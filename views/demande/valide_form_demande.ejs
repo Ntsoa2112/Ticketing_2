@@ -1,0 +1,81 @@
+<div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-4">
+                <div class="card-body">
+                    <h2 class="title">Effectuer cette tâche</h2>
+
+ 
+                    <form method="GET" action="form_demande/<%=oneDemande.id%>">
+  
+
+
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Objet: <%= oneDemande.objet %></label>
+                                </div>
+                            </div>
+                        </div>  <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Priorité: <%= oneDemande.priorite %></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Tâche: <%= oneDemande.tache %></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Code: <%= oneDemande.code %></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Taille: <%= oneDemande.size %></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Expediteur: <%= oneDemande.categorie %></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div >
+                            <div "row row-space">
+                                <div class="input-group">
+                                    <label class="label">Chemin: <%= oneDemande.chemin %></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row row-space">
+                                <div >
+                                    <div class="input-group">                                    
+                                        <label class="label">Date et heure de demande: <%= datecreation %> à <%= timecreation %></label>
+                                    </div>
+                                </div>
+                            </div>
+                       
+                        <div class="p-t-15">
+                            <button class="btn btn--radius-2 btn--blue" type="submit">Valider</button>
+                        </div>
+
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    

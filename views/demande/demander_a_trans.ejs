@@ -1,0 +1,90 @@
+<body>
+        <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+            <div class="wrapper wrapper--w680">
+                <div class="card card-4">
+                    <div class="card-body">
+                        <h2 class="title">Demande à Trans</h2>
+                        <form method="POST" action="/demander_a_trans">
+                            <div class="row row-space"> 
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Objet</label>
+                                        <input class="input--style-4" type="text" name="objet" required>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="row row-space">
+                               
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        
+                                        <div class="radio">
+                                            <div class="col-2">
+                                                <div class="input-group">
+                                                    <label class="label">Priorités</label>
+                                                    <div class="select">
+                                                        <select class="browser-default custom-select" id="priori" name="priorite" required>
+                                                            <option>Sélectionner</option>
+                                                            <option value="P1">P1</option>
+                                                            <option value="P2">P2</option>
+                                                            <option value="P3">P3</option>
+                                                          </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <label class="label">Tâche</label>
+                                                <div class="select">
+                                                    <select class="browser-default custom-select" id="tache" name="tache" required>
+                                                        <option>Sélectionner</option>
+                                                        <option value="Récuperation">Récupération</option>
+                                                        <option value="Livraison">Livraison</option>
+                                                        
+                                                      </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <div class="input-group">
+                                        <label class="label">Code dossier</label>
+                                        <input class="input--style-4" type="number" name="code" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-t-15">
+                                    <button class="btn btn--radius-2 btn--blue" id="sub" type="submit">Envoyer</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script
+  src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous">
+  </script>
+
+    <script>
+        $("#sub").click(function(){
+        var $tache = $("#tache").val();
+        var $priori = $("#priori").val();
+        if($priori == 'Sélectionner'){
+            alert("Vous devez sélectionner une priorité");
+            return false;
+        }
+        if($tache == 'Sélectionner'){
+            alert("Vous devez sélectionner une tâche");
+            return false;
+        }
+        
+    });
+    </script>
