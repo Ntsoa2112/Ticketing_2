@@ -42,7 +42,7 @@
                                                 <div class="select">
                                                     <select class="browser-default custom-select" id="tache" name="tache" required>
                                                         <option>Sélectionner</option>
-                                                        <option value="Récuperation">Récupération</option>
+                                                        <option value="Récuperation">Récuperation</option>
                                                         <option value="Livraison">Livraison</option>
                                                         
                                                       </select>
@@ -55,6 +55,11 @@
                                         <label class="label">Code dossier</label>
                                         <input class="input--style-4" type="number" name="code" required>
                                     </div>
+
+                                    <div class="input-group" id="chem">
+                                            
+                                        </div>
+
                                 </div>
                             </div>
                             <div class="p-t-15">
@@ -74,6 +79,34 @@
   </script>
 
     <script>
+        
+        
+        $("#tache").change(function(){
+            var $tache = $("#tache").val();
+            if($tache == 'Livraison'){
+
+                if(!$("#chem1").length){
+                    $("#chem").append(                   
+                        $(          
+                            '<label class="label" id="chemlab">Chemin</label>',
+                    
+                        )                  
+                    ).append(
+                        $(          
+                            '<input class="input--style-4" type="text" name="chem1" id="chem1" required>',
+                    
+                        ) 
+                    );
+                }
+            }
+            else{
+                if($("#chem1").length || $tache == 'Récuperation'){
+                    $('#chem1').remove();
+                    $('#chemlab').remove();
+                }
+            }
+        });
+
         $("#sub").click(function(){
         var $tache = $("#tache").val();
         var $priori = $("#priori").val();
