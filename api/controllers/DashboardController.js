@@ -23,7 +23,14 @@ module.exports = {
             if (err) return res.send(err);
             
             Effectuer_tache.find(function foundEffectuer_tache(err, tache_en_cours){
-                res.view('pages/dashboard', { demande: demande , tache_en_cours: tache_en_cours });
+                if (err) return res.send(err);
+
+                Message.find(function foundMessage(err, messages){
+                    if (err) return res.send(err);
+                    res.view('pages/dashboard', { demande: demande , tache_en_cours: tache_en_cours, messages:messages });
+                });
+
+                
             });
         });
     },

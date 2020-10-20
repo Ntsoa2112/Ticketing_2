@@ -5,32 +5,119 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
-
+var fs = require('file-system');
+const getSize = require('get-folder-size');
 
 module.exports = {
-    
-    demande_a_trans: function(req, res){
-        //console.log("Ety" + req.param('code'));
-       Fake.findOne({code:req.param('code')}, function foundOneFake(err, Onefake){
+
+    afficher_contenu: function(req, res){
+        var id_demande = req.param('id_demande');
+        Demande.findOne(id_demande, function foundDemande(err, OneDemande){
             if(err) return res.send(err);
-            
-            var code = Onefake.code;
-            //console.log("Mande" + code);
-            var size = Onefake.size;
-            var chemin = Onefake.chemin;
-            var objet = req.param('objet');
-            var priorite = req.param('priorite');
-            var tache = req.param('tache');
-            var categorie = req.session.User.categorie;
-            var matricule = req.session.User.matricule;
-            Demande.create({objet, priorite, tache, code, size, chemin, categorie, matricule},function createDemande(err){
-                if(err){
-                    res.send(err);
-                }
-                //console.log("Tafa: " + code);
-                return res.redirect('/dashboard');
-              });
-       })
+            var chemin = OneDemande.chemin;
+
+            fs.readdir(chemin, function readdir(err, files){
+                if(err) return res.send(err);
+                var contenu = files;
+                getSize(chemin, function statChemin(err, size){
+                    if(err) return res.send(err);
+
+                    function FileConvertSize(aSize){
+                        aSize = Math.abs(parseInt(aSize, 10));
+                        var def = [[1, 'octets'], [1024, 'ko'], [1024*1024, 'Mo'], [1024*1024*1024, 'Go'], [1024*1024*1024*1024, 'To']];
+                        for(var i=0; i<def.length; i++){
+                            if(aSize<def[i][0]) return (aSize/def[i-1][0]).toFixed(2)+' '+def[i-1][1];
+                        }
+                    }
+    
+                    var size = FileConvertSize(size);
+                    res.view('demande/afficher_contenu', { oneDemande: OneDemande, size: size, contenu: contenu });
+
+                });
+            });
+
+        });
+    },
+    
+    demande_a_trans: async function(req, res){
+        var objet = req.param('objet');
+        var priorite = req.param('priorite');
+        var tache = req.param('tache');
+        var categorie = req.session.User.categorie;
+        var matricule = req.session.User.matricule;
+
+        if(tache == 'Récuperation'){
+            await Fake.findOne({code:req.param('code')}, function foundOneFake(err, Onefake){
+                if(err) return res.send(err);
+                
+                var code = Onefake.code;
+
+                var chemin = Onefake.chemin;
+                console.log("aty :" + chemin);
+                fs.readdir(chemin, function readdir(err, files){
+                    if(err) return res.send(err);
+                    var contenu = files;
+
+                    getSize(chemin, function statChemin(err, size){
+                        if(err) return res.send(err);
+        
+                        function FileConvertSize(aSize){
+                            aSize = Math.abs(parseInt(aSize, 10));
+                            var def = [[1, 'octets'], [1024, 'ko'], [1024*1024, 'Mo'], [1024*1024*1024, 'Go'], [1024*1024*1024*1024, 'To']];
+                            for(var i=0; i<def.length; i++){
+                                if(aSize<def[i][0]) return (aSize/def[i-1][0]).toFixed(2)+' '+def[i-1][1];
+                            }
+                        }
+        
+                        var size = FileConvertSize(size);
+                        
+                        Demande.create({objet, priorite, tache, code, size, chemin, categorie, matricule},function createDemande(err){
+                            if(err){
+                                res.send(err);
+                            }
+                            
+                            return res.redirect('/dashboard');
+                          });
+                        
+                    })
+                });
+               
+           })
+        }
+        else if(tache == 'Livraison'){
+            var chemin = req.param('chem1');
+            var code = req.param('code');
+            fs.readdir(chemin, function readdir(err, files){
+                if(err) return res.send(err);
+                var contenu = files;
+                console.log("tafa:"+ files);
+                getSize(chemin, function statChemin(err, size){
+                    if(err) return res.send(err);
+    
+                    function FileConvertSize(aSize){
+                        aSize = Math.abs(parseInt(aSize, 10));
+                        var def = [[1, 'octets'], [1024, 'ko'], [1024*1024, 'Mo'], [1024*1024*1024, 'Go'], [1024*1024*1024*1024, 'To']];
+                        for(var i=0; i<def.length; i++){
+                            if(aSize<def[i][0]) return (aSize/def[i-1][0]).toFixed(2)+' '+def[i-1][1];
+                        }
+                    }
+    
+                    var size = FileConvertSize(size);
+                    console.log(size);
+                    Demande.create({objet, priorite, tache, code, size, chemin, categorie, matricule},function createDemande(err){
+                        if(err){
+                            res.send(err);
+                        }
+                        //console.log("Tafa: " + code);
+                        return res.redirect('/dashboard');
+                      });
+                    
+                })
+            });
+        }
+
+        
+        
         
     },
 
@@ -43,7 +130,13 @@ module.exports = {
             var datecreation = new Date(oneDemande.createdAt).toLocaleDateString();
             var timecreation = new Date(oneDemande.createdAt).toLocaleTimeString();         
             
-            res.view('demande/valide_form_demande', { oneDemande: oneDemande, datecreation:datecreation , timecreation: timecreation });
+            var chemin = oneDemande.chemin;
+            fs.readdir(chemin, function readdir(err, files){
+                if(err) return res.send(err);
+                var contenu = files;
+                res.view('demande/valide_form_demande', { oneDemande: oneDemande, datecreation:datecreation , timecreation: timecreation, contenu: contenu });
+            });
+
         } );
     },
 
@@ -74,7 +167,12 @@ module.exports = {
                 if(err) return res.send(err);
                 var datePriseEnCharge = new Date(OneTache.createdAt).toLocaleDateString();
                 var timePriseEnCharge = new Date(OneTache.createdAt).toLocaleTimeString(); 
-                res.view('demande/terminer_form_tache', { oneDemande: OneDemande, OneTache:OneTache, datePriseEnCharge:datePriseEnCharge, timePriseEnCharge:timePriseEnCharge });
+                var chemin = OneDemande.chemin;
+                fs.readdir(chemin, function readdir(err, files){
+                    if(err) return res.send(err);
+                    var contenu = files;
+                    res.view('demande/terminer_form_tache', { oneDemande: OneDemande, OneTache:OneTache, datePriseEnCharge:datePriseEnCharge, timePriseEnCharge:timePriseEnCharge, contenu:contenu });
+                });       
             });
         });
     },
@@ -86,7 +184,19 @@ module.exports = {
         var dateNow = now.toLocaleDateString();
         var timeNow = now.toLocaleTimeString();
         var H_fin_transfert = dateNow + " à " + timeNow;
+        if(req.param('sms')){
+            var sms = req.param('sms');
+            var exp_matricule = req.session.User.matricule;
+            Demande.findOne(id_demande, function foundDemande(err, OneDemande){
+                if(err) return res.send( err);
+                var dest_matricule = OneDemande.matricule;
+                Message.create({matricule_exp:exp_matricule, matricule_dest:dest_matricule, sms:sms}, function createMessage(err){
+                    if(err) return res.send( err);
+                })
+            });
 
+
+        };
         Effectuer_tache.updateOne({id:id_tache}, {H_fin_transfert:H_fin_transfert, statu:'Terminer'}, function(err){
             if(err) return res.send( err);
             Demande.updateOne({id:id_demande}, {etat_demande:'Terminer'}, function(err){

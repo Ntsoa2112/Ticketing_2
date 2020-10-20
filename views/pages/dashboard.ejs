@@ -297,6 +297,15 @@
                                         </div>
                                         <div class="content">
                                             <a class="js-acc-btn" href="#">Matricule: <%= session.User.matricule %></a>
+                                            <%
+                                                var nbr_sms = 0;
+                                                for(var i = 0; i< messages.length; i++){
+                                                    if(messages[i].vue == false && messages[i].matricule_dest == session.User.matricule ){
+                                                        nbr_sms = nbr_sms + 1;
+                                                    }
+                                                }
+                                            %>
+                                            <a href="#"><%= nbr_sms %></a>
                                         </div>
                                         
                                         <div class="account-dropdown js-dropdown">
@@ -476,7 +485,7 @@
                                       <%= demande[i].size %>
                                     </td>
                                   <td>
-                                    <%= demande[i].chemin %>
+                                      <a href="/contenu/<%= demande[i].id %>"><%= demande[i].chemin %></a>
                                   </td>
                                   
                                   <td>
@@ -549,7 +558,8 @@
                             <%= demande[j].size %>
                           </td>
                         <td>
-                          <%= demande[j].chemin %>
+                            <a href="/contenu/<%= demande[j].id %>"><%= demande[j].chemin %></a>
+                          
                         </td>
                         
                         <td>
@@ -643,7 +653,8 @@
                           <%= demande[i].size %>
                         </td>
                       <td>
-                        <%= demande[i].chemin %>
+                          <a href="/contenu/<%= demande[i].id %>"><%= demande[i].chemin %></a>
+                        
                       </td>
                       
                       <td>

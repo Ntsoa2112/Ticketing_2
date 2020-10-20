@@ -6,41 +6,41 @@
 
                     <form method="POST" action="terminer_tache/<%=OneTache.id%>/<%= oneDemande.id %>">
 
-                        <div class="row row-space">
+                        <div >
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Objet: <%= oneDemande.objet %></label>
                                 </div>
                             </div>
-                        </div>  <div class="row row-space">
+                        </div>  <div >
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Priorité: <%= oneDemande.priorite %></label>
                                 </div>
                             </div>
                         </div>
-                        <div class="row row-space">
+                        <div >
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Tâche: <%= oneDemande.tache %></label>
                                 </div>
                             </div>
                         </div>
-                        <div class="row row-space">
+                        <div >
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Code: <%= oneDemande.code %></label>
                                 </div>
                             </div>
                         </div>
-                        <div class="row row-space">
+                        <div >
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Taille: <%= oneDemande.size %></label>
                                 </div>
                             </div>
                         </div>
-                        <div class="row row-space">
+                        <div >
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Expediteur: <%= oneDemande.categorie %></label>
@@ -48,20 +48,50 @@
                             </div>
                         </div>
                         <div >
-                            <div "row row-space">
+                            <div>
                                 <div class="input-group">
                                     <label class="label">Chemin: <%= oneDemande.chemin %></label>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row row-space">
-                                <div >
-                                    <div class="input-group">                                    
-                                            <label class="label">Date et heure de prise en charge: <%= datePriseEnCharge %> à <%= timePriseEnCharge %></label>
-                                    </div>
+                        <div >
+                            <div >
+                                <div class="input-group">                                    
+                                        <label class="label">Date et heure de prise en charge: <%= datePriseEnCharge %> à <%= timePriseEnCharge %></label>
                                 </div>
                             </div>
+                        </div>
+
+                        <div>
+                            <div class="input-group"> 
+                                <label class="label">Contenu :</label>  
+                                <% for(var i=0; i<contenu.length; i++){ %>
+                                        <div>
+                                            <li><%= contenu[i] %></li>
+                                        </div>  
+                                <%
+                                }
+                                %>
+                            </div>
+                        </div>
+
+                        <div >
+                            <div >
+                                <div class="input-group">                                    
+                                    <label class="label">Envoyer un message :</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="optradio" value="oui" >  ___Oui
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="optradio" value="non">  ___Non
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="message">
+
+                        </div>
                        
                         <div class="p-t-15">
                             <button class="btn btn--radius-2 btn--blue" type="submit">Terminer</button>
@@ -72,5 +102,39 @@
         </div>
     </div>
 
+    <script
+    src="https://code.jquery.com/jquery-3.5.1.js"
+    integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous">
+    </script>
+  
+      <script>
 
+          $(document).ready(function(){
+            $('input[type="radio"]').click(function(){
+                var val = $(this).attr("value");
+
+                if(!$("#form7").length){
+                    if(val == "oui"){
+                        $(".message").append(
+                            $(
+                                "<textarea id='form7' name='sms' placeholder='Votre message ici ...' class='md-textarea form-control' rows='3'></textarea>"
+                            )
+                        )
+                    }
+                
+                }
+                else{
+                    if(val == "non"){
+                        $("#form7").remove();
+                    }   
+                }
+
+                
+            });
+          });
+          
+          
+          
+      </script>
     

@@ -234,6 +234,8 @@ h6 {
 
 .wrapper--w680 {
   max-width: 530px;
+ 
+  
 }
 
 
@@ -634,6 +636,7 @@ input {
 @media (max-width: 767px) {
   .card-4 .card-body {
     padding: 50px 40px;
+    text-align: left;
   }
 }
 

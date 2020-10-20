@@ -51,6 +51,8 @@ module.exports.routes = {
 
   '/tache_continuer/:id_demande/:id_tache' : 'demandeController.continuer_tache',
 
+  '/contenu/:id_demande' : 'demandeController.afficher_contenu',
+
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *
