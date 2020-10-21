@@ -53,6 +53,10 @@ module.exports.routes = {
 
   '/contenu/:id_demande' : 'demandeController.afficher_contenu',
 
+  '/message_vue/:matricule_dest' : 'demandeController.message_vue',
+
+  '/exporter_xl' : 'exporterController.exportation',
+
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *

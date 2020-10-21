@@ -232,6 +232,17 @@ module.exports = {
             })
 
         })
+    },
+
+    message_vue: function(req, res){
+        var matricule_dest = req.param('matricule_dest');
+        Message.update({matricule_dest:matricule_dest}, {vue:true}, function updateMessage(err){
+            if(err) return res.send(err);
+            console.log('Tafa eeeeeeeeee');
+            var mety = "Mety";
+            return res.send(mety);
+        })
+        
     }
 
 };

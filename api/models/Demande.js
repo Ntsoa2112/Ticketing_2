@@ -21,4 +21,3 @@ module.exports = {
 
   datastore : 'default'
 };
-
