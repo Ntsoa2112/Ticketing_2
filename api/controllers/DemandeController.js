@@ -55,7 +55,6 @@ module.exports = {
                 var code = Onefake.code;
 
                 var chemin = Onefake.chemin;
-                console.log("aty :" + chemin);
                 fs.readdir(chemin, function readdir(err, files){
                     if(err) return res.send(err);
                     var contenu = files;
@@ -80,7 +79,6 @@ module.exports = {
                             Demande.findOne({objet:objet, priorite:priorite, code:code, chemin:chemin, size:size}, function foundDemande(err, OneDemande){
                                 if(err) return res.send(err);
                                 var id = OneDemande.id;
-                                console.log("id demande :" + id);
                                 sails.sockets.blast("nouvelle_tache", {id:id, objet, priorite, tache, code, size, chemin, categorie, matricule});
                             });
                             
@@ -98,7 +96,7 @@ module.exports = {
             fs.readdir(chemin, function readdir(err, files){
                 if(err) return res.send(err);
                 var contenu = files;
-                console.log("tafa:"+ files);
+
                 getSize(chemin, function statChemin(err, size){
                     if(err) return res.send(err);
     
@@ -111,7 +109,7 @@ module.exports = {
                     }
     
                     var size = FileConvertSize(size);
-                    console.log(size);
+
                     Demande.create({objet, priorite, tache, code, size, chemin, categorie, matricule},function createDemande(err){
                         if(err){
                             res.send(err);
@@ -270,7 +268,6 @@ module.exports = {
         var matricule_dest = req.param('matricule_dest');
         Message.update({matricule_dest:matricule_dest}, {vue:true}, function updateMessage(err){
             if(err) return res.send(err);
-            console.log('Tafa eeeeeeeeee');
             var mety = "Mety";
             return res.send(mety);
         })
