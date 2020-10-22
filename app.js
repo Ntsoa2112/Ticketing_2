@@ -1,6 +1,6 @@
 /**
  * app.js
- *
+ **********************https://edutechwiki.unige.ch/fr/Socket.io
  * Use `app.js` to run your app without `sails lift`.
  * To start the server, run: `node app.js`.
  *
