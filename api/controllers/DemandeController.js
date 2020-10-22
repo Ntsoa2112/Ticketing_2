@@ -7,6 +7,8 @@
 
 var fs = require('file-system');
 const getSize = require('get-folder-size');
+const io = require('socket.io');
+var socket = io();
 
 module.exports = {
 
@@ -75,6 +77,12 @@ module.exports = {
                             if(err){
                                 res.send(err);
                             }
+                            Demande.findOne({objet:objet, priorite:priorite, code:code, chemin:chemin, size:size}, function foundDemande(err, OneDemande){
+                                if(err) return res.send(err);
+                                var id = OneDemande.id;
+                                console.log("id demande :" + id);
+                                sails.sockets.blast("nouvelle_tache", {id:id, objet, priorite, tache, code, size, chemin, categorie, matricule});
+                            });
                             
                             return res.redirect('/dashboard');
                           });
@@ -108,7 +116,8 @@ module.exports = {
                         if(err){
                             res.send(err);
                         }
-                        //console.log("Tafa: " + code);
+
+                        sails.sockets.blast("nouvelle_tache", {objet, priorite, tache, code, size, chemin, categorie, matricule});
                         return res.redirect('/dashboard');
                       });
                     
@@ -151,7 +160,17 @@ module.exports = {
                
                 await Demande.updateOne(id_demande, {etat_demande : etat_demande}, function updateDemande(err){
                     if(err) return res.send( err);
-                    return res.redirect('/dashboard');
+                    var datecreation = new Date(OneDemande.createdAt).toLocaleDateString();
+                    var timecreation = new Date(OneDemande.createdAt).toLocaleTimeString();
+                    var debut = datecreation + " à " + timecreation;
+
+                    Effectuer_tache.findOne({id_demande:id_demande}, function(err, tacheOne){
+                        if(err) return res.send( err);
+                        var id_tache = tacheOne.id;
+                    
+                        sails.sockets.blast("tache_en_cours", {id_demande:id_demande, objet:OneDemande.objet, priorite:OneDemande.priorite, tache:OneDemande.tache, code:OneDemande.code, size:OneDemande.size, chemin:OneDemande.chemin, expediteur:OneDemande.categorie, realisateur:matricule_trans, debut:debut, id_tache:id_tache});
+                        return res.redirect('/dashboard');
+                    });
                 });
                 
             } );
@@ -184,6 +203,7 @@ module.exports = {
         var dateNow = now.toLocaleDateString();
         var timeNow = now.toLocaleTimeString();
         var H_fin_transfert = dateNow + " à " + timeNow;
+        var matr = req.session.User.matricule;
         if(req.param('sms')){
             var sms = req.param('sms');
             var exp_matricule = req.session.User.matricule;
@@ -191,6 +211,7 @@ module.exports = {
                 if(err) return res.send( err);
                 var dest_matricule = OneDemande.matricule;
                 Message.create({matricule_exp:exp_matricule, matricule_dest:dest_matricule, sms:sms}, function createMessage(err){
+                    sails.sockets.blast("new_message", {matricule_exp:exp_matricule, matricule_dest:dest_matricule, sms:sms});
                     if(err) return res.send( err);
                 })
             });
@@ -201,6 +222,17 @@ module.exports = {
             if(err) return res.send( err);
             Demande.updateOne({id:id_demande}, {etat_demande:'Terminer'}, function(err){
                 if(err) return res.send( err);
+                Demande.findOne(id_demande, function foundDemande(err, OneDemande){
+                    if(err) return res.send( err);
+                    Effectuer_tache.findOne({id_demande:id_demande}, function foundOneDemande(err, OneTache){
+                        if(err) return res.send(err);
+                        var datePriseEnCharge = new Date(OneTache.createdAt).toLocaleDateString();
+                        var timePriseEnCharge = new Date(OneTache.createdAt).toLocaleTimeString(); 
+                        var prise_en_charge = datePriseEnCharge + " à " + timePriseEnCharge;
+                        sails.sockets.blast("tache_terminer", {id_demande:id_demande, objet:OneDemande.objet, priorite:OneDemande.priorite, tache:OneDemande.tache, code:OneDemande.code, size:OneDemande.size, chemin:OneDemande.chemin, expediteur:OneDemande.categorie, realisateur:matr, fin:H_fin_transfert, debut:prise_en_charge});
+                    });
+                });
+
                 return res.redirect('/dashboard');
             })
 

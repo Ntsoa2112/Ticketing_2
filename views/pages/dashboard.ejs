@@ -284,7 +284,8 @@
                                 </div>
                                 
                                 <div>
-                                        <% if(session.User.categorie != 'Trans'){ %>
+                                        <%
+                                        if(session.User.categorie != 'Trans'){ %>
                                             <a  style="color:rgb(89, 138, 245); margin-left:20px;"  href="/demander_a_trans">Faire une demande</a>
                                         <% } %>
                                 </div>
@@ -305,8 +306,11 @@
                                                             nbr_sms = nbr_sms + 1;
                                                         }
                                                     }
+                                                    
                                                 %>
-                                                <a class="js-acc-btn" id="nbr_sms" href="#"> <%= nbr_sms %> </a>
+                                                <a class="js-acc-btn" style="color:rgb(199, 59, 54);" id="nbr_sms" href="#"> 
+                                                    <%= nbr_sms %> 
+                                                </a>
                                                 
                                             </div>
                                             <div id="res">
@@ -314,7 +318,7 @@
                                             </div>
                                             
                                             <div class="account-dropdown js-dropdown">
-                                                <div class="info clearfix">
+                                                <div class="info clearfix" id="contenu_sms">
                                                         <%
                                                             for(var i = 0; i< messages.length; i++){
                                                                 if(messages[i].vue == false && messages[i].matricule_dest == session.User.matricule ){
@@ -447,11 +451,11 @@
                                     <th scope="col">Etat</th>
                                   </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="id_nouvelle_tache">
                                 <%    
                                 for(var i=0; i<demande.length; i++) {
                                   if(demande[i].etat_demande == 'nouvelle'){ %>
-                                <tr>
+                                <tr id="<%= demande[i].id %>" >
                                  
                                   <td>
                                     <%= demande[i].objet %>
@@ -510,7 +514,7 @@
                         <th scope="col">Etat tâche</th>
                       </tr>
                 </thead>
-                <tbody>
+                <tbody id="id_tache_en_cours">
                     <%           
                     for(var i=0; i < tache_en_cours.length; i++) {
                       if(tache_en_cours[i].statu != 'Terminer'){
@@ -615,7 +619,7 @@
                         <th scope="col">Fin</th>
                       </tr>
                 </thead>
-                <tbody>
+                <tbody id="id_tache_terminer">
                     <%           
                     for(var i=0; i<demande.length; i++) {
                       if(demande[i].etat_demande == "Terminer"){ 
@@ -677,7 +681,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="copyright">
-                                    <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+                                    <p>Copyright © 2020 Easytech <a href="#">Easytech</a>.</p>
                                 </div>
                             </div>
                         </div>
@@ -689,6 +693,9 @@
         </div>
 
     </div>
+
+    <input id="session" value="<%= session.User.matricule %>" ></input>
+    <input id="session_categorie" value="<%= session.User.categorie %>"></input>
 
     <!-- Jquery JS-->
     <script src="vendor/jquery-3.2.1.min.js"></script>
@@ -752,29 +759,76 @@ $(document).ready(function(){
 
             //Le format de réponse attendu
             dataType : "json",
-        })
-
-        
+        })        
     });
 
     $("#notif").click(function(){
-        $("#nbr_sms").text('0');
+        $("#nbr_sms").text('');
     });
-
-
-
 });
 </script>
+
+<script type="text/javascript" src="/dependencies/sails.io.js"></script>
+<script type="text/javascript">
+    //Start the socket connection
+
+    io.sails.url = "http://localhost:1337/";
+
+    var moi =  $("#session").val();
+    var session_categorie = $("#session_categorie").val();
+    io.socket.on("new_message" , function(data){           
+        if(data.matricule_dest == moi){
+            var id_nbr_sms = $("#nbr_sms");
+            var nbr_sms = parseInt( $("#nbr_sms").text() , 10); 
+            var nbr_sms_actuelle = nbr_sms + 1;
+            id_nbr_sms.text(nbr_sms_actuelle);
+            var contenu_sms = $("#contenu_sms");
+            contenu_sms.append(
+                $(
+                    "<h5 class='name'> <span>Expéditeur:" +data.matricule_exp+"</span> <span class='email'>Trans</span></h5><span class='email'> "+data.sms+"</span><hr>"
+                )
+            )
+        }    
+    });
+
+    io.socket.on("nouvelle_tache", function(data){
+        var id_nouvelle_tache = $("#id_nouvelle_tache");
+        id_nouvelle_tache.append(
+            $(
+                '<tr><td>'+ data.objet+'</td><td>'+ data.priorite+'</td><td>'+ data.tache+'</td><td>'+ data.code+'</td><td>'+ data.size+'</td><td><a href="/contenu/'+data.id+'">'+ data.chemin+'</a></td><td>'+ data.categorie+'</td><td>'+ (session_categorie == 'Trans' ? ' <a type="button" class="btn btn-success" id="boutt" href="/valide_form_demande/'+data.id+'">Prendre</a>' : 'En attente')+'</td></tr>'
+            )
+        )
+    });
+
+    io.socket.on("tache_en_cours", function(data){
+        
+        var id_tache_en_cours = $("#id_tache_en_cours");
+        id_tache_en_cours.append(
+            $(
+                '<tr><td>'+ data.objet+'</td><td>'+ data.priorite+'</td><td>'+ data.tache+'</td><td>'+ data.code+'</td><td>'+ data.size+'</td><td><a href="/contenu/'+data.id_demande+'">'+ data.chemin+'</a></td><td>'+ data.expediteur+'</td><td>'+ data.realisateur+'</td><td>'+ data.debut+'</td><td>'+ (session_categorie != 'Trans'? 'En cours' : '<span id="onLine"><a type="button" class="btn btn-danger" id="boutt" href="/stand_by/'+data.id_demande+'/' + data.id_tache +'">Stand By</a><a type="button" class="btn btn-primary" id="boutt" href="/valide_form_terminer/'+id_demande+'">Terminer</a></span>')+'</td></tr>' 
+                
+            )
+        )
+        id_nouvelle_tache.remove('#'+id_demande);
+    });
+
+    io.socket.on("tache_terminer", function(data){
+        var id_tache_terminer = $("#id_tache_terminer");
+        id_tache_terminer.append(
+            $(
+                '<tr><td>'+ data.objet+'</td><td>'+ data.priorite+'</td><td>'+ data.tache+'</td><td>'+ data.code+'</td><td>'+ data.size+'</td><td><a href="/contenu/'+data.id_demande+'">'+ data.chemin+'</a></td><td>'+ data.expediteur+'</td><td>'+ data.realisateur+'</td><td>'+ data.debut+'</td><td>'+ data.fin+'</td></tr>'
+            )
+        )
+
+    });
+</script>
+
+
 <!-- JS DATATABLE-->
 
 <script type="text/javascript" src='DataTables/media/js/jquery.js'></script>
 <script type="text/javascript" src="DataTables/media/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="DataTables/tableau.js"></script>
 </body>
-
-
-
-
-
 </html>
 <!-- end document-->

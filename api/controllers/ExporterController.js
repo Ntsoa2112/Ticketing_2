@@ -147,6 +147,7 @@ module.exports = {
                 }
 
                 wb.write('assets/export/Tâche.xlsx');
+                return res.view("demande/down_excel");
 
             });
         });

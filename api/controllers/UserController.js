@@ -6,6 +6,7 @@
  */
 
 var bcrypt = require('bcrypt');
+var localStorage = require('localStorage');
 
 module.exports = {
     create: function(req, res){
@@ -41,6 +42,9 @@ module.exports = {
                 // The user has authenticated successfully, set their session
                 req.session.authenticated = true;
                 req.session.User = user;
+                localStorage.setItem("moi", req.session.User.matricule);
+                var moi = localStorage.getItem("moi");
+                console.log(moi);
 
                 // Redirect to protected area
                 return res.redirect('/dashboard');
