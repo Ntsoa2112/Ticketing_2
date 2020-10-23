@@ -12,7 +12,7 @@ module.exports = {
     priorite: { type: 'string', required: true },
     tache: { type: 'string', required: true },
     code: { type: 'string', required: true },
-    size: { type: 'string', required: true },
+    size: { type: 'string', required: false },
     chemin: { type: 'string', required: false },
     categorie: { type: 'string', required: true },
     etat_demande: { type: 'string',  defaultsTo: 'nouvelle' },

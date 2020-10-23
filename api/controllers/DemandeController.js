@@ -47,48 +47,21 @@ module.exports = {
         var tache = req.param('tache');
         var categorie = req.session.User.categorie;
         var matricule = req.session.User.matricule;
+        var code = req.param('code');
 
         if(tache == 'Récuperation'){
-            await Fake.findOne({code:req.param('code')}, function foundOneFake(err, Onefake){
-                if(err) return res.send(err);
-                
-                var code = Onefake.code;
-
-                var chemin = Onefake.chemin;
-                fs.readdir(chemin, function readdir(err, files){
+            Demande.create({objet, priorite, tache, code, categorie, matricule},function createDemande(err){
+                if(err){
+                    res.send(err);
+                }
+                Demande.findOne({objet:objet, priorite:priorite}, function foundDemande(err, OneDemande){
                     if(err) return res.send(err);
-                    var contenu = files;
-
-                    getSize(chemin, function statChemin(err, size){
-                        if(err) return res.send(err);
-        
-                        function FileConvertSize(aSize){
-                            aSize = Math.abs(parseInt(aSize, 10));
-                            var def = [[1, 'octets'], [1024, 'ko'], [1024*1024, 'Mo'], [1024*1024*1024, 'Go'], [1024*1024*1024*1024, 'To']];
-                            for(var i=0; i<def.length; i++){
-                                if(aSize<def[i][0]) return (aSize/def[i-1][0]).toFixed(2)+' '+def[i-1][1];
-                            }
-                        }
-        
-                        var size = FileConvertSize(size);
-                        
-                        Demande.create({objet, priorite, tache, code, size, chemin, categorie, matricule},function createDemande(err){
-                            if(err){
-                                res.send(err);
-                            }
-                            Demande.findOne({objet:objet, priorite:priorite, code:code, chemin:chemin, size:size}, function foundDemande(err, OneDemande){
-                                if(err) return res.send(err);
-                                var id = OneDemande.id;
-                                sails.sockets.blast("nouvelle_tache", {id:id, objet, priorite, tache, code, size, chemin, categorie, matricule});
-                            });
-                            
-                            return res.redirect('/dashboard');
-                          });
-                        
-                    })
+                    var id = OneDemande.id;
+                    sails.sockets.blast("nouvelle_tache", {id:id, objet, priorite, tache, code,  categorie, matricule});
                 });
-               
-           })
+                
+                return res.redirect('/dashboard');
+              });
         }
         else if(tache == 'Livraison'){
             var chemin = req.param('chem1');
@@ -121,11 +94,7 @@ module.exports = {
                     
                 })
             });
-        }
-
-        
-        
-        
+        }    
     },
 
     get_form_demande: function(req, res){
@@ -137,12 +106,17 @@ module.exports = {
             var datecreation = new Date(oneDemande.createdAt).toLocaleDateString();
             var timecreation = new Date(oneDemande.createdAt).toLocaleTimeString();         
             
-            var chemin = oneDemande.chemin;
-            fs.readdir(chemin, function readdir(err, files){
-                if(err) return res.send(err);
-                var contenu = files;
-                res.view('demande/valide_form_demande', { oneDemande: oneDemande, datecreation:datecreation , timecreation: timecreation, contenu: contenu });
-            });
+            if(!oneDemande.chemin){
+                res.view('demande/valide_form_demande', { oneDemande: oneDemande, datecreation:datecreation , timecreation: timecreation});
+            }
+            else{
+                var chemin = oneDemande.chemin;
+                fs.readdir(chemin, function readdir(err, files){
+                    if(err) return res.send(err);
+                    var contenu = files;
+                    res.view('demande/valide_form_demande', { oneDemande: oneDemande, datecreation:datecreation , timecreation: timecreation, contenu: contenu });
+                });
+            }
 
         } );
     },
@@ -184,12 +158,20 @@ module.exports = {
                 if(err) return res.send(err);
                 var datePriseEnCharge = new Date(OneTache.createdAt).toLocaleDateString();
                 var timePriseEnCharge = new Date(OneTache.createdAt).toLocaleTimeString(); 
-                var chemin = OneDemande.chemin;
-                fs.readdir(chemin, function readdir(err, files){
-                    if(err) return res.send(err);
-                    var contenu = files;
-                    res.view('demande/terminer_form_tache', { oneDemande: OneDemande, OneTache:OneTache, datePriseEnCharge:datePriseEnCharge, timePriseEnCharge:timePriseEnCharge, contenu:contenu });
-                });       
+
+                if(!OneDemande.chemin){
+                    res.view('demande/terminer_form_tache', { oneDemande: OneDemande, OneTache:OneTache, datePriseEnCharge:datePriseEnCharge, timePriseEnCharge:timePriseEnCharge});
+                }
+                else{
+                    var chemin = OneDemande.chemin;
+                    fs.readdir(chemin, function readdir(err, files){
+                        if(err) return res.send(err);
+                        var contenu = files;
+                        res.view('demande/terminer_form_tache', { oneDemande: OneDemande, OneTache:OneTache, datePriseEnCharge:datePriseEnCharge, timePriseEnCharge:timePriseEnCharge, contenu:contenu });
+                    }); 
+                }
+
+                      
             });
         });
     },

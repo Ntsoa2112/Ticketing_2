@@ -33,6 +33,9 @@
                                 </div>
                             </div>
                         </div>
+                        <%
+                        if(oneDemande.chemin){
+                        %>
                         <div >
                             <div class="col-2">
                                 <div class="input-group">
@@ -40,6 +43,9 @@
                                 </div>
                             </div>
                         </div>
+                        <%
+                        }
+                        %>
                         <div >
                             <div class="col-2">
                                 <div class="input-group">
@@ -47,6 +53,9 @@
                                 </div>
                             </div>
                         </div>
+                        <%
+                        if(oneDemande.chemin){
+                        %>
                         <div >
                             <div>
                                 <div class="input-group">
@@ -54,15 +63,19 @@
                                 </div>
                             </div>
                         </div>
-
+                        <%
+                        }
+                        %>
                         <div >
                             <div >
                                 <div class="input-group">                                    
-                                        <label class="label">Date et heure de prise en charge: <%= datePriseEnCharge %> à <%= timePriseEnCharge %></label>
+                                        <label class="label">Prise en charge: <%= datePriseEnCharge %> à <%= timePriseEnCharge %></label>
                                 </div>
                             </div>
                         </div>
-
+                        <%
+                        if(oneDemande.chemin){
+                        %>
                         <div>
                             <div class="input-group"> 
                                 <label class="label">Contenu :</label>  
@@ -75,7 +88,9 @@
                                 %>
                             </div>
                         </div>
-
+                        <%
+                        }
+                        %>
                         <div >
                             <div >
                                 <div class="input-group">                                    

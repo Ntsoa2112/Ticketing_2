@@ -5,6 +5,8 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 var xl = require('excel4node');
+const fs = require('fs');
+const download = require('download');
 
 module.exports = {
 
@@ -146,11 +148,30 @@ module.exports = {
                     ws3.cell(i+2, 10).string(tacheTerminer[i].etat_demande);
                 }
 
-                wb.write('assets/export/Tâche.xlsx');
+                wb.write('/Tâche.xlsx');
                 return res.view("demande/down_excel");
 
             });
         });
-    }
+    },
+
+    /*
+    down: function(req, res){
+        (async () => {
+            await download('http://localhost:1337/export/Tâche.xlsx', 'dist');
+         
+            fs.writeFileSync('dist/Tâche.xlsx', await download('http://localhost:1337/export/Tâche.xlsx'));
+         
+            download('localhost:1337/export/Tâche.xlsx').pipe(fs.createWriteStream('dist/Tâche.xlsx'));
+         
+            await Promise.all([
+                'localhost:1337/export/Tâche.xlsx'
+            ].map(url => download(url, 'dist')));
+        })();
+        return res.redirect('/dashboard');
+
+    },
+    */
+    
 
 };

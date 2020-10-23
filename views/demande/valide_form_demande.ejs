@@ -36,6 +36,9 @@
                                 </div>
                             </div>
                         </div>
+                        <%
+                        if(oneDemande.chemin){
+                        %>
                         <div class="">
                             <div >
                                 <div class="input-group">
@@ -43,6 +46,9 @@
                                 </div>
                             </div>
                         </div>
+                        <%
+                        }
+                        %>
                         <div class="">
                             <div >
                                 <div class="input-group">
@@ -50,6 +56,9 @@
                                 </div>
                             </div>
                         </div>
+                        <%
+                        if(oneDemande.chemin){
+                        %>
                         <div >
                             <div "">
                                 <div class="input-group">
@@ -57,6 +66,9 @@
                                 </div>
                             </div>
                         </div>
+                        <%
+                        }
+                        %>
 
                         <div class="">
                             <div >
@@ -65,11 +77,15 @@
                                 </div>
                             </div>
                         </div>
-
+                        <%
+                        if(oneDemande.chemin){
+                        %>
                         <div>
                             <div class="input-group"> 
                                 <label class="label">Contenu :</label>  
-                                <% for(var i=0; i<contenu.length; i++){ %>
+                                <% 
+                                
+                                for(var i=0; i<contenu.length; i++){ %>
                                         <div>
                                             <li><%= contenu[i] %></li>
                                         </div>  
@@ -78,7 +94,9 @@
                                 %>
                             </div>
                         </div>
-                       
+                        <%
+                        }
+                        %>
                         <div class="p-t-15">
                             <button class="btn btn--radius-2 btn--blue" type="submit">Valider</button>
                         </div>
