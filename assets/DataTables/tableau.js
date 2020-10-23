@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#tab').DataTable({
+    $('#tab').css("font-size", 14).DataTable({
         pagingType: "simple_numbers",
         lengthMenu:[10,15,25,35,45,55],
         order:[[1,'desc'], [0, 'asc']],

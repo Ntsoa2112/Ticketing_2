@@ -81,9 +81,11 @@ hr,
 fieldset, legend {
   margin: 0;
   padding: 0;
-  
+  font-size: 14px;
 }
-
+#nave{
+  font-size: 5px;
+}
 /**
  * Remove trailing margins from nested lists.
  */
