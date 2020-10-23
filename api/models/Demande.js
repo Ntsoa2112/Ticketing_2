@@ -13,7 +13,7 @@ module.exports = {
     tache: { type: 'string', required: true },
     code: { type: 'string', required: true },
     size: { type: 'string', required: true },
-    chemin: { type: 'string', required: true },
+    chemin: { type: 'string', required: false },
     categorie: { type: 'string', required: true },
     etat_demande: { type: 'string',  defaultsTo: 'nouvelle' },
     matricule: { model:'User' },

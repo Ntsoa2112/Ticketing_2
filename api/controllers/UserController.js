@@ -44,7 +44,6 @@ module.exports = {
                 req.session.User = user;
                 localStorage.setItem("moi", req.session.User.matricule);
                 var moi = localStorage.getItem("moi");
-                console.log(moi);
 
                 // Redirect to protected area
                 return res.redirect('/dashboard');

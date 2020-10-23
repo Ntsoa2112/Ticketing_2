@@ -1,17 +1,17 @@
 
-
 <body>
     <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
         <div class="wrapper wrapper--w681">
             <div class="card card-4">
                 <div class="card-body">
                     <h2 class="title">Inscription</h2>
-                    <form method="POST" action="/creer_compte">
+                    <form method="POST">
                         <div class="row row-space"> 
                             <div class="col-2">
+                                
                                 <div class="input-group">
                                     <label class="label">Matricule</label>
-                                    <input class="input--style-4" type="number" name="matricule">
+                                    <input class="input--style-4" type="text" name="Matricule">
                                 </div>
                             </div>
                         </div>
@@ -20,7 +20,7 @@
                             <div class="col-2">
                                 <div id="appe" class="input-group">
                                     <label class="label">Catégories</label>
-                                    <div  id="select" class="select">
+                                    <div id="select" class="select">
                                         <select class="browser-default custom-select" id="categorie" name="categorie" required>
                                             <option>Sélectionner</option>
                                             <option value="Trans">Trans</option>
@@ -30,9 +30,10 @@
                                             <option value="CQ">CQ</option>
                                             <option value="Stephania">Stephania</option>
                                             <option value="Winwindata">Winwindata</option>
-                                            <option value="autre">Autres</option>
-                                          </select>
-                                    </div>
+                                            <option value="autre">Autres</option> 
+
+                                         </select>
+                                     </div>
                                 </div>
                             </div>
                         </div>
@@ -40,14 +41,17 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Password</label>
-                                    <input class="input--style-4" type="Password" name="password">
+                                    <input class="input--style-4" type="Password" name="Password">
                                 </div>
                             </div>
                             
                         </div>
+                        <div class="input-group" id="chem">
+                                            
+                        </div>
                        
                         <div class="p-t-15">
-                            <button class="btn btn--radius-2 btn--blue" id="sub" type="submit">Créer</button>
+                            <button class="btn btn--radius-2 btn--blue" type="submit">Soumettre</button>
                         </div>
                     </form>
                 </div>
@@ -55,41 +59,52 @@
         </div>
     </div>
 
+    <!-- Jquery JS-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <!-- Vendor JS-->
+    <script src="vendor/select2/select2.min.js"></script>
+    <script src="vendor/datepicker/moment.min.js"></script>
+    <script src="vendor/datepicker/daterangepicker.js"></script>
 
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
-<script
-  src="https://code.jquery.com/jquery-3.5.1.js"
-  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-  crossorigin="anonymous"></script>
+    <!-- Main JS-->
+    <script src="js/global.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
+        
+        
+        $("#categorie").change(function(){
+            var $cat = $("#categorie").val();
+            if($cat == 'autre'){
 
-<script>
-    $("#sub").click(function(){
-        var $cat = $("#categorie").val();
-        if($cat == 'Sélectionner'){
-            alert("Vous devez sélectionner votre catégorie");
+                if(!$("#chem1").length){
+                    $("#select").remove()
+                    $("#appe")             
+                   .append(
+                        $(          
+                            '<input class="input--style-4" type="text" name="categorie" id="chem1" placeholder="Nom catégorie ici" required>',
+                    
+                        ) 
+                    );
+                }
+            }
+            
+        });
+
+        $("#sub").click(function(){
+        var $tache = $("#categorie").val();
+        var $priori = $("#priori").val();
+        if($priori == 'Sélectionner'){
+            alert("Vous devez sélectionner une priorité");
             return false;
         }
-    });
-
-     $("#categorie").change(function(){
-        var $cat = $("#categorie").val();
-        if($cat == 'autre'){
-
-            if(!$("#chem1").length){
-                $("#select").remove()
-                $("#appe")             
-                .append(
-                    $(          
-                        '<input class="input--style-4" type="text" name="categorie" id="chem1" placeholder="Nom catégorie ici" required>',
-                
-                    ) 
-                );
-            }
+        if($tache == 'Sélectionner'){
+            alert("Vous devez sélectionner une tâche");
+            return false;
         }
         
     });
-
-</script>
+    </script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 
 </html>
 <!-- end document-->
