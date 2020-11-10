@@ -474,9 +474,17 @@
                                 </div>
                             </div>
                         </div>
-                        
+                       
                         <!-- CONTENUE DATATABLE -->                      
                         <h1 class="tache">Suivi des tâches</h1>  
+                        <table style="position:absolut; float:right;">
+                            <tr>
+                                <td> Date début:</td>
+                                <td style="margin-right:10px;"><input class="form-control" placeholder="années-mois-jours" type="text" id="min" name="min"></td>
+                                <td>Date fin:</td>
+                                <td><input class="form-control" placeholder="années-mois-jours" type="text" id="max" name="max"></td>
+                            </tr>
+                        </table>
                         <table id='tab' class='display cell-border'>
                             <span id="sapl">
 
@@ -533,8 +541,7 @@
                                       <%= demande[i].size %>
                                     </td>
                                   <td>
-                                      
-                                      <button onclick="document.location='/contenu/<%= demande[i].id %>'"><%= demande[i].chemin %></button>
+                                      <a href="/contenu/<%= demande[i].id %>"><%= demande[i].chemin %></a>
                                   </td>
                                   
                                   <td>
@@ -602,8 +609,7 @@
                                         <%= demande[j].size %>
                                         </td>
                                     <td>
-                                            <button onclick="document.location='/contenu/<%= demande[j].id %> %>'"><%= demande[j].chemin %></button>
-
+                                        <a href="/contenu/<%= demande[j].id %>"><%= demande[j].chemin %></a>
                                     </td>
                                     
                                     <td>
@@ -685,7 +691,7 @@
                                         <%= demande[i].size %>
                                     </td>
                                     <td>
-                                        <button onclick="document.location='/contenu/<%= demande[i].id %>'"><%= demande[i].chemin %></button>
+                                        <a href="/contenu/<%= demande[i].id %>"><%= demande[i].chemin %></a>
                                     </td>
                                     
                                     <td>
@@ -991,8 +997,8 @@ $(document).ready(function(){
 
 <!-- JS DATATABLE-->
 
-<script type="text/javascript" src='DataTables/media/js/jquery.js'></script>
-<script type="text/javascript" src="DataTables/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src='https://code.jquery.com/jquery-3.5.1.js'></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="DataTables/tableau.js"></script>
 
 
