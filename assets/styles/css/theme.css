@@ -318,7 +318,8 @@ section {
 
 .main-content {
     padding-top: 116px;
-    min-height: 100vh;
+    min-height: 40vh;
+    margin-left:-70px;
 }
 
 @media (max-width: 991px) {
@@ -1151,9 +1152,23 @@ section {
     -moz-border-radius: 2px;
     border-radius: 2px;
 }
-
+.headfont{
+    background-color:rgb(66, 108, 216);
+   color: cornsilk;
+}
 .card {
     margin-bottom: 30px;
+
+}
+.fonttable{
+    font-weight: 300;
+    color: #fff;
+    font-size:12px;
+    
+}
+.fonttable ul li{
+    text-justify: auto;
+    list-style-type: none;
 }
 
 .input-group-addon {
@@ -1190,9 +1205,10 @@ section {
     position: fixed;
     top: 0;
     right: 0;
-    left: 300px;
+    left:230px;
     height: 75px;
     z-index: 3;
+
 }
 
 .header-desktop .section__content {
@@ -1578,7 +1594,7 @@ section {
 }
 
 .menu-sidebar {
-    width: 300px;
+    width: 230px;
     position: fixed;
     left: 0;
     top: 0;
@@ -3211,14 +3227,14 @@ section {
 .overview-box .text h2 {
     font-weight: 300;
     color: #fff;
-    font-size: 36px;
+    font-size:29px;
     line-height: 1;
     margin-bottom: 5px;
 }
 
 .overview-box .text span {
-    font-size: 18px;
-    color: rgba(255, 255, 255, 0.6);
+    font-size: 29px;
+    color: #fff;
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {

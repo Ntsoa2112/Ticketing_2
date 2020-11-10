@@ -38,7 +38,7 @@
 
     <!-- CSS DATATABLE-->
 
-    <link rel="stylesheet" type="text/css" href="DataTables/media/css/datatables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <!-- Main CSS-->
@@ -55,7 +55,9 @@
     </style>
 </head>
 
+
 <body class="animsition">
+    
     <div class="page-wrapper">
         <!-- HEADER MOBILE-->
         <header class="header-mobile d-block d-lg-none">
@@ -168,6 +170,7 @@
                     <img src="images/icon/easytech.png" alt="Easytech" />
                 </a>
             </div>
+            
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
@@ -190,7 +193,7 @@
                         %>
                         <li>
                             <a href="#">
-                                <i class="far fa-comment-alt"></i><button type="button"  data-toggle="modal" data-target="#myModal">Ancien notification</button></a>
+                                <i class="far fa-comment-alt"></i><button type="button"  data-toggle="modal" data-target="#myModal">Notification</button></a>
                         </li>
                         <li>
                             <a href="#">
@@ -225,7 +228,7 @@
         <div class="page-container">
             <!-- HEADER DESKTOP-->
             <header class="header-desktop">
-                <div class="section__content section__content--p30">
+                <div>
                     <div class="container-fluid">
                         <div class="header-wrap">
                            
@@ -345,10 +348,123 @@
                 </div>
             </header>
             <!-- HEADER DESKTOP-->
-
+             
             <!-- MAIN CONTENT-->
-            <div class="main-content">
-                <div class="section__content section__content--p30">
+            <div class="main-content">       
+                <div>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="overview-wrap">
+                                    <h2 class="title-1">Statistique</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-t-25">
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="overview-item overview-item--c1">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+                                            <div class="icon">
+                                                <i class="zmdi zmdi-star-circle"></i>
+                                            </div>
+                                            <div class="text">
+                                                <h2 > <span id="nbrNouvelleTache"><%= detailsNouvelle["nbrtache"] %></span>  Nouvelle Tâche</h2>
+                                                <span></span>
+                                            </div>
+                                        </div>
+                                        <table class="fonttable" style="margin-left:20px; margin-right:0px;">
+                                            <tr>
+                                                <td>
+                                                    <ul>
+                                                        <li >Récuperation: <span id="nRec"><%= detailsNouvelle["nbrRec"] %></span> </li>
+                                                        <li >Livraison: <span id="nLiv"><%= detailsNouvelle["nbrLiv"] %></span></li>
+                                                        <li></li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul style="margin-left:50px;">
+                                                        <li >P1: <span id="nP1"> <%= detailsNouvelle["nbrP1"] %></span></li>
+                                                        <li>P2: <span id="nP2"> <%= detailsNouvelle["nbrP2"] %> </span></li>
+                                                        <li>P3: <span id="nP3"> <%= detailsNouvelle["nbrP3"] %> </span></li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="overview-item overview-item--c2">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+                                            <div class="icon">
+                                                <i class="zmdi zmdi-run"></i>
+                                            </div>
+                                            <div class="text">
+                                                <h2 > <span id="nbrTacheEnCours"><%= detailsEnCours["nbrtache"] %> </span> Tâche en cours</h2>
+                                                <span></span>
+                                            </div>
+                                        </div>
+                                        <table class="fonttable" style="margin-left:20px; margin-right:0px;">
+                                            <tr>
+                                                <td>
+                                                    <ul>
+                                                        <li>Récuperation: <span id="cRec"> <%= detailsEnCours["nbrRec"] %></span></li>
+                                                        <li>Livraison: <span id="cLiv"> <%= detailsEnCours["nbrLiv"] %></span></li>
+                                                        <li></li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul style="margin-left:50px;">
+                                                        <li>P1: <span id="cP1"> <%= detailsEnCours["nbrP1"] %> </span></li>
+                                                        <li>P2: <span id="cP2"> <%= detailsEnCours["nbrP2"] %></span></li>
+                                                        <li>P3: <span id="cP3"><%= detailsEnCours["nbrP3"] %> </span> </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="overview-item overview-item--c3">
+                                    <div class="overview__inner">
+                                        <div class="overview-box clearfix">
+                                            <div class="icon">
+                                                <i class="zmdi zmdi-check"></i>
+                                            </div>
+                                            <div class="text">
+                                                <h2> <span id="nbrTacheTerminer"> <%= detailsterminer["nbrtache"] %> </span> Tâche terminé</h2>
+                                                <span></span>
+                                            </div>
+                                        </div>
+                                        <table class="fonttable" style="margin-left:20px; margin-right:0px;">
+                                            <tr>
+                                                <td>
+                                                    <ul>
+                                                        <li>Récuperation: <span id="tRec"> <%= detailsterminer["nbrRec"] %></span></li>
+                                                        <li>Livraison: <span id="tLiv"><%= detailsterminer["nbrLiv"] %></span> </li>
+                                                        <li></li>
+                                                    </ul>
+                                                </td>
+                                                <td>
+                                                    <ul style="margin-left:50px;">
+                                                        <li>P1: <span id="tP1"><%= detailsterminer["nbrP1"] %> </span> </li>
+                                                        <li>P2: <span id="tP2"> <%= detailsterminer["nbrP2"] %></span></li>
+                                                        <li>P3: <span id="tP3"><%= detailsterminer["nbrP3"] %> </span> </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                        
+                <div>
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12">
@@ -359,11 +475,13 @@
                             </div>
                         </div>
                         
-                        <!-- CONTENUE DATATABLE -->
-
+                        <!-- CONTENUE DATATABLE -->                      
                         <h1 class="tache">Suivi des tâches</h1>  
-                        <table id='tab' class='display'>
-                            <thead>
+                        <table id='tab' class='display cell-border'>
+                            <span id="sapl">
+
+                            </span>
+                            <thead class="headfont">
                                 <tr>      
                                     <th scope="col">Objet</th>
                                     <th scope="col">Priorité</th>
@@ -374,11 +492,24 @@
                                     <th scope="col">Expéditeur</th>                                 
                                     <th scope="col">Etat</th>
                                     <th scope="col">Réalisateur</th>
-                                    <th scope="col">Début</th>  
-                                    <th scope="col">Fin</th> 
-                                    <th scope="col">Action</th> 
-                                                                        
-                                  </tr>
+                                    <th scope="col" id="min">Début</th>  
+                                    <th scope="col" id="max">Fin</th> 
+                                    <th scope="col">Action</th>                                      
+                                </tr>
+                                <tr>      
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>                                 
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>  
+                                    <th scope="col"></th> 
+                                    <th scope="col"></th>                                      
+                                </tr>
                             </thead>
                             <tbody id="id_nouvelle_tache">
                                 <%    
@@ -402,7 +533,8 @@
                                       <%= demande[i].size %>
                                     </td>
                                   <td>
-                                      <a href="/contenu/<%= demande[i].id %>"><%= demande[i].chemin %></a>
+                                      
+                                      <button onclick="document.location='/contenu/<%= demande[i].id %>'"><%= demande[i].chemin %></button>
                                   </td>
                                   
                                   <td>
@@ -439,159 +571,178 @@
 
                                 <!-- Tâche en cours -->
                                 
-                                        <%           
-                                        for(var i=0; i < tache_en_cours.length; i++) {
-                                            if(tache_en_cours[i].statu != 'Terminer'){
-                                            var id_demande = tache_en_cours[i].id_demande;
-                                            var dateDebut = new Date(tache_en_cours[i].createdAt).toLocaleDateString();
-                                            var timedebut = new Date(tache_en_cours[i].createdAt).toLocaleTimeString();
+                                <%           
+                                for(var i=0; i < tache_en_cours.length; i++) {
+                                    if(tache_en_cours[i].statu != 'Terminer'){
+                                    var id_demande = tache_en_cours[i].id_demande;
+                                    var dateDebut = new Date(tache_en_cours[i].createdAt).toLocaleDateString();
+                                    var timedebut = new Date(tache_en_cours[i].createdAt).toLocaleTimeString();
+                            
+                                    %>
+                                <tr>
                                     
-                                            %>
-                                        <tr>
-                                            
-                                            <%           
-                                            for(var j=0; j<demande.length; j++) {
-                                                if(demande[j].id == id_demande){
-                                    
-                                            %>
-                                            <td>
-                                                <%= demande[j].objet %>
-                                            </td>
-                                            <td>
-                                                <%= demande[j].priorite %>
-                                            </td>
-                                            <td>
-                                                <%= demande[j].tache %>
-                                            </td>
-                                            <td>
-                                                <%= demande[j].code %>
-                                            </td>
-                                            <td>
-                                                <%= demande[j].size %>
-                                                </td>
-                                            <td>
-                                                <a href="/contenu/<%= demande[j].id %>"><%= demande[j].chemin %></a>
-                                                
-                                            </td>
-                                            
-                                            <td>
-                                                <%= demande[j].categorie %>
-                                            </td>
-                                            <%
-                                                }
-                                            }
-                                            %>
-                                            <td>
-                                                Tâche en cours
-                                            </td>
-                                            <td>
-                                            <%= tache_en_cours[i].matricule_trans %>
-                                            </td>
-                                            <td>
-                                                <%= dateDebut %> à <%= timedebut %>
-                                            </td>
-                                            <td>
+                                    <%           
+                                    for(var j=0; j<demande.length; j++) {
+                                        if(demande[j].id == id_demande){
+                            
+                                    %>
+                                    <td>
+                                        <%= demande[j].objet %>
+                                    </td>
+                                    <td>
+                                        <%= demande[j].priorite %>
+                                    </td>
+                                    <td>
+                                        <%= demande[j].tache %>
+                                    </td>
+                                    <td>
+                                        <%= demande[j].code %>
+                                    </td>
+                                    <td>
+                                        <%= demande[j].size %>
+                                        </td>
+                                    <td>
+                                            <button onclick="document.location='/contenu/<%= demande[j].id %> %>'"><%= demande[j].chemin %></button>
 
-                                            </td>
-                                            <td>
-                                                <% 
-                                                if(tache_en_cours[i].statu == 'Stand By'){
-                                                %>
-                                                <span style="color:rgb(199, 59, 54)" ><strong>Stand By</strong></span> 
-                                                <% 
-                                                if(session.User.categorie == 'Trans'){
-                                                    if(session.User.matricule == tache_en_cours[i].matricule_trans){
-                                                %>
-                                                <a type="button" class="btn btn-primary" id="boutt" href="/tache_continuer/<%= id_demande %>/<%= tache_en_cours[i].id %>">Continuer</a>
-                                                <%
-                                                    }
-                                                }
-                                                }
-                                                
-                                                else if(tache_en_cours[i].matricule_trans == session.User.matricule ) { %>
-                                                
-                                                    <span id="onLine">
-                                                    <a type="button" class="btn btn-danger" id="boutt" href="/stand_by/<%= id_demande %>/<%= tache_en_cours[i].id %>">Stand By</a>
-                                                    <a type="button" class="btn btn-primary" id="boutt" href="/valide_form_terminer/<%= id_demande %>">Terminer</a>
-                                                    </span> 
-                                                    
-                                                <% 
-                                                }
-                                                else{
-                                                %>
-                                                En cours
-                                                <%
-                                                }
-                                                %>
-                                            </td>
-                                        </tr>
+                                    </td>
+                                    
+                                    <td>
+                                        <%= demande[j].categorie %>
+                                    </td>
+                                    <%
+                                        }
+                                    }
+                                    %>
+                                    <td>
+                                        Tâche en cours
+                                    </td>
+                                    <td>
+                                    <%= tache_en_cours[i].matricule_trans %>
+                                    </td>
+                                    <td>
+                                        <%= dateDebut %>
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                    <td>
                                         <% 
-                                            }
-                                            }
+                                        if(tache_en_cours[i].statu == 'Stand By'){
                                         %>
+                                        <span style="color:rgb(199, 59, 54)" ><strong>Stand By</strong></span> 
+                                        <% 
+                                        if(session.User.categorie == 'Trans'){
+                                            if(session.User.matricule == tache_en_cours[i].matricule_trans){
+                                        %>
+                                        <a type="button" class="btn btn-primary" id="boutt" href="/tache_continuer/<%= id_demande %>/<%= tache_en_cours[i].id %>">Continuer</a>
+                                        <%
+                                            }
+                                        }
+                                        }
+                                        
+                                        else if(tache_en_cours[i].matricule_trans == session.User.matricule ) { %>
+                                        
+                                            <span id="onLine">
+                                            <a type="button" class="btn btn-danger" id="boutt" href="/stand_by/<%= id_demande %>/<%= tache_en_cours[i].id %>">Stand By</a>
+                                            <a type="button" class="btn btn-primary" id="boutt" href="/valide_form_terminer/<%= id_demande %>">Terminer</a>
+                                            </span> 
+                                            
+                                        <% 
+                                        }
+                                        else{
+                                        %>
+                                        En cours
+                                        <%
+                                        }
+                                        %>
+                                    </td>
+                                </tr>
+                                <% 
+                                    }
+                                    }
+                                %>
                                             
                                         <!-- Tâche terminé-->
                                         
-                                                <%           
-                                                for(var i=0; i<demande.length; i++) {
-                                                    if(demande[i].etat_demande == "Terminer"){ 
-                                                    var id_demande = demande[i].id;
-                                                    %>
-                                                <tr>
-                                                    
-                                                    <td><%= demande[i].objet %></td>
-                                                    <td>
-                                                    <%= demande[i].priorite %>
-                                                    </td>
-                                                    <td>
-                                                    <%= demande[i].tache %>
-                                                    </td>
-                                                    <td>
-                                                    <%= demande[i].code %>
-                                                    </td>
-                                                    <td>
-                                                        <%= demande[i].size %>
-                                                    </td>
-                                                    <td>
-                                                        <a href="/contenu/<%= demande[i].id %>"><%= demande[i].chemin %></a>
-                                                    
-                                                    </td>
-                                                    
-                                                    <td>
-                                                    <%= demande[i].categorie %>
-                                                    </td>
-                                                    <td>
-                                                        Tâche terminé
-                                                    </td>
-                                                    <td>
-                                                        <%
-                                                        for(var e=0; e < tache_en_cours.length; e++) {
-                                                        if(id_demande == tache_en_cours[e].id_demande && tache_en_cours[e].statu == 'Terminer'){
-                                                            var dateDebut = new Date(tache_en_cours[e].createdAt).toLocaleDateString();
-                                                            var timedebut = new Date(tache_en_cours[e].createdAt).toLocaleTimeString();   
-                                                        %>
-                                                        <%= tache_en_cours[e].matricule_trans %>
-                                                        
-                                                    </td>
-                                                    <td>
-                                                        <%= dateDebut %> à <%= timedebut %>
-                                                    </td>
-                                                    <td>
-                                                        <%= tache_en_cours[e].H_fin_transfert %>
-                                                    </td>
-                                                    <td>
-                                                        Terminé
-                                                    </td>
-                                                        <%                 
-                                                        }
-                                                        }             
-                                                        %>
-                                                </tr>
-                                                <% 
-                                                    }
-                                                    } 
-                                                %>
-          
+                                <%           
+                                for(var i=0; i<demande.length; i++) {
+                                    if(demande[i].etat_demande == "Terminer"){ 
+                                    var id_demande = demande[i].id;
+                                    %>
+                                <tr>
+                                    
+                                    <td><%= demande[i].objet %></td>
+                                    <td>
+                                    <%= demande[i].priorite %>
+                                    </td>
+                                    <td>
+                                    <%= demande[i].tache %>
+                                    </td>
+                                    <td>
+                                    <%= demande[i].code %>
+                                    </td>
+                                    <td>
+                                        <%= demande[i].size %>
+                                    </td>
+                                    <td>
+                                        <button onclick="document.location='/contenu/<%= demande[i].id %>'"><%= demande[i].chemin %></button>
+                                    </td>
+                                    
+                                    <td>
+                                    <%= demande[i].categorie %>
+                                    </td>
+                                    <td>
+                                        Tâche terminé
+                                    </td>
+                                    <td>
+                                        <%
+                                        for(var e=0; e < tache_en_cours.length; e++) {
+                                        if(id_demande == tache_en_cours[e].id_demande && tache_en_cours[e].statu == 'Terminer'){
+                                            var dateDebut = new Date(tache_en_cours[e].createdAt).toLocaleDateString();
+                                            var timedebut = new Date(tache_en_cours[e].createdAt).toLocaleTimeString();   
+                                        %>
+                                        <%= tache_en_cours[e].matricule_trans %>
+                                        
+                                    </td>
+                                    <td>
+                                        <%= dateDebut %>
+                                    </td>
+                                    <td>
+                                        <%
+                                            const tt = tache_en_cours[e].H_fin_transfert
+                                            const tapal = tt.split(' à')
+                                         %>
+                                        <%= tapal[0] %>
+                                    </td>
+                                    <td>
+                                        Terminé
+                                    </td>
+                                        <%                 
+                                        }
+                                        }             
+                                        %>
+                                </tr>
+                                <% 
+                                    }
+                                    } 
+                                %>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>                                 
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>
+                                        <th scope="col"></th>  
+                                        <th scope="col"></th> 
+                                        <th scope="col"></th>    
+                                </tr>
+                            </tfoot>
                       </table>
                       <hr>
         
@@ -742,10 +893,10 @@ $(document).ready(function(){
     var id_nouvelle_tache = $("#id_nouvelle_tache");
     io.socket.on("new_message" , function(data){           
         if(data.matricule_dest == moi){
-            var id_nbr_sms = $("#nbr_sms");
             var nbr_sms = parseInt( $("#nbr_sms").text() , 10); 
-            var nbr_sms_actuelle = nbr_sms + 1;
-            id_nbr_sms.text(nbr_sms_actuelle);
+            nbr_sms = nbr_sms + 1;
+            $("#nbr_sms").text(nbr_sms)
+
             var contenu_sms = $("#contenu_sms");
             contenu_sms.append(
                 $(
@@ -762,11 +913,16 @@ $(document).ready(function(){
                 '<tr><td>'+ data.objet+'</td><td>'+ data.priorite+'</td><td>'+ data.tache+'</td><td>'+ data.code+'</td><td>'+ data.size+'</td><td><a href="/contenu/'+data.id+'">'+ data.chemin+'</a></td><td>'+ data.categorie+'</td><td>Nouvelle tâche</td><td></td><td></td><td></td><td>'+ (session_categorie == 'Trans' ? ' <a type="button" class="btn btn-success" id="boutt" href="/valide_form_demande/'+data.id+'">Prendre</a>' : 'En attente')+'</td></tr>'
             )
         )
+
+        var nbrNouvelleTache = parseInt($('#nbrNouvelleTache').text(), 10);
+        nbrNouvelleTache = nbrNouvelleTache + 1;
+        $('#nbrNouvelleTache').text(nbrNouvelleTache);
+
         if(session_categorie == 'Trans'){
-            var id_nbr_sms = $("#nbr_sms");
             var nbr_sms = parseInt( $("#nbr_sms").text() , 10); 
-            var nbr_sms_actuelle = nbr_sms + 1;
-            id_nbr_sms.text(nbr_sms_actuelle);
+            nbr_sms = nbr_sms + 1;
+            $("#nbr_sms").text(nbr_sms)
+
             var contenu_sms = $("#contenu_sms");
             contenu_sms.append(
                 $(
@@ -778,7 +934,14 @@ $(document).ready(function(){
     });
 
     io.socket.on("tache_en_cours", function(data){
-        
+        var nbrTacheEnCours = parseInt($('#nbrTacheEnCours').text(), 10);
+        nbrTacheEnCours = nbrTacheEnCours + 1;
+        $('#nbrTacheEnCours').text(nbrTacheEnCours)
+
+        var nbrNouvelleTache = parseInt($('#nbrNouvelleTache').text(), 10);
+        nbrNouvelleTache = nbrNouvelleTache - 1;
+        $('#nbrNouvelleTache').text(nbrNouvelleTache);
+
         id_nouvelle_tache.append(
             $(
                 '<tr><td>'+ data.objet+'</td><td>'+ data.priorite+'</td><td>'+ data.tache+'</td><td>'+ data.code+'</td><td>'+ data.size+'</td><td><a href="/contenu/'+data.id_demande+'">'+ data.chemin+'</a></td><td>'+ data.expediteur+'</td><td>Tâche en cours</td><td>'+ data.realisateur+'</td><td>'+ data.debut+'</td><td></td><td>'+ (session_categorie != 'Trans'? 'En cours' : '<span id="onLine"><a type="button" class="btn btn-danger" id="boutt" href="/stand_by/'+data.id_demande+'/' + data.id_tache +'">Stand By</a><a type="button" class="btn btn-primary" id="boutt" href="/valide_form_terminer/'+id_demande+'">Terminer</a></span>')+'</td></tr>' 
@@ -788,14 +951,42 @@ $(document).ready(function(){
     });
 
     io.socket.on("tache_terminer", function(data){
+        var nbrTacheTerminer = parseInt($('#nbrTacheTerminer').text(), 10);
+        nbrTacheTerminer = nbrTacheTerminer + 1;
+        $('#nbrTacheTerminer').text(nbrTacheTerminer);
+
+        var nbrTacheEnCours = parseInt($('#nbrTacheEnCours').text(), 10);
+        nbrTacheEnCours = nbrTacheEnCours - 1 ;
+        $('#nbrTacheEnCours').text(nbrTacheEnCours)
+
         var id_tache_terminer = $("#id_tache_terminer");
         id_tache_terminer.append(
             $(
                 '<tr><td>'+ data.objet+'</td><td>'+ data.priorite+'</td><td>'+ data.tache+'</td><td>'+ data.code+'</td><td>'+ data.size+'</td><td><a href="/contenu/'+data.id_demande+'">'+ data.chemin+'</a></td><td>'+ data.expediteur+'</td><td>'+ data.realisateur+'</td><td>'+ data.debut+'</td><td>'+ data.fin+'</td></tr>'
             )
         )
-
     });
+
+    io.socket.on("detailsTache", function(data){
+        $("#nRec").text(data.detailsNouvelle["nbrRec"]);
+        $("#nLiv").text(data.detailsNouvelle["nbrLiv"]);
+        $("#nP1").text(data.detailsNouvelle["nbrP1"]);
+        $("#nP2").text(data.detailsNouvelle["nbrP2"]);
+        $("#nP3").text(data.detailsNouvelle["nbrP3"]);
+
+        $("#cRec").text(data.detailsEnCours["nbrRec"]);
+        $("#cLiv").text(data.detailsEnCours["nbrLiv"]);
+        $("#cP1").text(data.detailsEnCours["nbrP1"]);
+        $("#cP2").text(data.detailsEnCours["nbrP2"]);
+        $("#cP3").text(data.detailsEnCours["nbrP3"]);
+
+        $("#tRec").text(data.detailsterminer["nbrRec"]);
+        $("#tLiv").text(data.detailsterminer["nbrLiv"]);
+        $("#tP1").text(data.detailsterminer["nbrP1"]);
+        $("#tP2").text(data.detailsterminer["nbrP2"]);
+        $("#tP3").text(data.detailsterminer["nbrP3"]);
+
+    })
 </script>
 
 <!-- JS DATATABLE-->
@@ -803,6 +994,8 @@ $(document).ready(function(){
 <script type="text/javascript" src='DataTables/media/js/jquery.js'></script>
 <script type="text/javascript" src="DataTables/media/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="DataTables/tableau.js"></script>
+
+
 </body>
 </html>
 <!-- end document-->

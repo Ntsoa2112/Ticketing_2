@@ -1,6 +1,9 @@
 /*
  * Table styles
  */
+ thead input {
+  width: 100%;
+}
  table.dataTable {
     width: 100%;
     margin: 0 auto;

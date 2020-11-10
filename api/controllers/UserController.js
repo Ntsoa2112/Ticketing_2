@@ -61,7 +61,20 @@ module.exports = {
           }
   
         });
-      },
+    },
+
+    mdp_oublier: function(req, res){
+        var matricule = req.param('matricule');
+        var password = req.param('password');
+        User.updateOne({matricule:matricule}, {password:password}, function updatePassword(err){
+            if(err){
+                return res.send(err);
+              }
+              else{
+                return res.redirect('/');
+              }
+        })
+    }
 
 };
 

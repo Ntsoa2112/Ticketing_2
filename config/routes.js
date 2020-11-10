@@ -57,6 +57,10 @@ module.exports.routes = {
 
   '/exporter_xl' : 'exporterController.exportation',
 
+  'get /mdp_oublier' : { view: 'login_register/mdpoublier' },
+
+  'post /mdp_oublier' : 'UserController.mdp_oublier',
+
 
   /***************************************************************************
   *                                                                          *
