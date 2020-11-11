@@ -4,6 +4,7 @@ $.fn.dataTable.ext.search.push(
         var max = Date.parse( $('#max').val());
         var debut = Date.parse( data[9]) ; // use data for the dat column
         var fin = Date.parse( data[10]) ; 
+        console.log(min + " *** " + max)
  
         if ( ( isNaN( min ) && isNaN( max ) ) ||
              ( isNaN( min ) && fin <= max ) ||
@@ -49,7 +50,7 @@ $(document).ready(function() {
     var table = $('#tab').DataTable();
      
     // Event listener to the two range filtering inputs to redraw on input
-    $('#min, #max').keyup( function() {
+    $('#min, #max').change( function() {
         table.draw();
     } );
 } );

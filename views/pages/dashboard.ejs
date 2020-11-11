@@ -352,14 +352,18 @@
             <!-- MAIN CONTENT-->
             <div class="main-content">       
                 <div>
+
+                        <table>
+                                <tr>
+                                    <td> </td>
+                                    <td style="margin-right:10px;"><p>Date début:</p><input placeholder="Select date" type="date" id="min" name="min"></td>
+                                    <td class="md-form md-outline input-with-post-icon datepicker"></td>
+                                    <td><p>Date fin:</p><input placeholder="Select date" type="date"  id="max" name="max"></td>
+                                </tr>
+                            </table>
+
                     <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="overview-wrap">
-                                    <h2 class="title-1">Statistique</h2>
-                                </div>
-                            </div>
-                        </div>
+                        
                         <div class="row m-t-25">
                             <div class="col-sm-6 col-lg-3">
                                 <div class="overview-item overview-item--c1">
@@ -469,22 +473,16 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="overview-wrap">
-                                    <h2 class="title-1">Tableau de bord</h2>
+                                    <h2 class="title-1">Suivi des tâches</h2>
+                                    <hr />
                                     
                                 </div>
                             </div>
                         </div>
                        
                         <!-- CONTENUE DATATABLE -->                      
-                        <h1 class="tache">Suivi des tâches</h1>  
-                        <table style="position:absolut; float:right;">
-                            <tr>
-                                <td> Date début:</td>
-                                <td style="margin-right:10px;"><input class="form-control" placeholder="années-mois-jours" type="text" id="min" name="min"></td>
-                                <td>Date fin:</td>
-                                <td><input class="form-control" placeholder="années-mois-jours" type="text" id="max" name="max"></td>
-                            </tr>
-                        </table>
+                        
+                        
                         <table id='tab' class='display cell-border'>
                             <span id="sapl">
 
@@ -993,6 +991,7 @@ $(document).ready(function(){
         $("#tP3").text(data.detailsterminer["nbrP3"]);
 
     })
+
 </script>
 
 <!-- JS DATATABLE-->

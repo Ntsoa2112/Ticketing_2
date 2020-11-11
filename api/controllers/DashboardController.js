@@ -49,7 +49,7 @@ module.exports = {
             return details;
         }
 
-        var detailsNouvelle = await detailsTache('nouvelle');
+        var detailsNouvelle = await detailsTache('nouvelle', demande);
         var detailsEnCours = await detailsTache('En cours');
         var detailsterminer = await detailsTache('Terminer');
 
@@ -64,8 +64,7 @@ module.exports = {
                     sails.sockets.blast("detailsTache", {detailsNouvelle, detailsEnCours , detailsterminer});
                     res.view('pages/dashboard', { demande: demande , tache_en_cours: tache_en_cours, messages:messages, detailsNouvelle, detailsEnCours , detailsterminer });
                 });
-
-                
+         
             });
         });
     },
