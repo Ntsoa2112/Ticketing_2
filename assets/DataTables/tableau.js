@@ -1,3 +1,4 @@
+/*
 $.fn.dataTable.ext.search.push(
     function( settings, data, dataIndex ) {
         var min = Date.parse( $('#min').val());
@@ -16,7 +17,7 @@ $.fn.dataTable.ext.search.push(
         return false;
     }
 );
-
+*/
 $(document).ready(function() {
     $('#tab').css("font-size", 14).DataTable( {
         pagingType: "simple_numbers",
@@ -47,12 +48,14 @@ $(document).ready(function() {
             } );
         }
     } );
-    var table = $('#tab').DataTable();
+    //var table = $('#tab').DataTable();
      
     // Event listener to the two range filtering inputs to redraw on input
+    /*
     $('#min, #max').change( function() {
         table.draw();
     } );
+    */
 } );
 
 //https://connect.ed-diamond.com/GNU-Linux-Magazine/GLMF-189/DataTables-interagir-avec-les-tableaux-HTML

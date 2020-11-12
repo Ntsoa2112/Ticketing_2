@@ -25,7 +25,9 @@ module.exports.routes = {
 
   'post /creer_compte' : 'UserController.create',
 
-  '/dashboard' : 'DashboardController.affichage',
+  '/dashboard/:dd?/:df?' : 'DashboardController.affichage',
+
+  'post /dashboard/': 'DashboardController.afficher_date',
 
   'post /login' : 'userController.login',
 

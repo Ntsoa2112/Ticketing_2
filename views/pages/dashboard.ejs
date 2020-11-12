@@ -352,16 +352,31 @@
             <!-- MAIN CONTENT-->
             <div class="main-content">       
                 <div>
+                    <div style="margin-left:20px;">
+                            <% 
+                            var now = new Date(Date.now()).toLocaleDateString();
+                            var dd;
+                            var df;
+                            if(datDebut == "null" && datFin == "null"){
+                                dd = now;
+                                df = now;
+                            }
+                            else if(datDebut && datFin){
+                                dd = datDebut;
+                                df = datFin;
+                            }
 
-                        <table>
-                                <tr>
-                                    <td> </td>
-                                    <td style="margin-right:10px;"><p>Date début:</p><input placeholder="Select date" type="date" id="min" name="min"></td>
-                                    <td class="md-form md-outline input-with-post-icon datepicker"></td>
-                                    <td><p>Date fin:</p><input placeholder="Select date" type="date"  id="max" name="max"></td>
-                                </tr>
-                            </table>
-
+                            
+                            %>
+                            <form  action="/dashboard" method="POST" id="formt">
+                            <label for="">Date début:</label> 
+                            <form action="/dashboard" method="POST" id="formt">
+                            <input type="date" id="mint" name="mint" value="<%= dd %>">
+                                     
+                             <label for="">Date Fin:</label>                        
+                             <input type="date" id="maxt" name="maxt" value="<%= df %>">
+                            </form>
+                    </div>
                     <div class="container-fluid">
                         
                         <div class="row m-t-25">
@@ -498,8 +513,8 @@
                                     <th scope="col">Expéditeur</th>                                 
                                     <th scope="col">Etat</th>
                                     <th scope="col">Réalisateur</th>
-                                    <th scope="col" id="min">Début</th>  
-                                    <th scope="col" id="max">Fin</th> 
+                                    <th scope="col">Début</th>  
+                                    <th scope="col" >Fin</th> 
                                     <th scope="col">Action</th>                                      
                                 </tr>
                                 <tr>      
@@ -517,12 +532,11 @@
                                     <th scope="col"></th>                                      
                                 </tr>
                             </thead>
-                            <tbody id="id_nouvelle_tache">
+                            <tbody>
                                 <%    
-                                for(var i=0; i<demande.length; i++) {
+                                for(var i=0; i < demande.length ; i++) {
                                   if(demande[i].etat_demande == 'nouvelle'){ %>
-                                <tr id="<%= demande[i].id %>" >
-                                 
+                                <tr>
                                   <td>
                                     <%= demande[i].objet %>
                                   </td>
@@ -580,43 +594,34 @@
                                 for(var i=0; i < tache_en_cours.length; i++) {
                                     if(tache_en_cours[i].statu != 'Terminer'){
                                     var id_demande = tache_en_cours[i].id_demande;
-                                    var dateDebut = new Date(tache_en_cours[i].createdAt).toLocaleDateString();
-                                    var timedebut = new Date(tache_en_cours[i].createdAt).toLocaleTimeString();
+                                    var dateDebut = new Date(tache_en_cours[i].datecours).toLocaleDateString();
+                                    var timedebut = new Date(tache_en_cours[i].datecours).toLocaleTimeString();
                             
                                     %>
                                 <tr>
-                                    
-                                    <%           
-                                    for(var j=0; j<demande.length; j++) {
-                                        if(demande[j].id == id_demande){
-                            
-                                    %>
+
                                     <td>
-                                        <%= demande[j].objet %>
+                                        <%= tache_en_cours[i].objet %>
                                     </td>
                                     <td>
-                                        <%= demande[j].priorite %>
+                                        <%= tache_en_cours[i].priorite %>
                                     </td>
                                     <td>
-                                        <%= demande[j].tache %>
+                                        <%= tache_en_cours[i].tache %>
                                     </td>
                                     <td>
-                                        <%= demande[j].code %>
+                                        <%= tache_en_cours[i].code %>
                                     </td>
                                     <td>
-                                        <%= demande[j].size %>
+                                        <%= tache_en_cours[i].size %>
                                         </td>
                                     <td>
-                                        <a href="/contenu/<%= demande[j].id %>"><%= demande[j].chemin %></a>
+                                        <a href="/contenu/<%= tache_en_cours[i].id %>"><%= tache_en_cours[i].chemin %></a>
                                     </td>
                                     
                                     <td>
-                                        <%= demande[j].categorie %>
+                                        <%= tache_en_cours[i].categorie %>
                                     </td>
-                                    <%
-                                        }
-                                    }
-                                    %>
                                     <td>
                                         Tâche en cours
                                     </td>
@@ -624,6 +629,9 @@
                                     <%= tache_en_cours[i].matricule_trans %>
                                     </td>
                                     <td>
+                                        <%
+                                            var dateDebut = new Date( parseFloat(tache_en_cours[i].datecours , 10) ).toLocaleDateString();
+                                        %>
                                         <%= dateDebut %>
                                     </td>
                                     <td>
@@ -638,7 +646,7 @@
                                         if(session.User.categorie == 'Trans'){
                                             if(session.User.matricule == tache_en_cours[i].matricule_trans){
                                         %>
-                                        <a type="button" class="btn btn-primary" id="boutt" href="/tache_continuer/<%= id_demande %>/<%= tache_en_cours[i].id %>">Continuer</a>
+                                        <a type="button" class="btn btn-primary" id="boutt" href="/tache_continuer/<%= tache_en_cours[i].id_demande %>/<%= tache_en_cours[i].id %>">Continuer</a>
                                         <%
                                             }
                                         }
@@ -647,8 +655,8 @@
                                         else if(tache_en_cours[i].matricule_trans == session.User.matricule ) { %>
                                         
                                             <span id="onLine">
-                                            <a type="button" class="btn btn-danger" id="boutt" href="/stand_by/<%= id_demande %>/<%= tache_en_cours[i].id %>">Stand By</a>
-                                            <a type="button" class="btn btn-primary" id="boutt" href="/valide_form_terminer/<%= id_demande %>">Terminer</a>
+                                            <a type="button" class="btn btn-danger" id="boutt" href="/stand_by/<%= tache_en_cours[i].id_demande %>/<%= tache_en_cours[i].id %>">Stand By</a>
+                                            <a type="button" class="btn btn-primary" id="boutt" href="/valide_form_terminer/<%= tache_en_cours[i].id_demande %>">Terminer</a>
                                             </span> 
                                             
                                         <% 
@@ -669,51 +677,47 @@
                                         <!-- Tâche terminé-->
                                         
                                 <%           
-                                for(var i=0; i<demande.length; i++) {
-                                    if(demande[i].etat_demande == "Terminer"){ 
-                                    var id_demande = demande[i].id;
+                                for(var i=0; i < tache_en_cours.length; i++) {
+                                    if(tache_en_cours[i].etat_demande == "Terminer"){ 
+
                                     %>
                                 <tr>
                                     
-                                    <td><%= demande[i].objet %></td>
+                                    <td><%= tache_en_cours[i].objet %></td>
                                     <td>
-                                    <%= demande[i].priorite %>
+                                    <%= tache_en_cours[i].priorite %>
                                     </td>
                                     <td>
-                                    <%= demande[i].tache %>
+                                    <%= tache_en_cours[i].tache %>
                                     </td>
                                     <td>
-                                    <%= demande[i].code %>
+                                    <%= tache_en_cours[i].code %>
                                     </td>
                                     <td>
-                                        <%= demande[i].size %>
+                                        <%= tache_en_cours[i].size %>
                                     </td>
                                     <td>
-                                        <a href="/contenu/<%= demande[i].id %>"><%= demande[i].chemin %></a>
+                                        <a href="/contenu/<%= tache_en_cours[i].id %>"><%= tache_en_cours[i].chemin %></a>
                                     </td>
                                     
                                     <td>
-                                    <%= demande[i].categorie %>
+                                    <%= tache_en_cours[i].categorie %>
                                     </td>
                                     <td>
                                         Tâche terminé
                                     </td>
                                     <td>
-                                        <%
-                                        for(var e=0; e < tache_en_cours.length; e++) {
-                                        if(id_demande == tache_en_cours[e].id_demande && tache_en_cours[e].statu == 'Terminer'){
-                                            var dateDebut = new Date(tache_en_cours[e].createdAt).toLocaleDateString();
-                                            var timedebut = new Date(tache_en_cours[e].createdAt).toLocaleTimeString();   
-                                        %>
-                                        <%= tache_en_cours[e].matricule_trans %>
-                                        
+                                        <%= tache_en_cours[i].matricule_trans %>                                     
                                     </td>
                                     <td>
+                                        <%
+                                            var dateDebut = new Date( parseFloat(tache_en_cours[i].datecours , 10) ).toLocaleDateString();
+                                        %>
                                         <%= dateDebut %>
                                     </td>
                                     <td>
                                         <%
-                                            const tt = tache_en_cours[e].H_fin_transfert
+                                            const tt = tache_en_cours[i].H_fin_transfert
                                             const tapal = tt.split(' à')
                                          %>
                                         <%= tapal[0] %>
@@ -721,10 +725,6 @@
                                     <td>
                                         Terminé
                                     </td>
-                                        <%                 
-                                        }
-                                        }             
-                                        %>
                                 </tr>
                                 <% 
                                     }
@@ -863,8 +863,21 @@ src="https://code.jquery.com/jquery-3.5.1.js"
 integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
 crossorigin="anonymous">
 </script>
+
+
+<script type="text/javascript" src='DataTables/media/js/jquery.js'></script>
+<script type="text/javascript" src="DataTables/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="DataTables/tableau.js"></script>
           
 <script>
+
+$('#mint').change(function() {
+    $(this).closest('#formt').submit();
+});
+
+$('#maxt').change(function() {
+    $(this).closest('#formt').submit();
+});
 
 $(document).ready(function(){
     $("#notif").click(function(){
@@ -884,6 +897,9 @@ $(document).ready(function(){
         $("#nbr_sms").text('');
     });
 });
+
+
+ 
 </script>
 
 <script type="text/javascript" src="/dependencies/sails.io.js"></script>
@@ -996,9 +1012,6 @@ $(document).ready(function(){
 
 <!-- JS DATATABLE-->
 
-<script type="text/javascript" src='https://code.jquery.com/jquery-3.5.1.js'></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="DataTables/tableau.js"></script>
 
 
 </body>
