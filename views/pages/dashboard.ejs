@@ -369,11 +369,11 @@
                             
                             %>
                             <form  action="/dashboard" method="POST" id="formt">
-                            <label for="">Date début:</label> 
+                            <label for="">De:</label> 
                             <form action="/dashboard" method="POST" id="formt">
                             <input type="date" id="mint" name="mint" value="<%= dd %>">
                                      
-                             <label for="">Date Fin:</label>                        
+                             <label for=""> à :</label>                        
                              <input type="date" id="maxt" name="maxt" value="<%= df %>">
                             </form>
                     </div>
@@ -403,7 +403,7 @@
                                                 </td>
                                                 <td>
                                                     <ul style="margin-left:50px;">
-                                                        <li >P1: <span id="nP1"> <%= detailsNouvelle["nbrP1"] %></span></li>
+                                                        <li>P1: <span id="nP1"> <%= detailsNouvelle["nbrP1"] %></span></li>
                                                         <li>P2: <span id="nP2"> <%= detailsNouvelle["nbrP2"] %> </span></li>
                                                         <li>P3: <span id="nP3"> <%= detailsNouvelle["nbrP3"] %> </span></li>
                                                     </ul>
@@ -639,9 +639,13 @@
                                     </td>
                                     <td>
                                         <% 
-                                        if(tache_en_cours[i].statu == 'Stand By'){
+                                        if(tache_en_cours[i].etat_demande == 'Stand By'){
                                         %>
-                                        <span style="color:rgb(199, 59, 54)" ><strong>Stand By</strong></span> 
+                                        
+
+                                        <span  class="d-inline-block" tabindex="0" data-toggle="tooltip" title="<%= tache_en_cours[i].commentaire %>" style="color:rgb(199, 59, 54)" >
+                                            <strong class="btn btn-light"  style="color:rgb(212, 27, 27); pointer-events: none;">Stand By</strong>
+                                        </span> 
                                         <% 
                                         if(session.User.categorie == 'Trans'){
                                             if(session.User.matricule == tache_en_cours[i].matricule_trans){
@@ -652,10 +656,13 @@
                                         }
                                         }
                                         
-                                        else if(tache_en_cours[i].matricule_trans == session.User.matricule ) { %>
-                                        
+                                        else if(tache_en_cours[i].matricule_trans == session.User.matricule ) { 
+                                            var stand = "stand";
+                                            %>
+                                            
                                             <span id="onLine">
-                                            <a type="button" class="btn btn-danger" id="boutt" href="/stand_by/<%= tache_en_cours[i].id_demande %>/<%= tache_en_cours[i].id %>">Stand By</a>
+                                            <a type="button" class="btn btn-danger" href="/valider_stand_by/<%= tache_en_cours[i].id_demande %>/<%= tache_en_cours[i].id %>/<%= stand %>"  style="color:white;" >Stand By</a>
+                                            <input type="hidden" id="idStand" value="<%= tache_en_cours[i].id_demande %> "></input>
                                             <a type="button" class="btn btn-primary" id="boutt" href="/valide_form_terminer/<%= tache_en_cours[i].id_demande %>">Terminer</a>
                                             </span> 
                                             
@@ -663,7 +670,7 @@
                                         }
                                         else{
                                         %>
-                                        En cours
+                                        <span class="btn btn-light"  style="color:rgb(52, 118, 204);">En cours</span>
                                         <%
                                         }
                                         %>
@@ -723,7 +730,7 @@
                                         <%= tapal[0] %>
                                     </td>
                                     <td>
-                                        Terminé
+                                         <span class="btn btn-light" style="color:green;">Terminé</span>
                                     </td>
                                 </tr>
                                 <% 
@@ -797,35 +804,61 @@
                 
                 </div>
             </div>
+        </div>
+
+        <div class="container">
+            <div class="modal fade" id="myModalEx" role="dialog">
+                <div class="modal-dialog">
+                
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <label for="">Export Excel</label>
+
+                    </div>
+                    <div style="margin-left:20px;">
+                    
+                        <h5></h5>
+                        <label for="">Export réussi</label>
+                    
+                </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+                
+                </div>
+            </div>
             
         </div>
 
         <div class="container">
-    
-                <div class="modal fade" id="myModalEx" role="dialog">
-                    <div class="modal-dialog">
-                    
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        <label for="">Export Excel</label>
-    
-                        </div>
-                        <div style="margin-left:20px;">
-                        
-                            <h5></h5>
-                            <label for="">Export réussi</label>
-                        
+            <div class="modal fade" id="myModalStand" role="dialog">
+                <div class="modal-dialog">
+                
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <label for="">Export Excel</label>
+
                     </div>
-                        <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
+                    <div style="margin-left:20px;">
                     
+                        <h5></h5>
+                        <label for="">Export réussi</label>
+
+                        <span id="LinkStand"></span>
+                    
+                </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
                 
+                </div>
             </div>
+            
+        </div>
             <!-- END PAGE CONTAINER-->
 </div>
 

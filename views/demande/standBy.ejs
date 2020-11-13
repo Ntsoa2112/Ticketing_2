@@ -1,0 +1,106 @@
+<div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w681">
+            <div class="card card-4">
+                <div class="card-body">
+                    <h2 class="title">Stand By</h2>
+
+                    <form method="POST" action="standBy/<%=OneTache.id%>/<%= oneDemande.id %>">
+
+                        <div >
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Objet: <%= oneDemande.objet %></label>
+                                </div>
+                            </div>
+                        </div>  <div >
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Priorité: <%= oneDemande.priorite %></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div >
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Tâche: <%= oneDemande.tache %></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div >
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Code: <%= oneDemande.code %></label>
+                                </div>
+                            </div>
+                        </div>
+                        <%
+                        if(oneDemande.chemin){
+                        %>
+                        <div >
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Taille: <%= oneDemande.size %></label>
+                                </div>
+                            </div>
+                        </div>
+                        <%
+                        }
+                        %>
+                        <div >
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Expediteur: <%= oneDemande.categorie %></label>
+                                </div>
+                            </div>
+                        </div>
+                        <%
+                        if(oneDemande.chemin){
+                        %>
+                        <div >
+                            <div>
+                                <div class="input-group">
+                                    <label class="label">Chemin: <%= oneDemande.chemin %></label>
+                                </div>
+                            </div>
+                        </div>
+                        <%
+                        }
+                        %>
+                        <div >
+                            <div >
+                                <div class="input-group">                                    
+                                        <label class="label">Prise en charge: <%= datePriseEnCharge %> à <%= timePriseEnCharge %></label>
+                                </div>
+                            </div>
+                        </div>
+                        <%
+                        if(oneDemande.chemin){
+                        %>
+                        <div>
+                            <div class="input-group"> 
+                                <label class="label">Contenu :</label>  
+                                <% for(var i=0; i<contenu.length; i++){ %>
+                                        <div>
+                                            <li><%= contenu[i] %></li>
+                                        </div>  
+                                <%
+                                }
+                                %>
+                            </div>
+                        </div>
+                        <%
+                        }
+                        %>
+                        <label for="exampleFormControlTextarea1">Commentaire</label>
+                        <textarea class="form-control" name="commentaire" placeholder="Votre commentaire ici ..." id="exampleFormControlTextarea1" rows="3" required></textarea>
+                       
+                        <div class="p-t-15">
+                            <button class="btn btn-danger" type="submit">Stand By</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   

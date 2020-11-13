@@ -49,7 +49,9 @@ module.exports.routes = {
 
   'post /valide_form_terminer/terminer_tache/:id_tache/:id_demande': 'demandeController.tache_terminer',
 
-  '/stand_by/:id_demande/:id_tache' : 'demandeController.stand_by',
+  'get /valider_stand_by/:id_demande/:id_tache/:stand' : 'demandeController.valider_form_terminer',
+
+  'post /valider_stand_by/:id_demande/:id_tache/standBy/:id_tache/:id_demande' : 'demandeController.stand_by',
 
   '/tache_continuer/:id_demande/:id_tache' : 'demandeController.continuer_tache',
 

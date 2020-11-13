@@ -5,6 +5,7 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 const io = require('socket.io');
+var det = require('../service/traitement');
 var socket = io();
 
 module.exports = {
@@ -41,7 +42,7 @@ module.exports = {
             var tache_en_cours = allTache[1];
         }
         
-        var resultatStat = Dashboard.details(demande, tache_en_cours);
+        var resultatStat = det.details(demande, tache_en_cours);
         var detailsNouvelle = resultatStat["nouvelle"];
         var detailsEnCours = resultatStat["enCours"];
         var detailsterminer = resultatStat["terminer"];
@@ -74,7 +75,7 @@ module.exports = {
         }
         var demande = allTache[0];
         var tache_en_cours = allTache[1];
-        var resultatStat = Dashboard.details(demande, tache_en_cours);
+        var resultatStat = det.details(demande, tache_en_cours);
         var detailsNouvelle = resultatStat["nouvelle"];
         var detailsEnCours = resultatStat["enCours"];
         var detailsterminer = resultatStat["terminer"];
@@ -84,6 +85,6 @@ module.exports = {
             sails.sockets.blast("detailsTache", {detailsNouvelle, detailsEnCours , detailsterminer});
             res.view('pages/dashboard', { demande: demande , tache_en_cours: tache_en_cours, messages:messages, detailsNouvelle, detailsEnCours , detailsterminer , datDebut: datd , datFin: datf});
         });  
-    }
+    },
 
 };

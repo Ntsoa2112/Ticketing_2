@@ -17,6 +17,7 @@ module.exports = {
     categorie: { type: 'string', required: true },
     etat_demande: { type: 'string',  defaultsTo: 'nouvelle' },
     matricule: { model:'User' },
+    commentaire: { type: 'string', required: false},
   },
 
   datastore : 'default'
