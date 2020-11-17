@@ -13,6 +13,7 @@ module.exports = {
   },
   datastore : 'default',
 
+  /*
   detailsTache: async function(type){
     var rawResult = await sails.sendNativeQuery(`SELECT COUNT(*) nbr FROM demande WHERE etat_demande = $1 `, [ type ]);
     var nbrtache = rawResult.rows[0].nbr;
@@ -38,11 +39,12 @@ module.exports = {
     var details = {nbrtache, nbrP1, nbrP2, nbrP3, nbrRec, nbrLiv};
     return details;
   },
+  */
 
   details_Tache: async function(dd, df, type){
     if(type == "now"){
         var demande = await sails.sendNativeQuery(`SELECT * FROM demande WHERE "createdAt" > $1  and etat_demande = $2`, [dd, "nouvelle"]);
-        var tache_en_cours = await sails.sendNativeQuery(`SELECT *, effectuer_tache."createdAt" datecours FROM effectuer_tache JOIN demande ON effectuer_tache.id_demande = demande.id WHERE effectuer_tache."createdAt" > $1`, [dd]);
+        var tache_en_cours = await sails.sendNativeQuery(`SELECT *, effectuer_tache."createdAt" datecours FROM effectuer_tache JOIN demande ON effectuer_tache.id_demande = demande.id WHERE effectuer_tache."createdAt" > $1 OR demande.etat_demande = $2 OR demande.etat_demande = $3`, [dd, "En cours", "Stand By"]);
     }
     else if(type == "intervale"){
         var demande = await sails.sendNativeQuery(`SELECT * FROM demande WHERE "createdAt" > $1 and  "createdAt" <= $2 and etat_demande = $3`, [dd, df, "nouvelle"]);
