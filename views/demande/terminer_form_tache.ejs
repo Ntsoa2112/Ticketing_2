@@ -4,7 +4,7 @@
                 <div class="card-body">
                     <h2 class="title">Terminer cette tâche</h2>
 
-                    <form method="POST" action="terminer_tache/<%=OneTache.id%>/<%= oneDemande.id %>">
+                    <form method="POST" action="terminer_tache/<%=OneTache.id%>/<%= oneDemande.id %>" enctype="multipart/form-data">
 
                         <div >
                             <div class="col-2">
@@ -107,6 +107,9 @@
                         <div class="message">
 
                         </div>
+                        <div class="file">
+
+                        </div>
                        
                         <div class="p-t-15">
                             <button class="btn btn--radius-2 btn--blue" type="submit">Terminer</button>
@@ -134,6 +137,11 @@
                         $(".message").append(
                             $(
                                 "<textarea id='form7' name='sms' placeholder='Votre message ici ...' class='md-textarea form-control' rows='3'></textarea>"
+                            )
+                        ),
+                        $(".file").append(
+                            $(
+                                '<br><input type="file"  id="profile_pic" name="photo" accept=".jpg, .jpeg, .png">'
                             )
                         )
                     }

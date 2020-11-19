@@ -6,17 +6,60 @@
  */
 
 var bcrypt = require('bcrypt');
+const io = require('socket.io');
+var socket = io();
 
 module.exports = {
     create: function(req, res){
-        User.create(req.allParams(), function userCreated(err, user){
-            if(err){
-                return res.send("Erreur:" + err);
-            }
-            else{
-                return res.redirect('/');
-            };
-        });
+        var matricule = req.param('matricule');
+        var categorie = req.param('categorie');
+        var password = req.param('password');
+        var admin = false;
+        var notif = null;
+        function creation(matricule, categorie, password, admin, notif){
+            User.create({matricule, categorie, password, admin}, function userCreated(err, user){
+                if(err){
+                    return res.send("Erreur:" + err);
+                }
+                else{
+                    if(notif == null){
+                        //notif = "Vous pouvez vous connecter";
+                        notif = "ustr"
+                    }
+                    return res.redirect('/'+notif);
+                };
+            });
+        }
+        if(categorie == 'Admin'){
+            categorie = 'Trans';
+            User.find(function findAll(err, users){
+                if(err) res.send(err);
+                var admin_existe = false;
+                for(var i=0; i<users.length; i++){
+                    if(users[i].admin === true){
+                        var exp_matricule = req.param('matricule');
+                        var sms = exp_matricule + " vous demande le droit d'administrateur ";
+                        var dest_matricule = users[i].matricule;
+                        admin_existe = true;
+                        notif = "adfa"
+                        Message.create({matricule_exp:exp_matricule, matricule_dest:dest_matricule, sms:sms}, function createMessage(err){
+                            if(err) return res.send( err);                            
+                            sails.sockets.blast("new_message", {matricule_exp:exp_matricule, matricule_dest:dest_matricule, sms:sms, confAdmin:true});                 
+                        })
+                        break;
+                    }
+                }
+                if(admin_existe === false){
+                    admin = true;
+                    notif = "trad"
+                }
+                creation(matricule, categorie, password, admin, notif);
+            })
+            
+        }
+        else{
+            creation(matricule, categorie, password, admin, notif);
+        }
     },
 
     login: function(req, res) {
@@ -70,6 +113,18 @@ module.exports = {
               else{
                 return res.redirect('/');
               }
+        })
+    },
+
+    valider_admin: function(req, res){
+        console.log("etooooooo");
+        var matricule_new_admin = req.param("matricule");
+        User.updateOne({matricule:matricule_new_admin}, {admin:true}, function(err){
+            if(err) res.send(err);
+            var exp_matricule = req.session.User.matricule;
+            var sms = exp_matricule + " a confirmé votre droit d'administrateur, veuillez actualisez votre page";
+            console.log("sockkk");
+            sails.sockets.blast("new_message", {matricule_exp:exp_matricule, matricule_dest:matricule_new_admin, sms:sms});
         })
     }
 

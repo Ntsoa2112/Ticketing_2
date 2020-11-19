@@ -12,6 +12,7 @@ module.exports = {
       matricule_dest: { type: 'number', required: true },
       vue : { type: 'boolean', defaultsTo: false },
       sms : { type: 'string', required: true },
+      filename : { type: 'string', required: false },
     },
   
     datastore : 'default'

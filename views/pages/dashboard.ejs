@@ -103,6 +103,7 @@
                             <a href="map.html">
                                 <i class="fas fa-map-marker-alt"></i>Maps</a>
                         </li>
+                        
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-copy"></i>Pages</a>
@@ -181,9 +182,8 @@
                         </li>
 
                         <%
-                        if(session.User.categorie == 'Trans'){
+                        if(session.User.matricule == 'Trans'){
                         %>
-                        
                         <li>
                             <a href="#">
                                 <i class="fas fa-table"></i><button type="button"  data-toggle="modal" data-target="#myModalEx">Export Excel</button></a>
@@ -214,10 +214,12 @@
                         </li>
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fas fa-desktop"></i>UI Elements</a>
-                            
+                                <i class="fas fa-desktop"></i>UI Elements</a>                       
                         </li>
-
+                        <li class="has-sub">
+                                <a class="js-arrow" href="#">
+                                    <a href="/image">Images</a>                     
+                            </li>
                     </ul>
                 </nav>
             </div>
@@ -319,23 +321,61 @@
                                             
                                             <div class="account-dropdown js-dropdown">
                                                 <div class="info clearfix" id="contenu_sms">
-                                                        <%
-                                                            for(var i = 0; i< messages.length; i++){
-                                                                if(messages[i].vue == false && messages[i].matricule_dest == session.User.matricule ){
-                                                                  
+                                                <%
+                                                    for(var i = 0; i< messages.length; i++){
+                                                        if(messages[i].vue == false && messages[i].matricule_dest == session.User.matricule ){
+                                                            
 
-                                                            %>
-                                                            <h5 class="name">
-                                                                <span>Expéditeur: <%= messages[i].matricule_exp %></span>
-                                                                <span class="email">Trans</span>
-                                                            </h5>
-                                                            <span class="email"><%= messages[i].sms %></span>
-                                                            <hr>
-
-                                                            <%
-                                                                }
-                                                            }
+                                                    %>
+                                                    <h5 class="name">
+                                                        <span>Expéditeur: <%= messages[i].matricule_exp %></span>
+                                                        <span class="email">Trans</span>
+                                                    </h5>
+                                                    <span class="email"><%= messages[i].sms %> </span><p><%= messages[i].filename %></p><br>
+                                                    <%
+                                                    if(messages[i].filename){
                                                         %>
+
+                                                            <p>Teste</p>
+                                                            <p><%= messages[i].filename %></p>
+                                                            <img src="/images/file/<%= messages[i].filename %>" alt="Petite image" class="show_img"/>
+                                                       
+
+                                                    <%
+                                                    }
+                                                    var sms = messages[i].sms
+                                                    if(sms.substr(-39) == "vous demande le droit d'administrateur "){
+                                                    %>
+                                                        <br> <a id="conf" href="#" > Confirmer </a>
+                                                    <%
+                                                    }
+                                                    %>
+                                                    <hr>
+                                                    <script>
+                                                        $(document).ready(function(){
+                                                            $("#conf").click(function(){
+                                                                var a =  confirm ('Valider le droit d\'administrateur à <%= messages[i].matricule_exp %> ');
+                                                                if(a){
+                                                                        $.ajax({
+                                                                        //L'URL de la requête 
+                                                                        url: "/admin/<%= messages[i].matricule_exp %>",
+
+                                                                        //La méthode d'envoi (type de requête)
+                                                                        method: "GET",
+
+                                                                        //Le format de réponse attendu
+                                                                        dataType : "json",
+                                                                    })     
+                                                                }
+                                            
+                                                            });
+                                                        });
+                                                    </script>
+
+                                                    <%
+                                                        }
+                                                    }
+                                                %>
 
                                                 </div>
                                             </div>
@@ -791,8 +831,48 @@
                     %>
                         <h5>Expéditeur: <%= messages[i].matricule_exp %> Trans _ <%= temps %></h5>
                         <p><%= messages[i].sms %></p>
+                        <%
+                        if(messages[i].filename){
+                            %>
+
+                            <a href="/images/file/<%= messages[i].filename %>" target="_blank">
+                                <img src="/images/file/<%= messages[i].filename %>" alt="Petite image" />
+                            </a>
+
+
+                        <%
+                        }
+                        var sms = messages[i].sms
+                        if(sms.substr(-39) == "vous demande le droit d'administrateur "){
+                        %>
+                        <a id="conf<%= i %>" href="#" > Confirmer </a>
+                        <script>
+                            $(document).ready(function(){
+                                $("#conf<%= i %>").click(function(){
+                                    var a =  confirm ('Valider le droit d\'administrateur à <%= " " +  messages[i].matricule_exp %> ');
+                                    if(a){
+                                            $.ajax({
+                                            //L'URL de la requête 
+                                            url: "/admin/<%= messages[i].matricule_exp %>",
+
+                                            //La méthode d'envoi (type de requête)
+                                            method: "GET",
+
+                                            //Le format de réponse attendu
+                                            dataType : "json",
+                                        })     
+                                    }
+                
+                                });
+                            });
+                        </script>
+
+                        <%
+                        }
+                        %>
                         <hr>
-                    <%
+                    <%  
+                        
                             }
                         }
                     %>
@@ -864,8 +944,8 @@
 
     </div>
 
-    <input id="session" value="<%= session.User.matricule %>" ></input>
-    <input id="session_categorie" value="<%= session.User.categorie %>"></input>
+    <input type="hidden" id="session" value="<%= session.User.matricule %>" ></input>
+    <input type="hidden" id="session_categorie" value="<%= session.User.categorie %>"></input>
 
     <!-- Jquery JS-->
     <script src="vendor/jquery-3.2.1.min.js"></script>
@@ -949,13 +1029,38 @@ $(document).ready(function(){
             var nbr_sms = parseInt( $("#nbr_sms").text() , 10); 
             nbr_sms = nbr_sms + 1;
             $("#nbr_sms").text(nbr_sms)
-
             var contenu_sms = $("#contenu_sms");
-            contenu_sms.append(
-                $(
-                    "<h5 class='name'> <span>Expéditeur:" +data.matricule_exp+"</span> <span class='email'>Trans</span></h5><span class='email'> "+data.sms+"</span><hr>"
+            if(!data.confAdmin){
+                contenu_sms.append(
+                    $(
+                        "<h5 class='name'> <span>Expéditeur:" +data.matricule_exp+"</span> <span class='email'>Trans</span></h5><span class='email'> "+data.sms+"</span><br><a href='/images/file/"+ data.filename +"' target='_blank'>Piece jointe</a>"
+                    )
                 )
-            )
+            }
+            else{
+                contenu_sms.append(
+                    $(
+                        '<h5 class="name"> <span>Expéditeur:' +data.matricule_exp+'</span> <span class="email">Trans</span></h5><span class="email">' +data.sms+' </span><br><a id="conft' + data.matricule_exp +'" href="#">Confirmer</a><hr>'
+                    ),
+                    
+                )
+            }
+            var idt = "conft"+data.matricule_exp;
+            $("#"+idt).click(function(){
+                var a =  confirm ('Valider le droit d\'administrateur à '+ data.matricule_exp);
+                if(a){
+                        $.ajax({
+                        //L'URL de la requête 
+                        url: "/admin/" +data.matricule_exp,
+
+                        //La méthode d'envoi (type de requête)
+                        method: "GET",
+
+                        //Le format de réponse attendu
+                        dataType : "json",
+                    })
+                }                    
+            });   
         }    
     });
 
@@ -997,8 +1102,7 @@ $(document).ready(function(){
 
         id_nouvelle_tache.append(
             $(
-                '<tr><td>'+ data.objet+'</td><td>'+ data.priorite+'</td><td>'+ data.tache+'</td><td>'+ data.code+'</td><td>'+ data.size+'</td><td><a href="/contenu/'+data.id_demande+'">'+ data.chemin+'</a></td><td>'+ data.expediteur+'</td><td>Tâche en cours</td><td>'+ data.realisateur+'</td><td>'+ data.debut+'</td><td></td><td>'+ (session_categorie != 'Trans'? 'En cours' : '<span id="onLine"><a type="button" class="btn btn-danger" id="boutt" href="/stand_by/'+data.id_demande+'/' + data.id_tache +'">Stand By</a><a type="button" class="btn btn-primary" id="boutt" href="/valide_form_terminer/'+id_demande+'">Terminer</a></span>')+'</td></tr>' 
-                
+                '<tr><td>'+ data.objet+'</td><td>'+ data.priorite+'</td><td>'+ data.tache+'</td><td>'+ data.code+'</td><td>'+ data.size+'</td><td><a href="/contenu/'+data.id_demande+'">'+ data.chemin+'</a></td><td>'+ data.expediteur+'</td><td>Tâche en cours</td><td>'+ data.realisateur+'</td><td>'+ data.debut+'</td><td></td><td>'+ (session_categorie != 'Trans'? 'En cours' : '<span id="onLine"><a type="button" class="btn btn-danger" id="boutt" href="/stand_by/'+data.id_demande+'/' + data.id_tache +'">Stand By</a><a type="button" class="btn btn-primary" id="boutt" href="/valide_form_terminer/'+id_demande+'">Terminer</a></span>')+'</td></tr>'        
             )
         )
     });
@@ -1044,8 +1148,6 @@ $(document).ready(function(){
 </script>
 
 <!-- JS DATATABLE-->
-
-
 
 </body>
 </html>

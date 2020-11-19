@@ -19,7 +19,7 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': { view: 'login_register/login' },
+  '/:notif?': { view: 'login_register/login' },
 
   '/creer_compte': { view: 'login_register/creer_compte' },
 
@@ -64,6 +64,11 @@ module.exports.routes = {
   'get /mdp_oublier' : { view: 'login_register/mdpoublier' },
 
   'post /mdp_oublier' : 'UserController.mdp_oublier',
+
+  '/admin/:matricule' : 'UserController.valider_admin',
+
+  '/image' : { view: 'image' },
+
 
 
   /***************************************************************************

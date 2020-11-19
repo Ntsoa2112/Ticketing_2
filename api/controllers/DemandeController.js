@@ -204,17 +204,40 @@ module.exports = {
         if(req.param('sms')){
             var sms = req.param('sms');
             var exp_matricule = req.session.User.matricule;
-            Demande.findOne(id_demande, function foundDemande(err, OneDemande){
-                if(err) return res.send( err);
-                var dest_matricule = OneDemande.matricule;
-                Message.create({matricule_exp:exp_matricule, matricule_dest:dest_matricule, sms:sms}, function createMessage(err){
-                    sails.sockets.blast("new_message", {matricule_exp:exp_matricule, matricule_dest:dest_matricule, sms:sms});
+            var noww = Date.now();
+            if(req.file('photo')){
+                req.file('photo').upload({
+                    saveAs: function(file, cb) {
+                        cb(null, noww  + file.filename);
+                      },
+                    dirname: require('path').resolve(sails.config.appPath, 'assets/images/file')
+                  },function (err, uploadedFiles) {
+                    if (err) return res.serverError(err);
+                    var filename = noww  + uploadedFiles[0].filename;
+                    Demande.findOne(id_demande, function foundDemande(err, OneDemande){
+                        if(err) return res.send( err);
+                        var dest_matricule = OneDemande.matricule;
+                        Message.create({matricule_exp:exp_matricule, matricule_dest:dest_matricule, sms:sms, filename:filename}, function createMessage(err){
+                            console.log("Iryy : " + filename);
+                            sails.sockets.blast("new_message", {matricule_exp:exp_matricule, matricule_dest:dest_matricule, sms:sms, filename:filename});
+                            if(err) return res.send( err);
+                        })
+                    });
+                  });
+            }
+            else{              
+                Demande.findOne(id_demande, function foundDemande(err, OneDemande){
                     if(err) return res.send( err);
-                })
-            });
-
+                    var dest_matricule = OneDemande.matricule;
+                    Message.create({matricule_exp:exp_matricule, matricule_dest:dest_matricule, sms:sms}, function createMessage(err){
+                        sails.sockets.blast("new_message", {matricule_exp:exp_matricule, matricule_dest:dest_matricule, sms:sms});
+                        if(err) return res.send( err);
+                    })
+                });
+            }
 
         };
+        
         Effectuer_tache.updateOne({id:id_tache}, {H_fin_transfert:H_fin_transfert, statu:'Terminer'}, function(err){
             if(err) return res.send( err);
             Demande.updateOne({id:id_demande}, {etat_demande:'Terminer'}, function(err){
