@@ -218,7 +218,6 @@ module.exports = {
                         if(err) return res.send( err);
                         var dest_matricule = OneDemande.matricule;
                         Message.create({matricule_exp:exp_matricule, matricule_dest:dest_matricule, sms:sms, filename:filename}, function createMessage(err){
-                            console.log("Iryy : " + filename);
                             sails.sockets.blast("new_message", {matricule_exp:exp_matricule, matricule_dest:dest_matricule, sms:sms, filename:filename});
                             if(err) return res.send( err);
                         })

@@ -7,27 +7,27 @@
                     <form method="POST" action="standBy/<%=OneTache.id%>/<%= oneDemande.id %>">
 
                         <div >
-                            <div class="col-2">
+                            <div >
                                 <div class="input-group">
-                                    <label class="label">Objet: <%= oneDemande.objet %></label>
+                                    <label class="label label-default">Objet: <%= oneDemande.objet %></label>
                                 </div>
                             </div>
                         </div>  <div >
-                            <div class="col-2">
+                            <div >
                                 <div class="input-group">
                                     <label class="label">Priorité: <%= oneDemande.priorite %></label>
                                 </div>
                             </div>
                         </div>
                         <div >
-                            <div class="col-2">
+                            <div >
                                 <div class="input-group">
                                     <label class="label">Tâche: <%= oneDemande.tache %></label>
                                 </div>
                             </div>
                         </div>
                         <div >
-                            <div class="col-2">
+                            <div >
                                 <div class="input-group">
                                     <label class="label">Code: <%= oneDemande.code %></label>
                                 </div>
@@ -37,7 +37,7 @@
                         if(oneDemande.chemin){
                         %>
                         <div >
-                            <div class="col-2">
+                            <div >
                                 <div class="input-group">
                                     <label class="label">Taille: <%= oneDemande.size %></label>
                                 </div>
@@ -47,7 +47,7 @@
                         }
                         %>
                         <div >
-                            <div class="col-2">
+                            <div >
                                 <div class="input-group">
                                     <label class="label">Expediteur: <%= oneDemande.categorie %></label>
                                 </div>
@@ -81,7 +81,9 @@
                                 <label class="label">Contenu :</label>  
                                 <% for(var i=0; i<contenu.length; i++){ %>
                                         <div>
-                                            <li><%= contenu[i] %></li>
+                                            <ul>
+                                                <li class="list-group-item"><%= contenu[i] %></li>
+                                            </ul>
                                         </div>  
                                 <%
                                 }

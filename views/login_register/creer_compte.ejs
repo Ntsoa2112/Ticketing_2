@@ -1,26 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="author" content="Kodinger">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>My Login Page &mdash; Bootstrap 4 Login Page Snippet</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="styles/my-login.css">
+</head>
+<body class="my-login-page">
+	<section class="h-100">
+		<div class="container h-100">
+			<div class="row justify-content-md-center h-100">
+				<div class="card-wrapper">
+					<div class="brand">
+						<img src="images/logo.jfif" alt="bootstrap 4 login page">
+					</div>
+					<div class="card fat">
+						<div class="card-body">
+							<h4 class="card-title">Inscription</h4>
+							<form method="POST" class="my-login-validation" novalidate="">
+								<div class="form-group">
+									<label for="name">Matricule</label>
+									<input id="name" type="text" class="form-control" name="matricule" required autofocus>
+									<div class="invalid-feedback">
+										Matricule incorrect!
+									</div>
+								</div>
 
-
-<body>
-    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
-        <div class="wrapper wrapper--w681">
-            <div class="card card-4">
-                <div class="card-body">
-                    <h2 class="title">Inscription</h2>
-                    <form method="POST" action="/creer_compte">
-                        <div class="row row-space"> 
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Matricule</label>
-                                    <input class="input--style-4" type="number" name="matricule">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row row-space">
-                           
-                            <div class="col-2">
-                                <div id="appe" class="input-group">
-                                    <label class="label">Catégories</label>
-                                    <div  id="select" class="select">
+								<div id="appe"  class="form-group">
+									<div id="select">
+										<label for="name">Catégorie</label>
                                         <select class="browser-default custom-select" id="categorie" name="categorie" required>
                                             <option>Sélectionner</option>
                                             <option value="Trans">Trans</option>
@@ -29,68 +39,72 @@
                                             <option value="Classik">Classik</option>
                                             <option value="CQ">CQ</option>
                                             <option value="Stephania">Stephania</option>
-                                            <option value="Winwindata">Winwindata</option>
-                                            <option value="Admin">Administrateur</option>
-                                            <option value="autre">Autres</option>
-                                          </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Password</label>
-                                    <input class="input--style-4" type="Password" name="password">
-                                </div>
-                            </div>
-                            
-                        </div>
-                       
-                        <div class="p-t-15">
-                            <button class="btn btn--radius-2 btn--blue" id="sub" type="submit">Créer</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+											<option value="Winwindata">Winwindata</option>
+											<option value="Admin">Administrateur</option>
+                                            <option value="autre">Autres</option> 
 
+                                         </select>
+                                     </div>
+								</div>
+								
 
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
-<script
-  src="https://code.jquery.com/jquery-3.5.1.js"
-  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-  crossorigin="anonymous"></script>
+								<div class="form-group">
+									<label for="password">Mot de passe</label>
+									<input id="password" type="password" class="form-control" name="password" required data-eye>
+									<div class="invalid-feedback">
+										Mot de pass incorrect!
+									</div>
+								</div>
+
+								<div class="form-group m-0">
+									<button type="submit" class="btn btn-primary btn-block">
+											S'isncrire
+									</button>
+								</div>
+								<div class="mt-4 text-center">
+										Vous avez déja un compte? <a href="/">Se connecter</a>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="footer">
+						Copyright &copy; 2020 &mdash; Easytech
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="js/my-login.js"></script>
+	
+</body>
+
 
 <script>
-    $("#sub").click(function(){
-        var $cat = $("#categorie").val();
-        if($cat == 'Sélectionner'){
-            alert("Vous devez sélectionner votre catégorie");
-            return false;
-        }
-    });
+ $("#categorie").change(function(){
+	var $tache = $("#categorie").val();
+	if($tache == 'autre'){
 
-     $("#categorie").change(function(){
-        var $cat = $("#categorie").val();
-        if($cat == 'autre'){
-
-            if(!$("#chem1").length){
-                $("#select").remove()
-                $("#appe")             
-                .append(
-                    $(          
-                        '<input class="input--style-4" type="text" name="categorie" id="chem1" placeholder="Nom catégorie ici" required>',
-                
-                    ) 
-                );
-            }
-        }
-        
-    });
+		if(!$("#chem1").length){
+			$("#select").remove()
+			$("#appe")             
+		   .append(
+				$(          
+					'<label for="name">Catégorie</label><input type="text" name="categorie" class="form-control"  id="chem1" placeholder="Nom catégorie ici" required>',
+			
+				) 
+			);
+		}
+	}
+	else{
+		if($("#chem1").length || $tache == 'Récuperation'){
+			$('#chem1').remove();
+			$('#chemlab').remove();
+		}
+	}
+});
 
 </script>
-
 </html>
-<!-- end document-->

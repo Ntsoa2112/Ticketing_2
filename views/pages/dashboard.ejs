@@ -24,7 +24,7 @@
 
     <!-- Vendor CSS-->
     <link href="vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
-    <link href="vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="vendor/wow/animate.css" rel="stylesheet" media="all">
     <link href="vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
     <link href="vendor/slick/slick.css" rel="stylesheet" media="all">
@@ -39,7 +39,6 @@
     <!-- CSS DATATABLE-->
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <!-- Main CSS-->
     <link href="styles/css/theme.css" rel="stylesheet" media="all">
@@ -182,7 +181,7 @@
                         </li>
 
                         <%
-                        if(session.User.matricule == 'Trans'){
+                        if(session.User.admin == true){
                         %>
                         <li>
                             <a href="#">
@@ -216,10 +215,6 @@
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-desktop"></i>UI Elements</a>                       
                         </li>
-                        <li class="has-sub">
-                                <a class="js-arrow" href="#">
-                                    <a href="/image">Images</a>                     
-                            </li>
                     </ul>
                 </nav>
             </div>
@@ -335,10 +330,7 @@
                                                     <%
                                                     if(messages[i].filename){
                                                         %>
-
-                                                            <p>Teste</p>
-                                                            <p><%= messages[i].filename %></p>
-                                                            <img src="/images/file/<%= messages[i].filename %>" alt="Petite image" class="show_img"/>
+                                                            <a href="/images/file/<%= messages[i].filename %>"> Piece jointe</a>
                                                        
 
                                                     <%
@@ -346,14 +338,14 @@
                                                     var sms = messages[i].sms
                                                     if(sms.substr(-39) == "vous demande le droit d'administrateur "){
                                                     %>
-                                                        <br> <a id="conf" href="#" > Confirmer </a>
+                                                        <a id="conf<%= messages[i].matricule_exp %>" href="#" > Confirmer </a>
                                                     <%
                                                     }
                                                     %>
                                                     <hr>
                                                     <script>
                                                         $(document).ready(function(){
-                                                            $("#conf").click(function(){
+                                                            $("#conf<%= messages[i].matricule_exp %>").click(function(){
                                                                 var a =  confirm ('Valider le droit d\'administrateur à <%= messages[i].matricule_exp %> ');
                                                                 if(a){
                                                                         $.ajax({
@@ -1030,10 +1022,17 @@ $(document).ready(function(){
             nbr_sms = nbr_sms + 1;
             $("#nbr_sms").text(nbr_sms)
             var contenu_sms = $("#contenu_sms");
-            if(!data.confAdmin){
+            if(!data.confAdmin && data.filename){
                 contenu_sms.append(
                     $(
                         "<h5 class='name'> <span>Expéditeur:" +data.matricule_exp+"</span> <span class='email'>Trans</span></h5><span class='email'> "+data.sms+"</span><br><a href='/images/file/"+ data.filename +"' target='_blank'>Piece jointe</a>"
+                    )
+                )
+            }
+            else if(!data.confAdmin && !data.filename){
+                contenu_sms.append(
+                    $(
+                        "<h5 class='name'> <span>Expéditeur:" +data.matricule_exp+"</span> <span class='email'>Trans</span></h5><span class='email'> "+data.sms+"</span>"
                     )
                 )
             }

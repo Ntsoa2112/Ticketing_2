@@ -7,27 +7,27 @@
                     <form method="POST" action="terminer_tache/<%=OneTache.id%>/<%= oneDemande.id %>" enctype="multipart/form-data">
 
                         <div >
-                            <div class="col-2">
+                            <div >
                                 <div class="input-group">
                                     <label class="label">Objet: <%= oneDemande.objet %></label>
                                 </div>
                             </div>
                         </div>  <div >
-                            <div class="col-2">
+                            <div >
                                 <div class="input-group">
                                     <label class="label">Priorité: <%= oneDemande.priorite %></label>
                                 </div>
                             </div>
                         </div>
                         <div >
-                            <div class="col-2">
+                            <div >
                                 <div class="input-group">
                                     <label class="label">Tâche: <%= oneDemande.tache %></label>
                                 </div>
                             </div>
                         </div>
                         <div >
-                            <div class="col-2">
+                            <div >
                                 <div class="input-group">
                                     <label class="label">Code: <%= oneDemande.code %></label>
                                 </div>
@@ -37,7 +37,7 @@
                         if(oneDemande.chemin){
                         %>
                         <div >
-                            <div class="col-2">
+                            <div >
                                 <div class="input-group">
                                     <label class="label">Taille: <%= oneDemande.size %></label>
                                 </div>
@@ -47,7 +47,7 @@
                         }
                         %>
                         <div >
-                            <div class="col-2">
+                            <div >
                                 <div class="input-group">
                                     <label class="label">Expediteur: <%= oneDemande.categorie %></label>
                                 </div>
@@ -81,9 +81,11 @@
                                 <label class="label">Contenu :</label>  
                                 <% for(var i=0; i<contenu.length; i++){ %>
                                         <div>
-                                            <li><%= contenu[i] %></li>
+                                            <ul>
+                                                <li class="list-group-item"><%= contenu[i] %></li>
+                                            </ul>
                                         </div>  
-                                <%
+                                <% 
                                 }
                                 %>
                             </div>
@@ -91,27 +93,22 @@
                         <%
                         }
                         %>
-                        <div >
-                            <div >
-                                <div class="input-group">                                    
-                                    <label class="label">Envoyer un message :</label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="optradio" value="oui" >  ___Oui
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="optradio" value="non">  ___Non
-                                    </label>
-                                </div>
-                            </div>
+                        <div class="radio" >                                    
+                            <label class="label" for="re">Envoyer un message :</label>
+                            <label>
+                                <input type="radio" checked id="re" name="optradio" value="oui">Oui
+                            </label>
+                            <label>
+                                <input type="radio" id="re" name="optradio" value="non">Non
+                            </label>
                         </div>
                         <div class="message">
-
-                        </div>
+                                <textarea id='form7' name='sms' placeholder='Votre message ici ...' class='md-textarea form-control' rows='3'></textarea>
+                        </div><br>
                         <div class="file">
-
+                                <input type="file"  id="profile_pic" name="photo" accept=".jpg, .jpeg, .png">
                         </div>
-                       
-                        <div class="p-t-15">
+                        <div class="p-t-15" >
                             <button class="btn btn--radius-2 btn--blue" type="submit">Terminer</button>
                         </div>
                     </form>
@@ -141,7 +138,7 @@
                         ),
                         $(".file").append(
                             $(
-                                '<br><input type="file"  id="profile_pic" name="photo" accept=".jpg, .jpeg, .png">'
+                                '<input type="file"  id="profile_pic" name="photo" accept=".jpg, .jpeg, .png">'
                             )
                         )
                     }
@@ -150,6 +147,7 @@
                 else{
                     if(val == "non"){
                         $("#form7").remove();
+                        $("#profile_pic").remove();
                     }   
                 }
 

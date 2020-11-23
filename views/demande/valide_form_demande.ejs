@@ -84,11 +84,13 @@
                             <div class="input-group"> 
                                 <label class="label">Contenu :</label>  
                                 <% 
-                                
+                        
                                 for(var i=0; i<contenu.length; i++){ %>
-                                        <div>
-                                            <li><%= contenu[i] %></li>
-                                        </div>  
+                                        <div >
+                                            <ul>
+                                                <li class="list-group-item"><%= contenu[i] %></li>
+                                            </ul>
+                                        </div> 
                                 <%
                                 }
                                 %>

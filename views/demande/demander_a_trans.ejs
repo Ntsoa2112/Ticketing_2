@@ -1,123 +1,60 @@
-<body>
-        <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
-            <div class="wrapper wrapper--w681">
-                <div class="card card-4">
-                    <div class="card-body">
-                        <h2 class="title">Demande à Trans</h2>
-                        <form method="POST" action="/demander_a_trans">
-                            <div class="row row-space"> 
-                                <div class="col-2">
-                                    <div class="input-group">
-                                        <label class="label">Objet</label>
-                                        <input class="input--style-4" type="text" name="objet" required>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="row row-space">
-                               
-                                <div class="col-2">
-                                    <div class="input-group">
-                                        
-                                        <div class="radio">
-                                            <div class="col-2">
-                                                <div class="input-group">
-                                                    <label class="label">Priorités</label>
-                                                    <div class="select">
-                                                        <select class="browser-default custom-select" id="priori" name="priorite" required>
-                                                            <option>Sélectionner</option>
-                                                            <option value="P1">P1</option>
-                                                            <option value="P2">P2</option>
-                                                            <option value="P3">P3</option>
-                                                          </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="input-group">
-                                        <div class="col-2">
-                                            <div class="input-group">
-                                                <label class="label">Tâche</label>
-                                                <div class="select">
-                                                    <select class="browser-default custom-select" id="tache" name="tache" required>
-                                                        <option>Sélectionner</option>
-                                                        <option value="Récuperation">Récuperation</option>
-                                                        <option value="Livraison">Livraison</option>
-                                                        
-                                                      </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                
-                                    <div class="input-group">
-                                        <label class="label">Code dossier</label>
-                                        <input class="input--style-4" type="number" name="code" required>
-                                    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="author" content="Kodinger">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>My Login Page &mdash; Bootstrap 4 Login Page Snippet</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="styles/my-login.css">
+</head>
+<body class="my-login-page">
+	<section class="h-100">
+		<div class="container h-100">
+			<div class="row justify-content-md-center align-items-center h-100">
+				<div class="card-wrapper1">
+					<div class="card fat">
+						<div class="card-body">
+							<h4 class="card-title">Demande à Trans</h4>
+							<form method="POST" action="/demander_a_trans" class="my-login-validation" >
+								<div  id="chem" class="form-group">
+									<label for="new-password">Objet</label>
+									<input id="new-password" class="form-control" type="text" name="objet" required autofocus data-eye>
+									<label class="label">Priorités</label>
+									<select class="select" id="priori" name="priorite" required>
+										<option>Sélectionner</option>
+										<option value="P1">P1</option>
+										<option value="P2">P2</option>
+										<option value="P3">P3</option>
+									</select>
+									<label class="label">Tâche</label>
+									<select class="select" id="tache" name="tache" required>
+										<option>Sélectionner</option>
+										<option value="Récuperation">Récuperation</option>
+										<option value="Livraison">Livraison</option>
+									</select>
+									<label for="code">Code dossier</label>
+									<input id="code" class="form-control" name="code" required autofocus>
+								</div>
+								
+								<div class="form-group m-0">
+									<button type="submit" id="sub"  class="btn btn-primary btn-block">
+											Envoyer
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="footer">
+						Copyright &copy; 2020 &mdash; Easytech
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
-                                    <div class="input-group" id="chem">
-                                            
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="p-t-15">
-                                    <button class="btn btn--radius-2 btn--blue" id="sub" type="submit">Envoyer</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </body>
-
-    <script
-  src="https://code.jquery.com/jquery-3.5.1.js"
-  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-  crossorigin="anonymous">
-  </script>
-
-    <script>
-        
-        
-        $("#tache").change(function(){
-            var $tache = $("#tache").val();
-            if($tache == 'Livraison'){
-
-                if(!$("#chem1").length){
-                    $("#chem").append(                   
-                        $(          
-                            '<label class="label" id="chemlab">Chemin</label>',
-                    
-                        )                  
-                    ).append(
-                        $(          
-                            '<input class="input--style-4" type="text" placeholder="/Dossier1/Dossier2" name="chem1" id="chem1" required>',
-                    
-                        ) 
-                    );
-                }
-            }
-            else{
-                if($("#chem1").length || $tache == 'Récuperation'){
-                    $('#chem1').remove();
-                    $('#chemlab').remove();
-                }
-            }
-        });
-
-        $("#sub").click(function(){
-        var $tache = $("#tache").val();
-        var $priori = $("#priori").val();
-        if($priori == 'Sélectionner'){
-            alert("Vous devez sélectionner une priorité");
-            return false;
-        }
-        if($tache == 'Sélectionner'){
-            alert("Vous devez sélectionner une tâche");
-            return false;
-        }
-        
-    });
-    </script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="js/my-login.js"></script>
+</body>
+</html>

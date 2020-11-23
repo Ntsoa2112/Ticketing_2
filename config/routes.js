@@ -37,8 +37,6 @@ module.exports.routes = {
 
   'post /demander_a_trans' : 'demandeController.demande_a_trans',
 
-  '/fake' :  { view: 'fake/form'},
-
   'post /fake' : 'fakeController.create',
 
   'get /valide_form_demande/:id_demande': 'demandeController.get_form_demande',
@@ -66,8 +64,6 @@ module.exports.routes = {
   'post /mdp_oublier' : 'UserController.mdp_oublier',
 
   '/admin/:matricule' : 'UserController.valider_admin',
-
-  '/image' : { view: 'image' },
 
 
 
