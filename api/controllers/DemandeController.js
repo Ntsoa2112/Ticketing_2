@@ -208,12 +208,12 @@ module.exports = {
             if(req.file('photo')){
                 req.file('photo').upload({
                     saveAs: function(file, cb) {
-                        cb(null, noww  + file.filename);
+                        cb(null, noww  + file.filename.replace(/ /g,"_"));
                       },
                     dirname: require('path').resolve(sails.config.appPath, 'assets/images/file')
                   },function (err, uploadedFiles) {
                     if (err) return res.serverError(err);
-                    var filename = noww  + uploadedFiles[0].filename;
+                    var filename = noww  + uploadedFiles[0].filename.replace(/ /g,"_");
                     Demande.findOne(id_demande, function foundDemande(err, OneDemande){
                         if(err) return res.send( err);
                         var dest_matricule = OneDemande.matricule;
