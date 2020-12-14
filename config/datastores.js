@@ -51,7 +51,7 @@ module.exports.datastores = {
     // adapter: 'sails-mysql',
     // url: 'mysql://user:password@host:port/database',
     adapter: 'sails-postgresql',
-    url: 'mysql://postgres:root@localhost:5434/ticket',
+    url: 'mysql://fiche_recette:123456@db1.easytech.mg:5432/ticketing',
 
   },
 
