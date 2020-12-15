@@ -17,6 +17,7 @@ module.exports = {
         Demande.findOne(id_demande, function foundDemande(err, OneDemande){
             if(err) return res.send(err);
             var chemin = OneDemande.chemin;
+            chemin = chemin.substr(1);
 
             fs.readdir(chemin, function readdir(err, files){
                 if(err) return res.send(err);
