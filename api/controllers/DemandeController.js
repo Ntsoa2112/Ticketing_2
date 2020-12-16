@@ -38,6 +38,7 @@ module.exports = {
                 }
             
             }
+            /*
 
             console.log(chem);
             // Open the connection
@@ -53,13 +54,15 @@ module.exports = {
                     console.log(stdout);
                     console.log("etoooooo");
                 });
-                */
+                
                 //const ssh1 = await connect({host: ip});
                 console.log(chem);
                 //await fs_ssh2.mkdir(ssh1, '\\10.128.1.9\\test');
-                filess = await ssh2fs.readdir( ssh, chem);
+                //filess = await ssh2fs.readdir( ssh, chem);
+                var te = ssh2fs.readdir(ssh, chem);
+                console.log(te);
                 console.log("tafa eeeee");
-                console.log(filess);
+                //console.log(filess);
                 fs.readdir(chem, function readdir(err, files){
                     if(err) return res.send(err);
                     console.log("Read folder");
@@ -84,6 +87,7 @@ module.exports = {
                     
 
             });
+            */
 
 
 
@@ -93,7 +97,7 @@ module.exports = {
 
 
 
-/*
+
 
             fs.readdir(chemin, function readdir(err, files){
                 if(err) return res.send(err);
@@ -114,7 +118,7 @@ module.exports = {
 
                 });
             });
-            */
+            
 
         });
     },
