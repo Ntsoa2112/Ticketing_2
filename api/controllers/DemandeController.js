@@ -27,16 +27,19 @@ module.exports = {
             console.log(b[2]);
             ip = b[2];
 
-            var chem = "";
+            var chem = null;
             var long = b.length;
             for(var i=3; i < long; i++){
-                if(chem == ""){
+                if(chem == null){
                     chem = b[i];
                 }
-            chem = chem + "\\" + b[i];
+                else{
+                    chem = chem + "\\" + b[i];
+                }
+            
             }
 
-            
+            console.log(chem);
             // Open the connection
             connect({host: ip}, async function(err, ssh){
                 console.log("tafa eeeee");
