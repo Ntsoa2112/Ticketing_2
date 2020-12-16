@@ -21,7 +21,7 @@ module.exports = {
             var chemin = OneDemande.chemin;
             //chemin = chemin.substr(1);
 
-
+            /*
             let a =String.raw+"'" +chemin+"'"; //Output a ="\b1\c1\d1"
             let b = a.split("\\");
             console.log(b[2]);
@@ -90,7 +90,7 @@ module.exports = {
             */
 
             try{
-                chemin = `/mnt/testmount2/OUT/20201214`
+                //chemin = `/mnt/testmount2/OUT/20201214`
                 fs.readdir(chemin, function readdir(err, files){
                     if(err) {
                         console.log(err);
