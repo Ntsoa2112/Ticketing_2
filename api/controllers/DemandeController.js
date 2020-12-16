@@ -90,7 +90,7 @@ module.exports = {
             */
 
             try{
-                chemin = "//10.128.1.9/005766_brest/OUT/20201214"
+                chemin = "file://10.128.1.9/005766_brest/OUT/20201214"
                 fs.readdir(chemin, function readdir(err, files){
                     if(err) {
                         console.log(err);
