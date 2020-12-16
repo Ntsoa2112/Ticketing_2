@@ -89,37 +89,31 @@ module.exports = {
             });
             */
 
-
-
-
-
-
-
-
-
-
-
-            fs.readdir(chemin, function readdir(err, files){
-                if(err) return res.send(err);
-                var contenu = files;
-                getSize(chemin, function statChemin(err, size){
+            try{
+                fs.readdir(chemin, function readdir(err, files){
                     if(err) return res.send(err);
-
-                    function FileConvertSize(aSize){
-                        aSize = Math.abs(parseInt(aSize, 10));
-                        var def = [[1, 'octets'], [1024, 'ko'], [1024*1024, 'Mo'], [1024*1024*1024, 'Go'], [1024*1024*1024*1024, 'To']];
-                        for(var i=0; i<def.length; i++){
-                            if(aSize<def[i][0]) return (aSize/def[i-1][0]).toFixed(2)+' '+def[i-1][1];
-                        }
-                    }
+                    var contenu = files;
+                    getSize(chemin, function statChemin(err, size){
+                        if(err) return res.send(err);
     
-                    var size = FileConvertSize(size);
-                    res.view('demande/afficher_contenu', { oneDemande: OneDemande, size: size, contenu: contenu });
-
+                        function FileConvertSize(aSize){
+                            aSize = Math.abs(parseInt(aSize, 10));
+                            var def = [[1, 'octets'], [1024, 'ko'], [1024*1024, 'Mo'], [1024*1024*1024, 'Go'], [1024*1024*1024*1024, 'To']];
+                            for(var i=0; i<def.length; i++){
+                                if(aSize<def[i][0]) return (aSize/def[i-1][0]).toFixed(2)+' '+def[i-1][1];
+                            }
+                        }
+        
+                        var size = FileConvertSize(size);
+                        res.view('demande/afficher_contenu', { oneDemande: OneDemande, size: size, contenu: contenu });
+    
+                    });
                 });
-            });
-            
 
+            }
+            catch(error){
+                console.error(error);
+            }
         });
     },
     
