@@ -92,7 +92,10 @@ module.exports = {
             try{
                 chemin = "//10.128.1.9/005766_brest/OUT/20201214"
                 fs.readdir(chemin, function readdir(err, files){
-                    if(err) return res.send(err);
+                    if(err) {
+                        console.log(err);
+                        return res.send(err);
+                    }
                     var contenu = files;
                     getSize(chemin, function statChemin(err, size){
                         if(err) return res.send(err);
