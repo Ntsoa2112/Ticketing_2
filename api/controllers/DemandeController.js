@@ -10,7 +10,7 @@ const getSize = require('get-folder-size');
 const io = require('socket.io');
 var socket = io();
 const connect = require('ssh2-connect');
-const fs_ssh2 = require('ssh2-fs');
+const ssh2fs = require('ssh2-fs');
 
 module.exports = {
 
