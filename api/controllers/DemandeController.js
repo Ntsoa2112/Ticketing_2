@@ -38,7 +38,7 @@ module.exports = {
 
             
             // Open the connection
-            connect({host: ip}, function(err, ssh){
+            connect({host: ip}, async function(err, ssh){
                 console.log("tafa eeeee");
                 // Create a directory
                 //fs.mkdir(ssh, '/tmp/a_dir', (err, stdout, stderr){
@@ -51,8 +51,10 @@ module.exports = {
                     console.log("etoooooo");
                 });
                 */
-                console.log(chemin);
-                fs_ssh2.readdir(ssh, chemin, function readdir(err, files){
+                //const ssh1 = await connect({host: ip});
+                console.log(chem);
+                //await fs_ssh2.mkdir(ssh1, '\\10.128.1.9\\test');
+                fs.readdir(chem, function readdir(err, files){
                     if(err) return res.send(err);
                     console.log("Read folder");
                     var contenu = files;
