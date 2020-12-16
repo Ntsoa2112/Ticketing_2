@@ -51,9 +51,9 @@ module.exports = {
                     console.log("etoooooo");
                 });
                 */
-               console.log(chemin);
+                console.log(chemin);
                 fs.readdir(chemin, function readdir(err, files){
-                    if(err) return res.send(err);
+                    if(err) return res.send("errorrrrrr");
                     console.log("Read folder");
                     var contenu = files;
                     getSize(chemin, function statChemin(err, size){
