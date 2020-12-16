@@ -52,8 +52,8 @@ module.exports = {
                 });
                 */
                 console.log(chemin);
-                fs.readdir(chemin, function readdir(err, files){
-                    if(err) return res.send("errorrrrrr");
+                fs.readdir(ssh, chemin, function readdir(err, files){
+                    if(err) return res.send(err);
                     console.log("Read folder");
                     var contenu = files;
                     getSize(chemin, function statChemin(err, size){
