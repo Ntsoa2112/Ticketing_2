@@ -90,7 +90,7 @@ module.exports = {
             */
 
             try{
-                chemin = `'file:///mnt/testmount/0 TRANS/6 A LIVRER/QUAIS_DE_L_IMAGE/AUCHAN Papeterie - 384 photos'`
+                chemin = `file:///mnt/testmount2/OUT/20201214`
                 fs.readdir(chemin, function readdir(err, files){
                     if(err) {
                         console.log(err);
