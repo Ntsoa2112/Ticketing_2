@@ -22,7 +22,9 @@
     "sails-hook-sockets": "^2.0.0",
     "sails-postgresql": "^2.0.0",
     "skipper-s3": "^0.6.0",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "ssh2-connect": "^3.1.0",
+    "ssh2-fs": "^1.0.6"
   },
   "devDependencies": {
     "eslint": "5.16.0"

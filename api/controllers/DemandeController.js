@@ -9,6 +9,8 @@ var fs = require('file-system');
 const getSize = require('get-folder-size');
 const io = require('socket.io');
 var socket = io();
+const connect = require('ssh2-connect');
+const fs_ssh2 = require('ssh2-fs');
 
 module.exports = {
 
@@ -18,6 +20,70 @@ module.exports = {
             if(err) return res.send(err);
             var chemin = OneDemande.chemin;
             //chemin = chemin.substr(1);
+
+
+            let a =String.raw+"'" +chemin+"'"; //Output a ="\b1\c1\d1"
+            let b = a.split("\\");
+            console.log(b[2]);
+            ip = b[2];
+
+            var chem = "";
+            var long = b.length;
+            for(var i=3; i < long; i++){
+                if(chem == ""){
+                    chem = b[i];
+                }
+            chem = chem + "\\" + b[i];
+            }
+
+            
+            // Open the connection
+            connect({host: ip}, function(err, ssh){
+                console.log("tafa eeeee");
+                // Create a directory
+                //fs.mkdir(ssh, '/tmp/a_dir', (err, stdout, stderr){
+                //    console.log(stdout);
+                //});
+                /*
+                fs_ssh2.readdir(ssh, chemin, function(err, stdout, stderr){
+                    if(stderr) return res.send(stderr);
+                    console.log(stdout);
+                    console.log("etoooooo");
+                });
+                */
+                fs.readdir(chemin, function readdir(err, files){
+                    if(err) return res.send(err);
+                var contenu = files;
+                getSize(chemin, function statChemin(err, size){
+                    if(err) return res.send(err);
+
+                    function FileConvertSize(aSize){
+                        aSize = Math.abs(parseInt(aSize, 10));
+                        var def = [[1, 'octets'], [1024, 'ko'], [1024*1024, 'Mo'], [1024*1024*1024, 'Go'], [1024*1024*1024*1024, 'To']];
+                        for(var i=0; i<def.length; i++){
+                            if(aSize<def[i][0]) return (aSize/def[i-1][0]).toFixed(2)+' '+def[i-1][1];
+                        }
+                    }
+    
+                    var size = FileConvertSize(size);
+                    res.view('demande/afficher_contenu', { oneDemande: OneDemande, size: size, contenu: contenu });
+
+                });
+                })
+
+                    
+
+            });
+
+
+
+
+
+
+
+
+
+/*
 
             fs.readdir(chemin, function readdir(err, files){
                 if(err) return res.send(err);
@@ -38,6 +104,7 @@ module.exports = {
 
                 });
             });
+            */
 
         });
     },
