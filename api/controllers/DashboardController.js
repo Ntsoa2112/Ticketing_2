@@ -1,7 +1,7 @@
 /**
  * DashboardController
  *
- * @description :: Server-side actions for handling incoming requests.
+ * @description :: Server-side actions for handling incoming requests
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 const io = require('socket.io');
@@ -52,7 +52,6 @@ module.exports = {
                     sails.sockets.blast("detailsTache", {detailsNouvelle, detailsEnCours , detailsterminer});
                     res.view('pages/dashboard', { demande: demande , tache_en_cours: tache_en_cours, messages:messages, detailsNouvelle, detailsEnCours , detailsterminer, datDebut: "null", datFin: "null" });
                 });
-
     },
 
     afficher_date: async function(req, res){
