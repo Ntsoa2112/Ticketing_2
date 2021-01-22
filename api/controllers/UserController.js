@@ -94,6 +94,7 @@ module.exports = {
                 req.session.User = user;
 
                 // Redirect to protected area
+                console.log("Avant redirection dashboard")
                 return res.redirect('/dashboard');
             });
         });
