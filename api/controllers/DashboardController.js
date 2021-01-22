@@ -33,7 +33,7 @@ module.exports = {
             }
         }
         */
-
+        console.log("Tafiditra affichage");
         if(!req.param('dd') && !req.param('df')){
             var parse_now = Date.parse(new Date(Date.now()).toLocaleDateString());
             var type = "now";
@@ -41,7 +41,7 @@ module.exports = {
             var demande = allTache[0];
             var tache_en_cours = allTache[1];
         }
-        
+        console.log("Avant details");
         var resultatStat = det.details(demande, tache_en_cours);
         var detailsNouvelle = resultatStat["nouvelle"];
         var detailsEnCours = resultatStat["enCours"];
@@ -49,6 +49,7 @@ module.exports = {
 
                 Message.find(function foundMessage(err, messages){
                     if (err) return res.send(err);
+                    console.log("Tafiditra foundMesage");
                     sails.sockets.blast("detailsTache", {detailsNouvelle, detailsEnCours , detailsterminer});
                     res.view('pages/dashboard', { demande: demande , tache_en_cours: tache_en_cours, messages:messages, detailsNouvelle, detailsEnCours , detailsterminer, datDebut: "null", datFin: "null" });
                 });
