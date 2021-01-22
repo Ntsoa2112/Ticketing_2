@@ -55,9 +55,16 @@ module.exports = {
     },
 
     afficher_date: async function(req, res){
+        var datd, datf;
+        if(req.param('mint') == "" || !req.param('mint')){
+            datd = new Date(Date.now()).toLocaleDateString();
+        }
+        if(req.param('maxt') =="" || !req.param('maxt')){
+            datf = new Date(Date.now()).toLocaleDateString();
+        }
         if(req.param('mint') && req.param('maxt')){
-            var datd = req.param('mint');
-            var datf = req.param('maxt');
+            datd = req.param('mint');
+            datf = req.param('maxt');
             var now = new Date(Date.now()).toLocaleDateString();
             if(now == req.param('maxt')){
                 type = "now";
@@ -72,6 +79,7 @@ module.exports = {
             var dd = Date.parse(new Date(datd).toLocaleDateString());
             var allTache = await Dashboard.details_Tache( dd, df, type );
         }
+        console.log(allTache);
         var demande = allTache[0];
         var tache_en_cours = allTache[1];
         var resultatStat = det.details(demande, tache_en_cours);
