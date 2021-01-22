@@ -41,7 +41,7 @@ module.exports = {
             var demande = allTache[0];
             var tache_en_cours = allTache[1];
         }
-        
+        console.log("Avant details");
         var resultatStat = det.details(demande, tache_en_cours);
         var detailsNouvelle = resultatStat["nouvelle"];
         var detailsEnCours = resultatStat["enCours"];
