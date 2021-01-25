@@ -36,7 +36,8 @@ module.exports = {
         console.log("Tafiditra affichage");
         if(!req.param('dd') && !req.param('df')){
             console.log("date now : " + Date.now());
-            let dateNow = new Date().toLocaleDateString();
+            var dateNow = new Date();
+            dateNow = dateNow.toLocaleString();
             var parse_now = Date.parse(dateNow);
             var type = "now";
             console.log(dateNow);
