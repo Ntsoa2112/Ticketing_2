@@ -386,12 +386,13 @@
                 <div>
                     <div style="margin-left:20px;">
                             <% 
+                            var now = new Date(Date.now()).toLocaleDateString("en-GB");
 
                             var dd;
                             var df;
                             if(datDebut == "null" && datFin == "null"){
-                                dd = nnow;
-                                df = nnow;
+                                dd = now;
+                                df = now;
                             }
                             else if(datDebut && datFin){
                                 dd = datDebut;
