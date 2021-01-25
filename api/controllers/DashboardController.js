@@ -37,6 +37,7 @@ module.exports = {
         if(!req.param('dd') && !req.param('df')){
             var parse_now = Date.parse(new Date(Date.now()).toLocaleDateString());
             var type = "now";
+            console.log("parse now : "+parse_now);
             var allTache = await Dashboard.details_Tache( parse_now, parse_now ,type);
             var demande = allTache[0];
             var tache_en_cours = allTache[1];
@@ -60,6 +61,7 @@ module.exports = {
             var datd = req.param('mint');
             var datf = req.param('maxt');
             var now = new Date(Date.now()).toLocaleDateString();
+            console.log("Now : "+ now)
             if(now == req.param('maxt')){
                 type = "now";
                 var df = Date.parse(new Date(Date.now()).toLocaleDateString());
