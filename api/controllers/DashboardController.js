@@ -36,12 +36,11 @@ module.exports = {
         console.log("Tafiditra affichage");
         if(!req.param('dd') && !req.param('df')){
             console.log("date now : " + Date.now());
-            var dateNow = new Date();
-            dateNow = dateNow.toLocaleString();
+            var dateNow = new Date(Date.now()).toLocaleDateString();
             var parse_now = Date.parse(dateNow);
             var type = "now";
             console.log(dateNow);
-            console.log("parse now : "+ parse_now);
+            console.log("parse now : "+parse_now);
             var allTache = await Dashboard.details_Tache( parse_now, parse_now ,type);
             var demande = allTache[0];
             var tache_en_cours = allTache[1];
