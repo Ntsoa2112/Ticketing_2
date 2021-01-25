@@ -40,7 +40,6 @@ module.exports = {
             var m = dateNow.substr(3,2);
             var j = dateNow.substr(0,2);
             var y = dateNow.substr(6,4);
-
             dateNow = y+"-"+m+"-"+j;
             var parse_now = Date.parse(dateNow);
             var type = "now";
