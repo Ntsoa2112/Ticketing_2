@@ -45,8 +45,6 @@ module.exports = {
     console.log("Ato @ details");
     console.log(dd);
 
-    dd = 1611529200000;
-    df = 1611529200000;
     if(type == "now"){
         var demande = await sails.sendNativeQuery(`SELECT * FROM demande WHERE "createdAt" > $1  and etat_demande = $2`, [dd, "nouvelle"]);
         var tache_en_cours = await sails.sendNativeQuery(`SELECT *, effectuer_tache."createdAt" datecours FROM effectuer_tache JOIN demande ON effectuer_tache.id_demande = demande.id WHERE effectuer_tache."createdAt" > $1 OR demande.etat_demande = $2 OR demande.etat_demande = $3`, [dd, "En cours", "Stand By"]);
