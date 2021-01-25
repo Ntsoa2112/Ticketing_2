@@ -386,11 +386,7 @@
                 <div>
                     <div style="margin-left:20px;">
                             <% 
-                            var nnow = new Date(Date.now()).toLocaleDateString();
-                            var m = nnow.substr(3,2);
-                            var j = nnow.substr(0,2);
-                            var y = nnow.substr(6,4);
-                            nnow = y+"-"+m+"-"+j;
+                            var nnow = new Date().toISOString().slice(0,10);
                             var dd;
                             var df;
                             if(datDebut == "null" && datFin == "null"){
