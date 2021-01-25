@@ -386,19 +386,7 @@
                 <div>
                     <div style="margin-left:20px;">
                             <% 
-                            var now = new Date(Date.now()).toLocaleDateString("en-GB");
-                            var m = now.substr(0,1);
-                            var j = now.substr(2,2);
-                            var y = now.substr(5,4);
-                            function conv(nbr){
-                                if(nbr.length < 2 ){
-                                    nbr = "0"+nbr;
-                                }
-                                return nbr;
-                            }
-                            j = conv(j);
-                            m = conv(m);
-                            nnow = y+"-"+m+"-"+j;
+
                             var dd;
                             var df;
                             if(datDebut == "null" && datFin == "null"){
