@@ -56,16 +56,9 @@ module.exports = {
     },
 
     afficher_date: async function(req, res){
-        var datd, datf;
-        if(req.param('mint') == "" || !req.param('mint')){
-            datd = new Date(Date.now()).toLocaleDateString();
-        }
-        if(req.param('maxt') =="" || !req.param('maxt')){
-            datf = new Date(Date.now()).toLocaleDateString();
-        }
         if(req.param('mint') && req.param('maxt')){
-            datd = req.param('mint');
-            datf = req.param('maxt');
+            var datd = req.param('mint');
+            var datf = req.param('maxt');
             var now = new Date(Date.now()).toLocaleDateString();
             if(now == req.param('maxt')){
                 type = "now";
@@ -77,6 +70,7 @@ module.exports = {
                 var df = Date.parse(date);
                 var type = "intervale";
             }
+            var datd = req.param('mint');
             var dd = Date.parse(new Date(datd).toLocaleDateString());
             var allTache = await Dashboard.details_Tache( dd, df, type );
         }
@@ -87,7 +81,6 @@ module.exports = {
         var detailsNouvelle = resultatStat["nouvelle"];
         var detailsEnCours = resultatStat["enCours"];
         var detailsterminer = resultatStat["terminer"];
-
         Message.find(function foundMessage(err, messages){
             if (err) return res.send(err);
             sails.sockets.blast("detailsTache", {detailsNouvelle, detailsEnCours , detailsterminer});

@@ -44,6 +44,7 @@ module.exports = {
   details_Tache: async function(dd, df, type){
     console.log("Ato @ details");
     console.log(dd);
+
     dd = 1611529200000;
     df = 1611529200000;
     if(type == "now"){
