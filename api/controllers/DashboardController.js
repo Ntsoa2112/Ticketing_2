@@ -63,11 +63,11 @@ module.exports = {
         if(req.param('mint') && req.param('maxt')){
             var datd = req.param('mint');
             var datf = req.param('maxt');
-            var now = new Date(Date.now()).toLocaleDateString();
+            var now = new Date().toISOString().slice(0,10);
             console.log("Now : "+ now)
             if(now == req.param('maxt')){
                 type = "now";
-                var df = Date.parse(new Date(Date.now()).toLocaleDateString());
+                var df = Date.parse(new Date().toISOString().slice(0,10));
             }
             else{
                 var date = new Date(req.param('maxt'));
