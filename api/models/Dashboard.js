@@ -41,18 +41,30 @@ module.exports = {
   },
   */
 
-  details_Tache: async function(dd, df, type){
+  details_Tache: async function(dd, df, type, dep){
     console.log("Ato @ details");
     console.log(dd);
-
-    if(type == "now"){
+    if(dep == 'Trans'){
+      if(type == "now"){
         var demande = await sails.sendNativeQuery(`SELECT * FROM demande WHERE "createdAt" > $1  and etat_demande = $2`, [dd, "nouvelle"]);
         var tache_en_cours = await sails.sendNativeQuery(`SELECT *, effectuer_tache."createdAt" datecours FROM effectuer_tache JOIN demande ON effectuer_tache.id_demande = demande.id WHERE effectuer_tache."createdAt" > $1 OR demande.etat_demande = $2 OR demande.etat_demande = $3`, [dd, "En cours", "Stand By"]);
+      }
+      else if(type == "intervale"){
+          var demande = await sails.sendNativeQuery(`SELECT * FROM demande WHERE "createdAt" > $1 and  "createdAt" <= $2 and etat_demande = $3`, [dd, df, "nouvelle"]);
+          var tache_en_cours = await sails.sendNativeQuery(`SELECT *, effectuer_tache."createdAt" datecours FROM effectuer_tache JOIN demande ON effectuer_tache.id_demande = demande.id WHERE effectuer_tache."createdAt" > $1 and effectuer_tache."createdAt" <= $2`, [dd, df]);
+      }
     }
-    else if(type == "intervale"){
-        var demande = await sails.sendNativeQuery(`SELECT * FROM demande WHERE "createdAt" > $1 and  "createdAt" <= $2 and etat_demande = $3`, [dd, df, "nouvelle"]);
-        var tache_en_cours = await sails.sendNativeQuery(`SELECT *, effectuer_tache."createdAt" datecours FROM effectuer_tache JOIN demande ON effectuer_tache.id_demande = demande.id WHERE effectuer_tache."createdAt" > $1 and effectuer_tache."createdAt" <= $2`, [dd, df]);
+    else{
+      if(type == "now"){
+        var demande = await sails.sendNativeQuery(`SELECT * FROM demande WHERE "createdAt" > $1  and etat_demande = $2 and categorie = $3`, [dd, "nouvelle", dep]);
+        var tache_en_cours = await sails.sendNativeQuery(`SELECT *, effectuer_tache."createdAt" datecours FROM effectuer_tache JOIN demande ON effectuer_tache.id_demande = demande.id WHERE (effectuer_tache."createdAt" > $1 OR demande.etat_demande = $2 OR demande.etat_demande = $3) and categorie = $4`, [dd, "En cours", "Stand By", dep]);
+      }
+      else if(type == "intervale"){
+          var demande = await sails.sendNativeQuery(`SELECT * FROM demande WHERE "createdAt" > $1 and  "createdAt" <= $2 and etat_demande = $3 and categorie = $4`, [dd, df, "nouvelle", dep]);
+          var tache_en_cours = await sails.sendNativeQuery(`SELECT *, effectuer_tache."createdAt" datecours FROM effectuer_tache JOIN demande ON effectuer_tache.id_demande = demande.id WHERE effectuer_tache."createdAt" > $1 and effectuer_tache."createdAt" <= $2 and categorie = $3`, [dd, df, dep]);
+      }
     }
+
 
     demande = demande.rows;
     tache_en_cours = tache_en_cours.rows;

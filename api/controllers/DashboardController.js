@@ -33,6 +33,7 @@ module.exports = {
             }
         }
         */
+       var dep = req.session.User.categorie;
         console.log("Tafiditra affichage");
         if(!req.param('dd') && !req.param('df')){
             console.log("date now : " + Date.now());
@@ -41,7 +42,7 @@ module.exports = {
             var parse_now = Date.parse(dateNow);
             var type = "now";       
             console.log("parse now : "+parse_now);
-            var allTache = await Dashboard.details_Tache( parse_now, parse_now ,type);
+            var allTache = await Dashboard.details_Tache( parse_now, parse_now ,type, dep);
             var demande = allTache[0];
             var tache_en_cours = allTache[1];
         }
@@ -60,6 +61,7 @@ module.exports = {
     },
 
     afficher_date: async function(req, res){
+        var dep = req.session.User.categorie;
         if(req.param('mint') && req.param('maxt')){
             var datd = req.param('mint');
             var datf = req.param('maxt');
@@ -77,7 +79,7 @@ module.exports = {
             }
             var datd = req.param('mint');
             var dd = Date.parse(new Date(datd).toISOString().slice(0,10));
-            var allTache = await Dashboard.details_Tache( dd, df, type );
+            var allTache = await Dashboard.details_Tache( dd, df, type ,dep);
         }
         console.log(allTache);
         var demande = allTache[0];
