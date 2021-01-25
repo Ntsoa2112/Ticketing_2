@@ -148,8 +148,7 @@ module.exports = {
                     ws3.cell(i+2, 10).string(tacheTerminer[i].etat_demande);
                 }
 
-                wb.write('/Tâche.xlsx');
-                return res.view("demande/down_excel");
+                wb.write('assets/export/Tâche.xlsx');
 
             });
         });

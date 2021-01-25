@@ -185,7 +185,7 @@
                         %>
                         <li>
                             <a href="#">
-                                <i class="fas fa-table"></i><button type="button"  data-toggle="modal" data-target="#myModalEx">Export Excel</button></a>
+                                <i class="fas fa-table"></i><button type="button" id="export"  data-toggle="modal" data-target="#myModalEx">Export Excel</button></a>
                         </li>
                         <%
                         }
@@ -889,7 +889,7 @@
                     <div style="margin-left:20px;">
                     
                         <h5></h5>
-                        <label for="">Export réussi</label>
+                        <label for="">Export réussi, <a href="/export/Tâche.xlsx" download>cliquez ici</a> pour télécharger</label>
                     
                 </div>
                     <div class="modal-footer">
@@ -915,7 +915,7 @@
                     <div style="margin-left:20px;">
                     
                         <h5></h5>
-                        <label for="">Export réussi</label>
+                        <label for="">Export réussi, <a href="/export/Tâche.xlsx" download>cliquez ici</a> pour télécharger</label>
 
                         <span id="LinkStand"></span>
                     
@@ -999,6 +999,16 @@ $(document).ready(function(){
     $("#notif").click(function(){
         $("#nbr_sms").text('');
     });
+
+    $("#export").click(function(){
+        $.ajax({
+            //L'URL de la requête 
+            url: "/exporter_xl",
+
+            //La méthode d'envoi (type de requête)
+            method: "GET",
+        })  
+    })
 });
 
 
