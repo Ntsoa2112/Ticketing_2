@@ -76,7 +76,7 @@ module.exports = {
                 var type = "intervale";
             }
             var datd = req.param('mint');
-            var dd = Date.parse(new Date(datd).toLocaleDateString());
+            var dd = Date.parse(new Date(datd).toISOString().slice(0,10));
             var allTache = await Dashboard.details_Tache( dd, df, type );
         }
         console.log(allTache);
