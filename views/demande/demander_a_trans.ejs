@@ -18,8 +18,8 @@
 							<h4 class="card-title">Demande à Trans</h4>
 							<form method="POST" action="/demander_a_trans" class="my-login-validation" >
 								<div  id="chem" class="form-group">
-									<label for="new-password">Objet</label>
-									<input id="new-password" class="form-control" type="text" name="objet" required autofocus data-eye>
+									<!-- <label for="new-password">Objet</label> -->
+									<input type="hidden" id="new-password" class="form-control" type="text" name="objet" value="Objet" required autofocus data-eye>
 									<label class="label">Priorités</label>
 									<select class="select" id="priori" name="priorite" required>
 										<option>Sélectionner</option>

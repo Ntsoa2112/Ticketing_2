@@ -36,17 +36,13 @@ module.exports = {
        var dep = req.session.User.categorie;
         console.log("Tafiditra affichage");
         if(!req.param('dd') && !req.param('df')){
-            console.log("date now : " + Date.now());
             var dateNow = new Date().toISOString().slice(0,10);
-            console.log(dateNow);
             var parse_now = Date.parse(dateNow);
             var type = "now";       
-            console.log("parse now : "+parse_now);
             var allTache = await Dashboard.details_Tache( parse_now, parse_now ,type, dep);
             var demande = allTache[0];
             var tache_en_cours = allTache[1];
         }
-        console.log("Avant details");
         var resultatStat = det.details(demande, tache_en_cours);
         var detailsNouvelle = resultatStat["nouvelle"];
         var detailsEnCours = resultatStat["enCours"];
@@ -54,7 +50,6 @@ module.exports = {
 
                 Message.find(function foundMessage(err, messages){
                     if (err) return res.send(err);
-                    console.log("Tafiditra foundMesage");
                     sails.sockets.blast("detailsTache", {detailsNouvelle, detailsEnCours , detailsterminer});
                     res.view('pages/dashboard', { demande: demande , tache_en_cours: tache_en_cours, messages:messages, detailsNouvelle, detailsEnCours , detailsterminer, datDebut: "null", datFin: "null" });
                 });
@@ -66,7 +61,6 @@ module.exports = {
             var datd = req.param('mint');
             var datf = req.param('maxt');
             var now = new Date().toISOString().slice(0,10);
-            console.log("Now : "+ now)
             if(now == req.param('maxt')){
                 type = "now";
                 var df = Date.parse(new Date().toISOString().slice(0,10));
@@ -81,7 +75,6 @@ module.exports = {
             var dd = Date.parse(new Date(datd).toISOString().slice(0,10));
             var allTache = await Dashboard.details_Tache( dd, df, type ,dep);
         }
-        console.log(allTache);
         var demande = allTache[0];
         var tache_en_cours = allTache[1];
         var resultatStat = det.details(demande, tache_en_cours);

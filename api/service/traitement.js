@@ -5,9 +5,7 @@ module.exports = {
     datastore : 'default',
     
     details: function(demande, tacheCours){
-        console.log("Ato @ trait");
-        var nP1 = 0, nP2 = 0, nP3 = 0, nRec = 0, nLiv = 0, n = 0;
-    
+        var nP1 = 0, nP2 = 0, nP3 = 0, nRec = 0, nLiv = 0, n = 0;  
         function statdemande(type, demande){
             var nP1 = 0, nP2 = 0, nP3 = 0, nRec = 0, nLiv = 0, n = 0;
             for(var i = 0; i<demande.length; i++){      
@@ -38,7 +36,6 @@ module.exports = {
        var nouvelle = statdemande("nouvelle", demande);
        var enCours = statdemande("En cours", tacheCours);
        var terminer = statdemande("Terminer", tacheCours);
-       console.log("Hivoka @ trait");
        return {nouvelle, enCours, terminer};
       }
 
