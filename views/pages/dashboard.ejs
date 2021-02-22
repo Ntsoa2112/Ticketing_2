@@ -527,17 +527,17 @@
                        
                         <!-- CONTENUE DATATABLE -->                      
                         
-                        
+                        <div class="x_content" style="overflow-x:auto;">
                         <table id='tab' class=" cell-border table-striped " style="width:100%" >
                             <span id="sapl">
 
                             </span>
                             <thead class="headfont">
-                                <tr>      
-                                    <th scope="col">Objet</th>
+                                <tr>  
+                                    <th scope="col"></th>
+                                    <th scope="col">Code</th>
                                     <th scope="col">Priorité</th>
                                     <th scope="col">Tache</th>
-                                    <th scope="col">Code</th>
                                     <th scope="col">Taille</th>
                                     <th scope="col">Chemin</th>
                                     <th scope="col">Expéditeur</th>                                 
@@ -563,22 +563,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <%    
+                                <%    var e= 0;
                                 for(var i=0; i < demande.length ; i++) {
                                   if(demande[i].etat_demande == 'nouvelle'){ %>
                                 <tr>
-                                  <td>
-                                    <%= demande[i].objet %>
-                                  </td>
+                                    <td>
+                                        <%= e %>
+                                    </td>
+                                    <td>
+                                        <%= demande[i].code %>
+                                      </td>
                                   <td>
                                     <%= demande[i].priorite %>
                                   </td>
                                   <td>
                                     <%= demande[i].tache %>
                                   </td>
-                                  <td>
-                                    <%= demande[i].code %>
-                                  </td>
+                                  
                                   <td>
                                       <%= demande[i].size %>
                                     </td>
@@ -603,7 +604,9 @@
                                   </td>
 
                                   <td>
-                                    <% if(session.User.categorie == 'Trans'){ %>
+                                    <% 
+                                    e++;
+                                    if(session.User.categorie == 'Trans'){ %>
                                     <a type="button" class="btn btn-success" id="boutt" href="/valide_form_demande/<%= demande[i].id %>" >Prendre</a>
                                     <%
                                     }
@@ -629,9 +632,11 @@
                             
                                     %>
                                 <tr>
-
                                     <td>
-                                        <%= tache_en_cours[i].objet %>
+                                        <%= e %>
+                                    </td>
+                                    <td>
+                                        <%= tache_en_cours[i].code %>
                                     </td>
                                     <td>
                                         <%= tache_en_cours[i].priorite %>
@@ -639,9 +644,7 @@
                                     <td>
                                         <%= tache_en_cours[i].tache %>
                                     </td>
-                                    <td>
-                                        <%= tache_en_cours[i].code %>
-                                    </td>
+                                   
                                     <td>
                                         <%= tache_en_cours[i].size %>
                                         </td>
@@ -669,6 +672,7 @@
                                     </td>
                                     <td>
                                         <% 
+                                        e++;
                                         if(tache_en_cours[i].etat_demande == 'Stand By'){
                                         %>
                                         
@@ -719,17 +723,17 @@
 
                                     %>
                                 <tr>
-                                    
-                                    <td><%= tache_en_cours[i].objet %></td>
+                                    <td><%= e %></td>
+                                    <td>
+                                        <%= tache_en_cours[i].code %>
+                                        </td>
                                     <td>
                                     <%= tache_en_cours[i].priorite %>
                                     </td>
                                     <td>
                                     <%= tache_en_cours[i].tache %>
                                     </td>
-                                    <td>
-                                    <%= tache_en_cours[i].code %>
-                                    </td>
+                                   
                                     <td>
                                         <%= tache_en_cours[i].size %>
                                     </td>
@@ -748,6 +752,7 @@
                                     </td>
                                     <td>
                                         <%
+                                        e++;
                                             var dateDebut = new Date( parseFloat(tache_en_cours[i].datecours , 10) ).toLocaleDateString();
                                         %>
                                         <%= dateDebut %>
@@ -781,10 +786,11 @@
                                         <th scope="col"></th>
                                         <th scope="col"></th>  
                                         <th scope="col"></th> 
-                                        <th scope="col"></th>    
+                                        <th scope="col"></th>
                                 </tr>
                             </tfoot>
                       </table>
+                    </div>
                       <hr>
         
                  <!-- FIN CONTENUE DATATABLE-->
