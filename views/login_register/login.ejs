@@ -40,6 +40,9 @@
 								    <div class="invalid-feedback">
 								    	Password is required
 									</div>
+									<div class="mdp">
+
+									</div>
 								</div>
 								<div id="avertir">
 
@@ -71,7 +74,7 @@
 								%>
 
 								<div class="form-group m-0">
-									<button type="submit" class="btn btn-primary btn-block">
+									<button type="submit" class="btn btn-primary btn-block" id="sub">
 										Se connecter
 									</button>
 								</div>
@@ -98,7 +101,17 @@
 			$("#avertir").append(
 				"<label class='rouge'>Avertir l'administrateur pour modifier votre mot de passe</label>"
 			)
-		})
+		}),
+
+		$("#sub").click(function(e){
+		$mdp = $("#password").val();
+		if($mdp.length < 8){
+			e.preventDefault();
+			$(".mdp").append(
+				"<label class='rouge'>Le mot de passe doit être composé de 8 caractères au minimum</label>"
+			)
+		}
+})
 	</script>
 </body>
 </html>
