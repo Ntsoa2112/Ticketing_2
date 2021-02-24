@@ -206,15 +206,22 @@
                             <a href="#">
                                 <i class="fas fa-map-marker-alt"></i>Maps</a>
                         </li>
+                        <%
+                        if(session.User.admin == true){
+                        %>
                         <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-copy"></i>Pages</a>
+                            <a class="js-arrow" href="/modif_categorie">
+                                <i class="fas fa-copy"></i>Modifier catégorie</a>
                             
                         </li>
+                        
                         <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-desktop"></i>UI Elements</a>                       
+                            <a class="js-arrow" href="/mdp_oublier">
+                                <i class="fas fa-desktop"></i>Réinitialiser mdp</a>                       
                         </li>
+                        <%
+                        }
+                        %>
                     </ul>
                 </nav>
             </div>

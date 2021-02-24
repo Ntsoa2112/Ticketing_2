@@ -120,8 +120,7 @@ module.exports = {
                 return res.send(err);
               }
               else{
-                    var notif = "fdp";
-                    return res.redirect('/'+notif);
+                    return res.redirect('/dashboard');
               }
         })
     },
@@ -133,6 +132,19 @@ module.exports = {
             var exp_matricule = req.session.User.matricule;
             var sms = exp_matricule + " a confirmé votre droit d'administrateur, reconnectez-vous";
             sails.sockets.blast("new_message", {matricule_exp:exp_matricule, matricule_dest:matricule_new_admin, sms:sms});
+        })
+    },
+
+    modif_categorie: function(req, res){
+        var matricule = req.param("matricule");
+        var categorie = req.param("categorie");
+        User.updateOne({matricule:matricule}, {categorie:categorie}, function updateCategorie(err){
+            if(err){
+                return res.send(err);
+              }
+              else{
+                    return res.redirect('/dashboard');
+              }
         })
     }
 

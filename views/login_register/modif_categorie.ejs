@@ -18,8 +18,8 @@
 					</div>
 					<div class="card fat">
 						<div class="card-body">
-							<h4 class="card-title">Inscription</h4>
-							<form method="POST" class="my-login-validation" novalidate="">
+							<h4 class="card-title">Modifier la catégorie</h4>
+							<form method="POST" class="my-login-validation" novalidate="" action="/new_categorie">
 								<div class="form-group">
 									<label for="name">Matricule</label>
 									<input id="name" type="text" class="form-control" name="matricule" required autofocus>
@@ -30,7 +30,7 @@
 
 								<div id="appe"  class="form-group">
 									<div id="select">
-										<label for="name">Catégorie</label>
+										<label for="name">Nouvelle catégorie</label>
                                         <select class="browser-default custom-select" id="categorie" name="categorie" required>
                                             <option>Sélectionner</option>
                                             <option value="Trans">Trans</option>
@@ -48,21 +48,10 @@
 								</div>
 								
 
-								<div class="form-group">
-									<label for="password">Mot de passe</label>
-									<input id="password" type="password" class="form-control" name="password" required data-eye>
-									<div class="mdp">
-										
-									</div>
-								</div>
-
 								<div class="form-group m-0">
 									<button type="submit" class="btn btn-primary btn-block" id="sub">
-											S'isncrire
+											Modifier
 									</button>
-								</div>
-								<div class="mt-4 text-center">
-										Vous avez déja un compte? <a href="/">Se connecter</a>
 								</div>
 							</form>
 						</div>
@@ -108,13 +97,7 @@
 
 
 $("#sub").click(function(e){
-	$mdp = $("#password").val();
-	if($mdp.length < 8){
-		e.preventDefault();
-		$(".mdp").append(
-			"<label class='rouge'>Le mot de passe doit être composé de 8 caractères au minimum</label>"
-		)
-	}
+    alert("Catégorie modifié avec succés");
 })
 
 </script>

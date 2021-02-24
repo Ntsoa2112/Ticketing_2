@@ -65,6 +65,10 @@ module.exports.routes = {
 
   '/admin/:matricule' : 'UserController.valider_admin',
 
+  '/modif_categorie' : { view: 'login_register/modif_categorie' },
+
+  'post /new_categorie' : 'UserController.modif_categorie'
+
 
 
   /***************************************************************************

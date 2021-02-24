@@ -7,6 +7,10 @@ body.my-login-page {
 	font-size: 14px;
 }
 
+.rouge{
+  color: rgb(219, 35, 35);
+}
+
 .my-login-page .brand {
 	width: 90px;
 	height: 90px;

@@ -30,17 +30,20 @@
 								<div class="form-group">
 									<label for="new-password">Nouveau mot de passe</label>
 									<input id="new-password" type="password" class="form-control" name="password" required autofocus data-eye>
+									<div id="new_mdp">
+
+									</div>
 									<label for="new-password">Confirmation mot de passe</label>
 									<input id="cpassword" type="password" class="form-control" name="cpassword" required autofocus data-eye>
 									<div class="invalid-feedback">
 										Password is required
 									</div>
-									<div class="form-text text-muted">
+									<div class="form-text text-muted" id="note">
 										Assurez-vous que votre mot de passe est solide et facile à retenir
 									</div>
 								</div>									
 								<div class="form-group m-0">
-									<button type="submit" class="btn btn-primary btn-block">
+									<button type="submit" class="btn btn-primary btn-block" id="sub">
 										Confirmer
 									</button>
 								</div>
@@ -57,5 +60,28 @@
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="js/my-login.js"></script>
+	<script>
+		
+	$("#sub").click(function(e){
+		$mdp1 = $("#new-password").val();
+		$mdp2 = $("#cpassword").val();
+		if($mdp1.length < 8){
+			e.preventDefault();
+			$("#new_mdp").append(
+				"<label class='rouge'>Le mot de passe doit être composé de 8 caractères au minimum</label>"
+			)
+		}
+		else if($mdp1 != $mdp2){
+			e.preventDefault();
+			$("#note").empty();
+			$("#note").append(
+				"<label class='rouge'>Confirmation mot de passe incorrecte</label>"
+			)
+		}
+		else{
+			alert("Mot de passe réinitialiser avec succée");
+		}
+	})
+	</script>
 </body>
 </html>
