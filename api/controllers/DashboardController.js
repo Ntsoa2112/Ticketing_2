@@ -34,7 +34,6 @@ module.exports = {
         }
         */
        var dep = req.session.User.categorie;
-        console.log("Tafiditra affichage");
         if(!req.param('dd') && !req.param('df')){
             var dateNow = new Date().toISOString().slice(0,10);
             var parse_now = Date.parse(dateNow);
