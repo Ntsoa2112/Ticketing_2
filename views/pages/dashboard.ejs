@@ -624,7 +624,8 @@
                                     var id_demande = tache_en_cours[i].id_demande;
                                     var dateDebut = new Date(tache_en_cours[i].datecours).toLocaleDateString();
                                     var timedebut = new Date(tache_en_cours[i].datecours).toLocaleTimeString();
-                            
+                                  
+                                    var Heurdebut = new Date(tache_en_cours[i].createdAt).toLocaleTimeString();
                                     %>
                                 <tr>
                                     <td>
@@ -658,12 +659,13 @@
                                     </td>
                                     <td>
                                         <%
+                                             var Heurdebut = new Date(parseFloat(tache_en_cours[i].createdAt, 10)).toLocaleTimeString();
                                             var dateDebut = new Date( parseFloat(tache_en_cours[i].datecours , 10) ).toLocaleDateString();
                                         %>
-                                        <%= dateDebut %>
+                                        <%= dateDebut %> à <%= Heurdebut %>
                                     </td>
                                     <td>
-
+                                        
                                     </td>
                                     <td>
                                         <% 
@@ -748,16 +750,15 @@
                                     <td>
                                         <%
                                         e++;
+                                            
                                             var dateDebut = new Date( parseFloat(tache_en_cours[i].datecours , 10) ).toLocaleDateString();
+                                            var date_heure= tache_en_cours[i].H_fin_transfert;
+                                            
                                         %>
-                                        <%= dateDebut %>
+                                        <%= date_heure %> 
                                     </td>
                                     <td>
-                                        <%
-                                            const tt = tache_en_cours[i].H_fin_transfert
-                                            const tapal = tt.split(' à')
-                                         %>
-                                        <%= tapal[0] %>
+                                        <%= date_heure %>
                                     </td>
                                     <td>
                                          <span class="btn btn-light" style="color:green;">Terminé</span>
