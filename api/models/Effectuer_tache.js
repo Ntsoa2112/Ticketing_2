@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-
+    //tableName: 'tic_effectuer_tache',
     attributes: {
       id_demande: { type: 'number', required: true },
       matricule_trans: { type: 'number', required: true },
@@ -14,7 +14,7 @@ module.exports = {
       statu: { type: 'string', defaultsTo:'En cours' },
     },
   
-    datastore : 'default'
+    datastore : 'ConnexionTicket'
   
   };
   

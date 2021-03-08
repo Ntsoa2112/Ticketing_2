@@ -8,97 +8,85 @@
 var bcrypt = require('bcrypt');
 const io = require('socket.io');
 var socket = io();
+var ldap = require('ldapjs');
 
 module.exports = {
-    create: function(req, res){
-        var matricule = req.param('matricule');
-        User.find(function findAll(err, users){
-            if(err) return res.send(err);
-            for(var i=0; i<users.length; i++){
-                if(users[i].matricule == matricule){
-                    return res.send("Vous avez déjà un compte, ou vérifier votre numèro matricule");
+    login: async function(req, res)
+    {
+          var email = 0;
+          
+          if(!isNaN(req.param('email',null))) email = Number(req.param('email',null));
+          
+  
+      //init ldap
+          var client = ldap.createClient({
+            url: 'ldap://10.128.1.14:389',
+            reconnect: false
+          });
+
+          var donne_user = await sails.sendNativeQuery("select * from r_personnel where id_pers = $1", [email]);
+          client.on('error', function(err) { });
+
+          if(donne_user.rowCount ==1 ){
+                //test ldapServer
+                client.bind('EASYTECH\\'+req.param('email',null), req.param('password',null), async function(err) {
+                if(err){
+                    var notif = "Votre mot de passe est invalide";
+                    return res.redirect('/'+ notif);
                 }
-            }
-            var categorie = req.param('categorie');
-            var password = req.param('password');
-            var admin = false;
-            var notif = null;
-            function creation(matricule, categorie, password, admin, notif){
-                User.create({matricule, categorie, password, admin}, function userCreated(err, user){
-                    if(err){
-                        return res.send(err);
+                else
+                {
+                    req.session.matricule = email;
+        //connected
+                    var droit = await sails.sendNativeQuery("select r_personnel.id_pers,r_personnel.id_droit, fr_droit_user.droit from r_personnel join fr_droit_user on r_personnel.id_pers = fr_droit_user.id_personnel where r_personnel.id_pers =$1", [email]);
+                    if(droit.rowCount == 1){
+                        req.session.droit = droit.rows[0].id_droit;
                     }
                     else{
-                        if(notif == null){
-                            //notif = "Vous pouvez vous connecter";
-                            notif = "ustr"
-                        }
-                        return res.redirect('/'+notif);
-                    };
-                });
-            }
-            if(categorie == 'Admin'){
-                categorie = 'Trans';
-                User.find(function findAll(err, users){
-                    if(err) res.send(err);
-                    var admin_existe = false;
-                    for(var i=0; i<users.length; i++){
-                        if(users[i].admin === true){
-                            var exp_matricule = req.param('matricule');
-                            var sms = exp_matricule + " vous demande le droit d'administrateur ";
-                            var dest_matricule = users[i].matricule;
-                            admin_existe = true;
-                            notif = "adfa"
-                            Message.create({matricule_exp:exp_matricule, matricule_dest:dest_matricule, sms:sms}, function createMessage(err){
-                                if(err) return res.send( err);                            
-                                sails.sockets.blast("new_message", {matricule_exp:exp_matricule, matricule_dest:dest_matricule, sms:sms, confAdmin:true});                 
-                            })
-                            break;
-                        }
+                        req.session.droit = 0
                     }
-                    if(admin_existe === false){
-                        admin = true;
-                        notif = "trad"
+                    console.log("Droit : " + req.session.droit);
+/*
+                    Admin.findOne({id_pers:email}, function(err, resu){
+                        if(err) return res.send(err);
+                        console.log("tafa");
+                        console.log(resu);
+                    })
+                    */
+
+                   var admin = await sails.sendNativeQuery("select * from tic_admin where id_pers = $1", [email]);
+
+                    console.log(admin);
+                    req.session.admin = false;
+                    if(admin.rowCount == 1 && admin.rows[0].admin == true){
+                        req.session.admin = true;
                     }
-                    creation(matricule, categorie, password, admin, notif);
-                })
-                
-            }
-            else{
-                creation(matricule, categorie, password, admin, notif);
-            }
-        });     
-    },
+                    console.log("Admin : " + req.session.admin);
 
-    login: function(req, res) {
-        var matricule = req.param('matricule');
-        var password = req.param('password');
-  
-        // Lookup the user in the database
-        User.findOne({
-            matricule: matricule,
-        }).exec(function (err, user) {
-  
-            // Account not found
-            if (err || !user) {
-                return res.send('Vérifier votre nom ou prénom ou mot de passe', 500);
-            }
-
-            // Compare the passwords
-            bcrypt.compare(password, user.password, function(err, valid) {
-                if(err || !valid)
-                    return res.send('Mot de passe incorrecte', 500)
-
-                // The user has authenticated successfully, set their session
-                req.session.authenticated = true;
-                req.session.User = user;
-
-                // Redirect to protected area
-                console.log("Avant redirection dashboard")
-                return res.redirect('/dashboard');
+                    var id_dep = donne_user.rows[0].id_departement;
+                    var departement = await sails.sendNativeQuery("select libelle from r_departement where id = $1", [id_dep]);
+                    if(departement.rowCount == 1){
+                        req.session.categorie = departement.rows[0].libelle;
+                    }
+                    else{
+                        req.session.categorie = "Département inconnue";
+                    }
+                    req.session.categorie = 'TRANS';
+                    console.log("dep : " + req.session.categorie);
+                    console.log("Connecter : " + email);
+                    return res.redirect('/dashboard');               
+                }
             });
-        });
+          }
+          else{
+            var notif = "Votre matricule est invalide";
+            console.log('Email invalide user.'); //afficher email invalide
+            return res.redirect('/'+ notif);
+          }
+          
     },
+
+
 
     logout: function(req, res) {
         req.session.destroy(function(err) {
@@ -129,7 +117,7 @@ module.exports = {
         var matricule_new_admin = req.param("matricule");
         User.updateOne({matricule:matricule_new_admin}, {admin:true}, function(err){
             if(err) res.send(err);
-            var exp_matricule = req.session.User.matricule;
+            var exp_matricule = req.session.matricule;
             var sms = exp_matricule + " a confirmé votre droit d'administrateur, reconnectez-vous";
             sails.sockets.blast("new_message", {matricule_exp:exp_matricule, matricule_dest:matricule_new_admin, sms:sms});
         })

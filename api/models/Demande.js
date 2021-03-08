@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-
+  //tableName: 'tic_demande',
   attributes: {
     objet: { type: 'string', required: true },
     priorite: { type: 'string', required: true },
@@ -20,5 +20,5 @@ module.exports = {
     commentaire: { type: 'string', required: false},
   },
 
-  datastore : 'default'
+  datastore : 'ConnexionTicket'
 };

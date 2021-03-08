@@ -8,7 +8,8 @@
 var bcrypt = require('bcrypt');
 
 module.exports = {
-
+    datastore: 'ConnexionTicket',
+    tableName: 'user',
   attributes: {
       matricule: { type: 'number', required: true},
       categorie: { type: 'string', required: true },
@@ -51,7 +52,7 @@ module.exports = {
     
   },
 
-  datastore : 'default'
+  datastore : 'ConnexionTicket'
 
 };
 

@@ -181,7 +181,7 @@
                         </li>
 
                         <%
-                        if(session.User.admin == true){
+                        if(session.admin == true){
                         %>
                         <li>
                             <a href="#">
@@ -194,8 +194,8 @@
                             <a href="#">
                                 <i class="far fa-comment-alt"></i><button type="button"  data-toggle="modal" data-target="#myModal">Notification</button></a>
                         </li>
-                        <%
-                        if(session.User.admin == true){
+                        <!-- <%
+                        if(session.admin == true){
                         %>
                         <li class="has-sub">
                             <a class="js-arrow" href="/modif_categorie">
@@ -203,13 +203,13 @@
                             
                         </li>
                         
-                        <li class="has-sub">
+                        <!-- <li class="has-sub">
                             <a class="js-arrow" href="/mdp_oublier">
                                 <i class="fas fa-desktop"></i>Réinitialiser mdp</a>                       
-                        </li>
-                        <%
+                        </li> -->
+                        <!-- <%
                         }
-                        %>
+                        %> --> 
                     </ul>
                 </nav>
             </div>
@@ -231,7 +231,7 @@
                                                 <img src="images/icon/avatarhum.png" alt="avatar" />
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#">Matricule: <%= session.User.matricule %></a>
+                                            <a class="js-acc-btn" href="#">Matricule: <%= session.matricule %></a>
                                             
                                         </div>
                                         
@@ -244,9 +244,9 @@
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="name">
-                                                        <a href="#">Matricule: <%= session.User.matricule %></a>
+                                                        <a href="#">Matricule: <%= session.matricule %></a>
                                                     </h5>
-                                                    <span class="email"><%= session.User.categorie %></span>
+                                                    <span class="email"><%= session.categorie %></span>
                                                 </div>
                                             </div>
                                             <!---
@@ -277,7 +277,7 @@
                                 
                                 <div>
                                         <%
-                                        if(session.User.categorie != 'Trans'){ %>
+                                        if(session.categorie != 'TRANS'){ %>
                                             <a  style="color:rgb(89, 138, 245); margin-left:20px;"  href="/demander_a_trans">Faire une demande</a>
                                         <% } %>
                                 </div>
@@ -294,7 +294,7 @@
                                                 <%
                                                     var nbr_sms = 0;
                                                     for(var i = 0; i< messages.length; i++){
-                                                        if(messages[i].vue == false && messages[i].matricule_dest == session.User.matricule ){
+                                                        if(messages[i].vue == false && messages[i].matricule_dest == session.matricule ){
                                                             nbr_sms = nbr_sms + 1;
                                                         }
                                                     }
@@ -313,7 +313,7 @@
                                                 <div class="info clearfix" id="contenu_sms">
                                                 <%
                                                     for(var i = 0; i< messages.length; i++){
-                                                        if(messages[i].vue == false && messages[i].matricule_dest == session.User.matricule ){
+                                                        if(messages[i].vue == false && messages[i].matricule_dest == session.matricule ){
                                                             
 
                                                     %>
@@ -601,7 +601,7 @@
                                   <td>
                                     <% 
                                     e++;
-                                    if(session.User.categorie == 'Trans'){ %>
+                                    if(session.categorie == 'TRANS'){ %>
                                     <a type="button" class="btn btn-success" id="boutt" href="/valide_form_demande/<%= demande[i].id %>" >Prendre</a>
                                     <%
                                     }
@@ -676,8 +676,8 @@
                                             <strong class="btn btn-light"  style="color:rgb(212, 27, 27); pointer-events: none;">Stand By</strong>
                                         </span> 
                                         <% 
-                                        if(session.User.categorie == 'Trans'){
-                                            if(session.User.matricule == tache_en_cours[i].matricule_trans){
+                                        if(session.categorie == 'TRANS'){
+                                            if(session.matricule == tache_en_cours[i].matricule_trans){
                                         %>
                                         <a type="button" class="btn btn-primary" id="boutt" href="/tache_continuer/<%= tache_en_cours[i].id_demande %>/<%= tache_en_cours[i].id %>">Continuer</a>
                                         <%
@@ -685,7 +685,7 @@
                                         }
                                         }
                                         
-                                        else if(tache_en_cours[i].matricule_trans == session.User.matricule ) { 
+                                        else if(tache_en_cours[i].matricule_trans == session.matricule ) { 
                                             var stand = "stand";
                                             %>
                                             
@@ -791,7 +791,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="copyright">
-                        <p>Copyright © 2020 Easytech</p>
+                        <p>Copyright © 2021 Easytech</p>
                     </div>
                 </div>
             </div>
@@ -813,7 +813,7 @@
                     <div style="margin-left:20px;">
                     <%
                         for(var i = messages.length-1; i >= 0; i--){
-                            if(messages[i].matricule_dest == session.User.matricule ){
+                            if(messages[i].matricule_dest == session.matricule ){
                             var datecreation = new Date(messages[i].createdAt).toLocaleDateString();
                             var timecreation = new Date(messages[i].createdAt).toLocaleTimeString();
                             var temps = datecreation + " à " + timecreation;
@@ -934,8 +934,8 @@
 
     </div>
 
-    <input type="hidden" id="session" value="<%= session.User.matricule %>" ></input>
-    <input type="hidden" id="session_categorie" value="<%= session.User.categorie %>"></input>
+    <input type="hidden" id="session" value="<%= session.matricule %>" ></input>
+    <input type="hidden" id="session_categorie" value="<%= session.categorie %>"></input>
 
     <!-- Jquery JS-->
     <script src="vendor/jquery-3.2.1.min.js"></script>
@@ -986,7 +986,7 @@ $(document).ready(function(){
     $("#notif").click(function(){
         $.ajax({
             //L'URL de la requête 
-            url: "/message_vue/<%= session.User.matricule %>",
+            url: "/message_vue/<%= session.matricule %>",
 
             //La méthode d'envoi (type de requête)
             method: "GET",
@@ -1075,7 +1075,7 @@ $(document).ready(function(){
         var id_nouvelle_tache = $("#id_nouvelle_tache");
         id_nouvelle_tache.append(
             $(
-                '<tr><td>'+ data.objet+'</td><td>'+ data.priorite+'</td><td>'+ data.tache+'</td><td>'+ data.code+'</td><td>'+ data.size+'</td><td><a href="/contenu/'+data.id+'">'+ data.chemin+'</a></td><td>'+ data.categorie+'</td><td>Nouvelle tâche</td><td></td><td></td><td></td><td>'+ (session_categorie == 'Trans' ? ' <a type="button" class="btn btn-success" id="boutt" href="/valide_form_demande/'+data.id+'">Prendre</a>' : 'En attente')+'</td></tr>'
+                '<tr><td>'+ data.objet+'</td><td>'+ data.priorite+'</td><td>'+ data.tache+'</td><td>'+ data.code+'</td><td>'+ data.size+'</td><td><a href="/contenu/'+data.id+'">'+ data.chemin+'</a></td><td>'+ data.categorie+'</td><td>Nouvelle tâche</td><td></td><td></td><td></td><td>'+ (session_categorie == 'TRANS' ? ' <a type="button" class="btn btn-success" id="boutt" href="/valide_form_demande/'+data.id+'">Prendre</a>' : 'En attente')+'</td></tr>'
             )
         )
 
@@ -1083,7 +1083,7 @@ $(document).ready(function(){
         nbrNouvelleTache = nbrNouvelleTache + 1;
         $('#nbrNouvelleTache').text(nbrNouvelleTache);
 
-        if(session_categorie == 'Trans'){
+        if(session_categorie == 'TRANS'){
             var nbr_sms = parseInt( $("#nbr_sms").text() , 10); 
             nbr_sms = nbr_sms + 1;
             $("#nbr_sms").text(nbr_sms)
@@ -1109,7 +1109,7 @@ $(document).ready(function(){
 
         id_nouvelle_tache.append(
             $(
-                '<tr><td>'+ data.objet+'</td><td>'+ data.priorite+'</td><td>'+ data.tache+'</td><td>'+ data.code+'</td><td>'+ data.size+'</td><td><a href="/contenu/'+data.id_demande+'">'+ data.chemin+'</a></td><td>'+ data.expediteur+'</td><td>Tâche en cours</td><td>'+ data.realisateur+'</td><td>'+ data.debut+'</td><td></td><td>'+ (session_categorie != 'Trans'? 'En cours' : '<span id="onLine"><a type="button" class="btn btn-danger" id="boutt" href="/stand_by/'+data.id_demande+'/' + data.id_tache +'">Stand By</a><a type="button" class="btn btn-primary" id="boutt" href="/valide_form_terminer/'+id_demande+'">Terminer</a></span>')+'</td></tr>'        
+                '<tr><td>'+ data.objet+'</td><td>'+ data.priorite+'</td><td>'+ data.tache+'</td><td>'+ data.code+'</td><td>'+ data.size+'</td><td><a href="/contenu/'+data.id_demande+'">'+ data.chemin+'</a></td><td>'+ data.expediteur+'</td><td>Tâche en cours</td><td>'+ data.realisateur+'</td><td>'+ data.debut+'</td><td></td><td>'+ (session_categorie != 'TRANS'? 'En cours' : '<span id="onLine"><a type="button" class="btn btn-danger" id="boutt" href="/stand_by/'+data.id_demande+'/' + data.id_tache +'">Stand By</a><a type="button" class="btn btn-primary" id="boutt" href="/valide_form_terminer/'+id_demande+'">Terminer</a></span>')+'</td></tr>'        
             )
         )
     });

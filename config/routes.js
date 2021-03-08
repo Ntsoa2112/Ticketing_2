@@ -19,7 +19,7 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/:notif?': { view: 'login_register/login' },
+  '/:notif?': { view: 'login_register/login'},
 
   '/creer_compte': { view: 'login_register/creer_compte' },
 

@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-
+    //tableName: 'tic_message',
     attributes: {
       matricule_exp: { type: 'number', required: true },
       matricule_dest: { type: 'number', required: true },
@@ -15,6 +15,6 @@ module.exports = {
       filename : { type: 'string', required: false },
     },
   
-    datastore : 'default'
+    datastore : 'ConnexionTicket'
   
   };
