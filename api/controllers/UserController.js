@@ -70,7 +70,7 @@ module.exports = {
                     else{
                         req.session.categorie = "Département inconnue";
                     }
-                    req.session.categorie = 'TRANS';
+
                     console.log("dep : " + req.session.categorie);
                     console.log("Connecter : " + email);
                     return res.redirect('/dashboard');               
