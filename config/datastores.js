@@ -51,8 +51,32 @@ module.exports.datastores = {
     // adapter: 'sails-mysql',
     // url: 'mysql://user:password@host:port/database',
     adapter: 'sails-postgresql',
-    url: 'mysql://fiche_recette:123456@db1.easytech.mg:5432/ticketing',
+    url: 'mysql://fiche_recette:123456@db1.easytech.mg:5432/easy',
 
   },
+
+  ConnexionTicket : {
+    adapter: 'sails-postgresql',
+    url: 'mysql://fiche_recette:123456@db1.easytech.mg:5432/ticketing',
+  }
+/*
+  ConnexionTicket: {
+    adapter : 'sails-postgresql',
+    host: 'db1.easytech.mg',
+    //host: '10.128.130.253',
+    user: 'tdb',
+    password: 'tdb$$',
+    database: 'ticketing'
+  },
+
+  ConnexionPostgresql: {
+    adapter: 'sails-postgresql',
+    host: 'db1.easytech.mg',
+    //host: '10.128.130.253',
+    user: 'tdb',
+    password: 'tdb$$',
+    database: 'easy'
+  },
+  */
 
 };

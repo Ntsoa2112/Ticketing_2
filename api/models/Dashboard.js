@@ -11,15 +11,15 @@ module.exports = {
 
     
   },
-  datastore : 'default',
+  datastore : 'ConnexionTicket',
 
   /*
   detailsTache: async function(type){
-    var rawResult = await sails.sendNativeQuery(`SELECT COUNT(*) nbr FROM demande WHERE etat_demande = $1 `, [ type ]);
+    var rawResult = await datastore.sendNativeQuery(`SELECT COUNT(*) nbr FROM demande WHERE etat_demande = $1 `, [ type ]);
     var nbrtache = rawResult.rows[0].nbr;
 
     async function nbrPriorite(priorite, type){
-        var rawResult = await sails.sendNativeQuery("SELECT COUNT(*) nbrp FROM demande WHERE etat_demande = $1 and priorite = $2 ", [ type, priorite ]);
+        var rawResult = await datastore.sendNativeQuery("SELECT COUNT(*) nbrp FROM demande WHERE etat_demande = $1 and priorite = $2 ", [ type, priorite ]);
         var nbrp = rawResult.rows[0].nbrp;
         return nbrp;
     }
@@ -28,7 +28,7 @@ module.exports = {
     var nbrP3 = await nbrPriorite('P3', type);
 
     async function nbrTypeTache(typeTache, type){
-        var rawResult = await sails.sendNativeQuery("SELECT COUNT(*) nbrtype FROM demande WHERE etat_demande = $1 and tache = $2 ", [ type, typeTache ]);
+        var rawResult = await datastore.sendNativeQuery("SELECT COUNT(*) nbrtype FROM demande WHERE etat_demande = $1 and tache = $2 ", [ type, typeTache ]);
         var nbrType = rawResult.rows[0].nbrtype;
         return nbrType;
     }
@@ -42,34 +42,30 @@ module.exports = {
   */
 
   details_Tache: async function(dd, df, type, dep){
-    console.log("Ato @ details");
-    console.log(dd);
-    if(dep == 'Trans'){
+    var datastore = sails.getDatastore('ConnexionTicket');
+    if(dep == 'TRANS'){
       if(type == "now"){
-        var demande = await sails.sendNativeQuery(`SELECT * FROM demande WHERE "createdAt" > $1  and etat_demande = $2`, [dd, "nouvelle"]);
-        var tache_en_cours = await sails.sendNativeQuery(`SELECT *, effectuer_tache."createdAt" datecours FROM effectuer_tache JOIN demande ON effectuer_tache.id_demande = demande.id WHERE effectuer_tache."createdAt" > $1 OR demande.etat_demande = $2 OR demande.etat_demande = $3`, [dd, "En cours", "Stand By"]);
+        var demande = await datastore.sendNativeQuery(`SELECT * FROM demande WHERE "createdAt" > $1  and etat_demande = $2`, [dd, "nouvelle"]);
+        var tache_en_cours = await datastore.sendNativeQuery(`SELECT *, effectuer_tache."createdAt" datecours FROM effectuer_tache JOIN demande ON effectuer_tache.id_demande = demande.id WHERE effectuer_tache."createdAt" > $1 OR demande.etat_demande = $2 OR demande.etat_demande = $3`, [dd, "En cours", "Stand By"]);
       }
       else if(type == "intervale"){
-          var demande = await sails.sendNativeQuery(`SELECT * FROM demande WHERE "createdAt" > $1 and  "createdAt" <= $2 and etat_demande = $3`, [dd, df, "nouvelle"]);
-          var tache_en_cours = await sails.sendNativeQuery(`SELECT *, effectuer_tache."createdAt" datecours FROM effectuer_tache JOIN demande ON effectuer_tache.id_demande = demande.id WHERE effectuer_tache."createdAt" > $1 and effectuer_tache."createdAt" <= $2`, [dd, df]);
+          var demande = await datastore.sendNativeQuery(`SELECT * FROM demande WHERE "createdAt" > $1 and  "createdAt" <= $2 and etat_demande = $3`, [dd, df, "nouvelle"]);
+          var tache_en_cours = await datastore.sendNativeQuery(`SELECT *, effectuer_tache."createdAt" datecours FROM effectuer_tache JOIN demande ON effectuer_tache.id_demande = demande.id WHERE effectuer_tache."createdAt" > $1 and effectuer_tache."createdAt" <= $2`, [dd, df]);
       }
     }
     else{
       if(type == "now"){
-        var demande = await sails.sendNativeQuery(`SELECT * FROM demande WHERE "createdAt" > $1  and etat_demande = $2 and categorie = $3`, [dd, "nouvelle", dep]);
-        var tache_en_cours = await sails.sendNativeQuery(`SELECT *, effectuer_tache."createdAt" datecours FROM effectuer_tache JOIN demande ON effectuer_tache.id_demande = demande.id WHERE (effectuer_tache."createdAt" > $1 OR demande.etat_demande = $2 OR demande.etat_demande = $3) and categorie = $4`, [dd, "En cours", "Stand By", dep]);
+        var demande = await datastore.sendNativeQuery(`SELECT * FROM demande WHERE "createdAt" > $1  and etat_demande = $2 and categorie = $3`, [dd, "nouvelle", dep]);
+        var tache_en_cours = await datastore.sendNativeQuery(`SELECT *, effectuer_tache."createdAt" datecours FROM effectuer_tache JOIN demande ON effectuer_tache.id_demande = demande.id WHERE (effectuer_tache."createdAt" > $1 OR demande.etat_demande = $2 OR demande.etat_demande = $3) and categorie = $4`, [dd, "En cours", "Stand By", dep]);
       }
       else if(type == "intervale"){
-          var demande = await sails.sendNativeQuery(`SELECT * FROM demande WHERE "createdAt" > $1 and  "createdAt" <= $2 and etat_demande = $3 and categorie = $4`, [dd, df, "nouvelle", dep]);
-          var tache_en_cours = await sails.sendNativeQuery(`SELECT *, effectuer_tache."createdAt" datecours FROM effectuer_tache JOIN demande ON effectuer_tache.id_demande = demande.id WHERE effectuer_tache."createdAt" > $1 and effectuer_tache."createdAt" <= $2 and categorie = $3`, [dd, df, dep]);
+          var demande = await datastore.sendNativeQuery(`SELECT * FROM demande WHERE "createdAt" > $1 and  "createdAt" <= $2 and etat_demande = $3 and categorie = $4`, [dd, df, "nouvelle", dep]);
+          var tache_en_cours = await datastore.sendNativeQuery(`SELECT *, effectuer_tache."createdAt" datecours FROM effectuer_tache JOIN demande ON effectuer_tache.id_demande = demande.id WHERE effectuer_tache."createdAt" > $1 and effectuer_tache."createdAt" <= $2 and categorie = $3`, [dd, df, dep]);
       }
     }
-
-
     demande = demande.rows;
     tache_en_cours = tache_en_cours.rows;
     var allTache = [demande, tache_en_cours];
-    console.log("Hivoka  @ details");
     return allTache;
   },
 

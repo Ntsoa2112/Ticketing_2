@@ -8,32 +8,9 @@ const io = require('socket.io');
 var det = require('../service/traitement');
 var socket = io();
 
-module.exports = {
-    /*
-    affichage: function (req, res){
-        Demande.find(function foundDemande(err, demande){
-            if(err){
-                return res.send(err);
-            }
-            else{
-                res.view('pages/dashboard', { demande: demande });
-            }
-        });
-    },
-    */
-   
+module.exports = {   
     affichage: async function (req, res){
-        /*
-        function afficher(dd='undefined', df='undefined'){
-            if(dd && df){
-                Dashboard.details_Tache(dd, df);
-            }
-            else{
-                console.log("Passs");
-            }
-        }
-        */
-       var dep = req.session.User.categorie;
+       var dep = req.session.categorie;
         if(!req.param('dd') && !req.param('df')){
             var dateNow = new Date().toISOString().slice(0,10);
             var parse_now = Date.parse(dateNow);
@@ -47,15 +24,15 @@ module.exports = {
         var detailsEnCours = resultatStat["enCours"];
         var detailsterminer = resultatStat["terminer"];
 
-                Message.find(function foundMessage(err, messages){
-                    if (err) return res.send(err);
-                    sails.sockets.blast("detailsTache", {detailsNouvelle, detailsEnCours , detailsterminer});
-                    res.view('pages/dashboard', { demande: demande , tache_en_cours: tache_en_cours, messages:messages, detailsNouvelle, detailsEnCours , detailsterminer, datDebut: "null", datFin: "null" });
-                });
+        Message.find(function foundMessage(err, messages){
+            if (err) return res.send(err);
+            sails.sockets.blast("detailsTache", {detailsNouvelle, detailsEnCours , detailsterminer});
+            res.view('pages/dashboard', { demande: demande , tache_en_cours: tache_en_cours, messages:messages, detailsNouvelle, detailsEnCours , detailsterminer, datDebut: "null", datFin: "null" });
+        });
     },
 
     afficher_date: async function(req, res){
-        var dep = req.session.User.categorie;
+        var dep = req.session.categorie;
         if(req.param('mint') && req.param('maxt')){
             var datd = req.param('mint');
             var datf = req.param('maxt');

@@ -121,25 +121,25 @@ module.exports = {
         });
     },
     
-    demande_a_trans: async function(req, res){
+    demande_a_trans: function(req, res){
         var objet = req.param('objet');
         var priorite = req.param('priorite');
         var tache = req.param('tache');
-        var categorie = req.session.User.categorie;
-        var matricule = req.session.User.matricule;
+        var categorie = req.session.categorie;
+        var matricule = req.session.matricule;
         var code = req.param('code');
-
+        console.log("Aloan REC");
         if(tache == 'Récuperation'){
             Demande.create({objet, priorite, tache, code, categorie, matricule},function createDemande(err){
                 if(err){
                     res.send(err);
                 }
-                Demande.findOne({objet:objet, priorite:priorite}, function foundDemande(err, OneDemande){
+
+                Demande.findOne({objet:objet, priorite:priorite, tache:tache, code:code, categorie:categorie, matricule:matricule}, function foundDemande(err, OneDemande){
                     if(err) return res.send(err);
                     var id = OneDemande.id;
                     sails.sockets.blast("nouvelle_tache", {id:id, objet, priorite, tache, code,  categorie, matricule});
                 });
-                
                 return res.redirect('/dashboard');
               });
         }
@@ -205,7 +205,7 @@ module.exports = {
         Demande.findOne(req.param('id_demande'), function foundOneFake(err, OneDemande){
             if(err) return res.send(err);
             var id_demande = OneDemande.id;
-            var matricule_trans = req.session.User.matricule;           
+            var matricule_trans = req.session.matricule;           
             Effectuer_tache.create({id_demande, matricule_trans} , async function takeDemande(err){
                 if(err) return res.send("Erreur : " + err);
                 var etat_demande = 'En cours';
@@ -280,10 +280,11 @@ module.exports = {
         var dateNow = now.toLocaleDateString();
         var timeNow = now.toLocaleTimeString();
         var H_fin_transfert = dateNow + " à " + timeNow;
-        var matr = req.session.User.matricule;
+        var matr = req.session.matricule;
+
         if(req.param('sms')){
             var sms = req.param('sms');
-            var exp_matricule = req.session.User.matricule;
+            var exp_matricule = req.session.matricule;
             var noww = Date.now();
             if(req.file('photo')){
                 req.file('photo').upload({
@@ -393,8 +394,8 @@ var code = req.param('code');
             var objet = req.param('objet');
             var priorite = req.param('priorite');
             var tache = req.param('tache');
-            var categorie = req.session.User.categorie;
-            var matricule = req.session.User.matricule;
+            var categorie = req.session.categorie;
+            var matricule = req.session.matricule;
             Demande.create({objet, priorite, tache, code, size, chemin, categorie, matricule}, function createdemande(err){
                 if(err){
                     res.send("Erreur:" + err);
@@ -423,8 +424,8 @@ var code = req.param('code');
               var objet = req.param('objet');
               var priorite = req.param('priorite');
               var tache = req.param('tache');
-              var categorie = req.session.User.categorie;
-              var matricule = req.session.User.matricule;
+              var categorie = req.session.categorie;
+              var matricule = req.session.matricule;
               
               Demande.create({objet, priorite, tache, fichier, size, categorie, matricule}, function fileUploaded(err){
                 if(err){

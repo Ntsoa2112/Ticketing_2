@@ -22,20 +22,47 @@
 							<h4 class="card-title">
 									Connexion</h4>
 							<form method="POST" class="my-login-validation" novalidate="" action="/login">
+								<%
+								if(req.param("notif")){
+									var notif = req.param("notif");
+									var aff;
+									if(notif == "ustr"){
+										aff = "Vous pouvez vous connecter";
+									}
+									else if(notif == "trad"){
+										aff = "Vous pouvez vous connecter en tant qu'administrateur";
+									}
+									else if(notif == "adfa"){
+										aff = "Vous pouvez vous connecter en tant qu'utilisateur en attendant la confirmation de l'administrateur";
+									}
+									else if(notif == "fdp"){
+										aff = "Mot de passe réinitialiser avec succée";
+									}
+									else{
+										aff = notif;
+									}
+									%>
+	
+									<div class="form-text text-muted" style="color: red; font-size: 20px;">
+										<%= aff %>
+									</div>
+									<%
+									}
+									%>
 								<div class="form-group">
 									<label for="email">Matricule</label>
-									<input id="email" class="form-control" name="matricule" required autofocus>
+									<input id="email" class="form-control" name="email" required autofocus>
 									<div class="invalid-feedback">
 										Matricule non valide
 									</div>
 								</div>
 
 								<div class="form-group">
-									<label for="password">Mot de passe
+									<!-- <label for="password">Mot de passe
 										<a href="#" id="mdp_oublier" class="float-right">
 											Mot de passe oublié?
 										</a>
-									</label>
+									</label> -->
 									<input id="password" type="password" class="form-control" name="password" required data-eye>
 								    <div class="invalid-feedback">
 								    	Password is required
@@ -48,44 +75,19 @@
 
 								</div>
 
-								<%
-                            if(req.param("notif")){
-                                var notif = req.param("notif");
-                                var aff;
-                                if(notif == "ustr"){
-                                    aff = "Vous pouvez vous connecter";
-                                }
-                                else if(notif == "trad"){
-                                    aff = "Vous pouvez vous connecter en tant qu'administrateur";
-                                }
-                                else if(notif == "adfa"){
-                                    aff = "Vous pouvez vous connecter en tant qu'utilisateur en attendant la confirmation de l'administrateur";
-								}
-								else if(notif == "fdp"){
-									aff = "Mot de passe réinitialiser avec succée";
-								}
-								%>
-
-								<div class="form-text text-muted" style="color: green;">
-									<%= aff %>
-								</div>
-								<%
-								}
-								%>
-
 								<div class="form-group m-0">
 									<button type="submit" class="btn btn-primary btn-block" id="sub">
 										Se connecter
 									</button>
 								</div>
-								<div class="mt-4 text-center">
+								<!-- <div class="mt-4 text-center">
 										Vous n'avez pas de compte? <a href="/creer_compte">Créer un compte</a>
-								</div>
+								</div> -->
 							</form>
 						</div>
 					</div>
 					<div class="footer">
-						Copyright &copy; 2020 &mdash; Easytech
+						Copyright &copy; 2021 &mdash; Easytech
 					</div>
 				</div>
 			</div>
