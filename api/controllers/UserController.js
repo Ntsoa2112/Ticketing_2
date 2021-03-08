@@ -56,7 +56,6 @@ module.exports = {
 
                    var admin = await sails.sendNativeQuery("select * from tic_admin where id_pers = $1", [email]);
 
-                    console.log(admin);
                     req.session.admin = false;
                     if(admin.rowCount == 1 && admin.rows[0].admin == true){
                         req.session.admin = true;

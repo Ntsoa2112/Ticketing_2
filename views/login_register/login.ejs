@@ -22,6 +22,9 @@
 							<h4 class="card-title">
 									Connexion</h4>
 							<form method="POST" class="my-login-validation" novalidate="" action="/login">
+								<label for="" style="color: rgb(62, 182, 62);">
+									Utilisez le matricule et le mot de passe session pour se connecter
+								</label>
 								<%
 								if(req.param("notif")){
 									var notif = req.param("notif");
